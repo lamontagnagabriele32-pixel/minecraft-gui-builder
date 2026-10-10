@@ -1,8 +1,7 @@
-const { packager } = require('@electron/packager');
-
 async function pack() {
   try {
     console.log('Creating portable executable...');
+    const { packager } = await import('@electron/packager');
     const appPaths = await packager({
       dir: '.',
       platform: 'win32',
