@@ -1,0 +1,13 @@
+const {app}=require("electron");const os=require("os"),fs=require("fs"),path=require("path");app.setPath("userData",fs.mkdtempSync(path.join(os.tmpdir(),"ed-")));
+const TEST=`(async()=>{const o={},T=(n,f)=>{try{const r=f();o[n]=r===undefined?"ok":r}catch(e){o[n]="ERR "+e.message}};
+ T("load-no-events",()=>{$("ta").value=JSON.stringify({format:1,screen:{id:"x",width:176,height:166},elements:[{type:"button",id:"b",x:1,y:1,width:50,height:20,text:"A"},{type:"panel",id:"p",x:0,y:0,width:50,height:50}]});loadTa();return gen().length>100});
+ T("load-garbage-types",()=>{$("ta").value=JSON.stringify({format:1,screen:{},elements:[{type:"button",id:5,x:"a",y:null,width:-5,height:"20",text:7,events:null},{type:"nope"},null,{type:"panel",children:"x"}]});loadTa();gen();return P.elements.length});
+ T("load-missing-screen",()=>{$("ta").value=JSON.stringify({format:1,elements:[]});loadTa();return P.screen&&P.screen.width});
+ T("preview-vars-reset",()=>{newP();add("button");const e=cur().e;e.events={click:[{action:"change_variable",target:"c+=1",cond:""}]};togglePrev();run(e,"click");run(e,"click");const a=V.c;togglePrev();togglePrev();const b=V.c;togglePrev();return a+"->"+b});
+ T("bad-names",()=>{$("cls").value="my class";$("pkg").value="com.1bad";$("mod").value="My Mod";const j=gen();return /public class my class/.test(j)});
+ T("autosave-size",()=>{P.assets={big:"data:image/png;base64,"+"A".repeat(6000000)};push();return "ok"});
+ T("overlay-nogui",()=>{setOverlay("inventory");add("button");const j=gen();setOverlay("");return j.includes("InventoryScreen")});
+ T("empty-text-java",()=>{newP();add("label");cur().e.text='say "hi"\\\\n\\\\\\\\ x';return gen().includes('\\\\"hi\\\\"')});
+ return o})()`;
+app.on("browser-window-created",(_,w)=>{const c=w.webContents;c.on("did-finish-load",async()=>{let code=0;try{const r=await c.executeJavaScript(TEST);if(Object.values(r).some(v=>typeof v==="string"&&v.startsWith("ERR")))code=1;console.log("EDGE",JSON.stringify(r,null,1))}catch(e){console.log("EXEC",e.message);code=1}app.exit(code)})});
+require("../main.js");setTimeout(()=>app.exit(2),60000);

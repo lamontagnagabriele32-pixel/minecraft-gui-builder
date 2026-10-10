@@ -1,0 +1,1073 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Minecraft GUI Builder</title>
+<style>
+:root{--bg:#f3f4f6;--pn:#fff;--pn2:#f8f9fb;--tx:#1a1d23;--mut:#6a7280;--bd:#e2e5ea;--ac:#2a9d5c;--ac2:#e6f5ec;--in:#f1f3f6;--sh:0 1px 2px #0001,0 8px 24px #0002;color-scheme:light;box-sizing:border-box}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14151a;--pn:#1c1e24;--pn2:#22252c;--tx:#e9ebef;--mut:#8b919d;--bd:#2d3139;--ac:#4cc57a;--ac2:#1f3328;--in:#272a32;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#14151a;--pn:#1c1e24;--pn2:#22252c;--tx:#e9ebef;--mut:#8b919d;--bd:#2d3139;--ac:#4cc57a;--ac2:#1f3328;--in:#272a32;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{font:13px/1.45 -apple-system,"Segoe UI",Inter,system-ui,sans-serif;background:var(--bg);color:var(--tx);display:grid;grid-template-rows:46px 1fr 26px;overflow:hidden}
+button,select,input,textarea{font:inherit;color:inherit}
+button{background:var(--in);border:1px solid var(--bd);border-radius:7px;padding:5px 11px;cursor:pointer;transition:border-color .12s,background .12s}
+button:hover{border-color:var(--ac)}button:active{transform:translateY(1px)}
+select,input[type=text],input[type=number],input:not([type]),textarea{background:var(--in);border:1px solid var(--bd);border-radius:7px;padding:5px 8px;min-width:0}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--ac2);border-color:var(--ac)}
+input[type=color]{padding:0;height:28px;width:44px;border-radius:7px;border:1px solid var(--bd);background:none}
+.pri{background:var(--ac);border-color:transparent;color:#fff;font-weight:600}.pri:hover{filter:brightness(1.08);border-color:transparent}
+.ic{width:32px;padding:5px 0;text-align:center}.sp{flex:1}
+#top{display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--pn);border-bottom:1px solid var(--bd)}
+.brand{display:flex;align-items:center;gap:8px;font-size:14px;margin-right:6px}
+#menubar{display:flex;gap:2px}.menu{position:relative}
+.mb{background:none;border-color:transparent;padding:5px 10px}.mb:hover,.menu.open .mb{background:var(--in);border-color:transparent}
+.dd{display:none;position:absolute;left:0;top:34px;min-width:250px;background:var(--pn);border:1px solid var(--bd);border-radius:10px;box-shadow:var(--sh);padding:5px;z-index:200}
+.menu.open .dd{display:block}.dd button,.dd label{display:flex;width:100%;justify-content:space-between;align-items:center;gap:20px;background:none;border:0;border-radius:6px;padding:6px 10px;text-align:left;cursor:pointer}
+.dd button:hover,.dd label:hover{background:var(--ac2)}.dd kbd{font:11px monospace;color:var(--mut)}.dd hr{border:0;border-top:1px solid var(--bd);margin:4px 2px}
+#ptitle{color:var(--mut);font-size:12px}
+#shell{display:grid;grid-template-columns:268px 1fr 310px;min-height:0}
+#left,#right{display:flex;flex-direction:column;background:var(--pn);min-height:0;min-width:0}
+#left{border-right:1px solid var(--bd)}#right{border-left:1px solid var(--bd)}
+.tabs{display:flex;border-bottom:1px solid var(--bd);padding:0 6px}
+.tab{background:none;border:0;border-bottom:2px solid transparent;border-radius:0;padding:10px 12px;color:var(--mut);font-weight:600}
+.tab:hover{color:var(--tx)}.tab.on{color:var(--ac);border-bottom-color:var(--ac)}
+.pane{display:none;flex:1;overflow:auto;padding:12px;min-height:0}.pane.on{display:block}
+.hint{color:var(--mut);font-size:12px;margin:0 0 10px}
+.sec,#lib b,#th b,#cl b,#mg b,#pr h4,#colp h4,#p-proj h4{display:block;font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);margin:14px 0 6px}
+#pr h4{margin-top:4px}
+#lib{display:grid;grid-template-columns:1fr 1fr;gap:7px}#lib b{grid-column:1/-1;margin:0 0 2px}
+#lib button{display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 4px 9px;background:var(--pn2);font-size:12px;border-radius:10px}
+#lib button:hover{background:var(--ac2)}#lib svg{color:var(--ac)}
+#cl button,#th button,#mg button.full{display:block;width:100%;text-align:left;margin-bottom:5px}
+#th select{width:100%;margin-bottom:6px}#th input[type=file]{width:100%;font-size:11px;margin:4px 0}
+#layers{border-top:1px solid var(--bd);height:36%;display:flex;flex-direction:column;min-height:120px}
+#layers .sec{margin:10px 12px 4px}#hr{flex:1;overflow:auto;padding:0 6px 8px}
+.r{display:flex;align-items:center;gap:6px;padding:3px 8px;cursor:pointer;border-radius:6px}.r:hover{background:var(--in)}.r.a{background:var(--ac2);color:var(--ac)}.r span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.r b{font-weight:400;opacity:.65;padding:0 2px}
+#stage{position:relative;min-width:0;min-height:0;background:radial-gradient(circle,var(--bd) 1px,transparent 1.2px) 0 0/18px 18px,var(--bg)}
+#ws{position:absolute;inset:0;overflow:auto;padding:56px 40px 40px;display:flex}
+#zc{position:absolute;right:16px;bottom:16px;display:flex;align-items:center;gap:2px;background:var(--pn);border:1px solid var(--bd);border-radius:10px;padding:3px;box-shadow:var(--sh)}
+#zc button{background:none;border:0;width:30px;padding:4px 0}#zc button:hover{background:var(--in)}#zl{min-width:38px;text-align:center;color:var(--mut);font-size:12px}
+.qa{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}.qa button{flex:1;padding:5px 6px;font-size:12px}
+#pr label{display:grid;grid-template-columns:86px 1fr;align-items:center;gap:8px;margin:5px 0;font-size:12px;color:var(--mut)}
+#pr label input,#pr label select{width:100%;color:var(--tx)}
+#pr label:has(input[type=checkbox]){display:flex;gap:8px;color:var(--tx)}
+#pr select[data-ev]{margin-bottom:2px}
+#pr .m{color:var(--mut)}
+.form label{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:8px;margin:6px 0;font-size:12px;color:var(--mut)}.form input,.form select{width:100%;color:var(--tx)}
+.form .two{display:flex;gap:6px;align-items:center}.form .two input{width:100%}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}.row button{flex:1}
+.sw{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:6px}.sw i{width:24px;height:24px;border-radius:6px;border:1px solid #0003;cursor:pointer;display:block}.sw i:hover{transform:scale(1.15)}.sw i.cur{outline:2px solid var(--ac);outline-offset:1px}
+.badge{display:inline-block;padding:1px 7px;border-radius:99px;font-size:11px;font-weight:700}.ok{background:#d8f3e2;color:#14683a}.warn{background:#fde8d0;color:#8a4a07}.bad{background:#fbd9d9;color:#8c1c1c}
+#sb{display:flex;gap:16px;align-items:center;padding:0 12px;background:var(--pn);border-top:1px solid var(--bd);font-size:11.5px;color:var(--mut)}
+.fb{background:var(--pn);color:var(--tx);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);padding:16px;max-width:96vw;max-height:92vh;overflow:auto}
+#fl,#tm,#st,#gv,#pe{background:#0a0c1090;backdrop-filter:blur(3px)}
+#md{background:#0a0c1090}#md div{background:var(--pn);border-radius:14px;box-shadow:var(--sh)}
+.gn{background:var(--pn)}.fb b{font-size:14px}
+#log{left:50%;transform:translateX(-50%);bottom:40px;border-radius:8px}
+#db,#gp,#aip{border-radius:10px;box-shadow:var(--sh)}
+#aip{bottom:40px}
+
+/* canvas and nodes */
+
+#gui{position:relative;margin:auto;background:var(--panel,#c6c6c6);border:calc(var(--s)*1px) solid #000;flex:none;font:calc(var(--s)*8px)/1 monospace;image-rendering:pixelated}
+
+.n{position:absolute;overflow:visible;user-select:none;display:flex;align-items:center;justify-content:center;white-space:nowrap}
+
+.button{background:var(--btn,#6f6f6f);border:calc(var(--s)*2px) solid;border-color:var(--tl,#fff) var(--br,#373737) var(--br,#373737) var(--tl,#fff);color:var(--txt,#fff);text-shadow:calc(var(--s)*1px) calc(var(--s)*1px) #222}
+
+.button.off{filter:grayscale(1) brightness(.6)}
+
+.label{justify-content:flex-start}
+
+.slot{background:var(--slot,#8b8b8b);border:calc(var(--s)*1px) solid;border-color:var(--br,#373737) var(--tl,#fff) var(--tl,#fff) var(--br,#373737)}
+
+.panel{background:var(--panel,#c6c6c6);border:calc(var(--s)*2px) solid;border-color:var(--tl,#fff) var(--br,#555) var(--br,#555) var(--tl,#fff);display:block}
+
+.panel.nobg{background:none;border:0}
+
+.input{background:#000;border:calc(var(--s)*1px) solid #a0a0a0;color:#e0e0e0;justify-content:flex-start;padding:0 calc(var(--s)*3px)}
+
+.input input{all:unset;width:100%;color:#fff}
+
+.progress{background:#333;border:calc(var(--s)*1px) solid #000;display:block}
+.progress i{display:block;height:100%;background:#3cc43c}
+
+.checkbox{justify-content:flex-start;gap:calc(var(--s)*3px)}
+.checkbox b{width:calc(var(--s)*10px);height:calc(var(--s)*10px);background:#000;border:calc(var(--s)*1px) solid #fff;color:#fff;font-size:calc(var(--s)*9px);display:flex;align-items:center;justify-content:center}
+
+.image{background:repeating-conic-gradient(#999 0 25%,#bbb 0 50%) 0 0/16px 16px;color:#222}
+
+.sel{outline:2px solid #2d8cff}.sel>.tag,.sel>.h{z-index:6}
+.h{position:absolute;right:-7px;bottom:-7px;width:10px;height:10px;background:#2d8cff;cursor:nwse-resize}
+
+.tag{position:absolute;top:-17px;left:0;background:#2d8cff;color:#fff;font:10px system-ui;padding:1px 4px;white-space:nowrap}
+
+#md{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:50}
+#md div{background:var(--pn);padding:12px;width:min(760px,94vw)}
+#md textarea{width:100%;height:50vh;font:11px monospace}
+
+#fl,#tm,#st,#gv,#pe{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;z-index:60}
+.fb{background:var(--pn);padding:10px;max-width:96vw;max-height:90vh;overflow:auto}
+.fw{display:flex;gap:10px;align-items:flex-start;margin-top:8px}
+.fc{min-width:190px;display:flex;flex-direction:column;gap:2px}
+.ev{background:var(--ac);color:#fff;padding:3px 8px;border-radius:12px;text-align:center}
+.cd{border:1px solid var(--bd);border-radius:6px;padding:4px;display:flex;flex-direction:column;gap:3px}
+.ar{text-align:center;opacity:.6}
+
+#aip{position:fixed;right:10px;bottom:160px;width:380px;background:var(--pn);border:1px solid var(--ac);padding:6px;display:none;z-index:70}
+#aio{margin:4px 0 0;white-space:pre-wrap;word-break:break-all;font:10px monospace;max-height:30vh;overflow:auto}
+
+.fr{display:flex;gap:6px;align-items:center;margin:3px 0}
+.fr label{width:150px;margin:0}
+.fr input[type=color]{padding:0;width:50px}
+#tmc{image-rendering:pixelated;border:1px solid var(--bd);background:repeating-conic-gradient(#999 0 25%,#bbb 0 50%) 0 0/12px 12px;margin-top:6px}
+
+.gn{position:absolute;width:180px;height:90px;background:var(--pn);border:1px solid var(--ac);border-radius:6px}
+.gh{background:var(--ac);color:#fff;padding:2px 6px;cursor:move;display:flex;justify-content:space-between;border-radius:5px 5px 0 0}
+.gn select,.gn input{width:166px;margin:2px 6px}
+.po{position:absolute;top:39px;width:12px;height:12px;border-radius:50%;background:#2d8cff;cursor:pointer}
+.pi{left:-7px}
+.pq{right:-7px}
+
+#gp{position:fixed;display:none;z-index:90;width:270px;max-height:50vh;overflow:auto;background:var(--pn);border:1px solid var(--ac);padding:4px}
+.gpi{padding:3px 6px;cursor:pointer}
+.gpi:hover{background:var(--ac);color:#fff}
+.gn.event .gh{background:#c0392b}
+.gn.if .gh{background:#b7950b}
+.gn.action .gh{background:#2471a3}
+#pxv{image-rendering:pixelated;border:1px solid var(--bd);background:repeating-conic-gradient(#999 0 25%,#bbb 0 50%) 0 0/12px 12px;cursor:crosshair;touch-action:none;margin-top:6px}
+
+@keyframes swa{from{transform:rotate(25deg)}to{transform:rotate(-25deg)}}
+@keyframes swb{from{transform:rotate(-25deg)}to{transform:rotate(25deg)}}
+@keyframes wv{from{transform:rotate(135deg)}to{transform:rotate(175deg)}}
+.mgi{display:flex;gap:3px;align-items:center;margin:2px 0;font-size:11px}
+.mgi b{flex:1;overflow:hidden;text-overflow:ellipsis}
+aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
+
+#db{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:80;display:none;gap:4px;align-items:center;background:var(--pn);border:1px solid var(--ac);padding:4px 8px;flex-wrap:wrap}
+
+#log{position:fixed;left:140px;bottom:156px;background:#000c;color:#9f9;font:11px monospace;padding:4px 8px;display:none}
+/* rifiniture */
+#pr label input[type=checkbox]{width:auto}
+#pr label:has([data-ev]){display:block;padding:8px;margin:8px 0;background:var(--pn2);border:1px solid var(--bd);border-radius:8px;font-weight:600;color:var(--tx);text-transform:capitalize}
+#pr label:has([data-ev]) select,#pr label:has([data-ev]) input{display:block;margin-top:5px;width:100%;font-weight:400}
+#log{left:50%;right:auto;bottom:42px;transform:translateX(-50%);border-radius:8px;z-index:300;background:#111c;color:#bdf5cf;padding:6px 12px;max-width:80vw}
+#aip{bottom:40px}
+.fb h4{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);margin:14px 0 6px}
+.fr label{color:var(--mut)}.fr input,.fr select{min-width:0}
+
+.tab{padding:10px 8px;font-size:12.5px}
+#cmdk{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding-top:14vh;background:#0a0c1070;z-index:500;backdrop-filter:blur(2px)}
+.ck{width:min(560px,92vw);background:var(--pn);border:1px solid var(--bd);border-radius:14px;box-shadow:var(--sh);overflow:hidden}
+.ck input{width:100%;border:0;border-bottom:1px solid var(--bd);border-radius:0;padding:14px 16px;font-size:15px;background:transparent}
+#ckl{max-height:50vh;overflow:auto;padding:6px}.cki{display:flex;gap:10px;align-items:center;padding:8px 10px;border-radius:8px;cursor:pointer}.cki.on,.cki:hover{background:var(--ac2)}.cki span{flex:1}.cki em{color:var(--mut);font-style:normal;font-size:11px}.cki kbd{font:11px monospace;color:var(--mut);min-width:80px;text-align:right}
+#ctx{position:fixed;display:none;z-index:400;background:var(--pn);border:1px solid var(--bd);border-radius:10px;box-shadow:var(--sh);padding:5px;min-width:210px}#ctx button{display:block;width:100%;text-align:left;background:none;border:0;padding:6px 10px;border-radius:6px}#ctx button:hover{background:var(--ac2)}
+.tplg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.tplg button{padding:12px;text-align:left}
+.pb{display:flex;gap:8px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:12px;border:1px solid var(--bd);margin-bottom:6px}.pb:hover{background:var(--in)}.pb b{width:14px}.pb.err b{color:#e5484d}.pb.warn b{color:#e59500}.pb.info b{color:var(--mut)}
+#gui.dbg .n{outline:1px dashed #d946ef}
+.al{display:flex;gap:4px;margin-bottom:8px}.al button{flex:1;padding:4px 0;font-size:13px}
+#kbtn{display:flex;align-items:center;gap:14px;color:var(--mut);min-width:230px;justify-content:space-between}#kbtn kbd{font:11px monospace}
+
+#stabs{position:absolute;left:12px;top:10px;z-index:20;display:flex;gap:4px;max-width:calc(100% - 24px);overflow-x:auto}
+.stab{display:flex;align-items:center;gap:6px;background:var(--pn);border:1px solid var(--bd);border-radius:8px;padding:5px 10px;font-size:12px;white-space:nowrap;box-shadow:0 1px 2px #0001}
+.stab.on{background:var(--ac);color:#fff;border-color:transparent}.stab .x{opacity:.6;padding:0 2px}.stab .x:hover{opacity:1}.stab.add{border-style:dashed;color:var(--mut);background:transparent;box-shadow:none}.stab input{width:110px;padding:1px 4px;font-size:12px}
+#launch{position:fixed;inset:0;z-index:700;background:var(--bg);display:none;justify-content:center;overflow:auto;padding:5vh 24px}
+.lw{width:min(940px,100%)}.lh{display:flex;gap:14px;align-items:center;margin-bottom:4px}.lh h1{margin:0;font-size:26px}.lh p{margin:2px 0 0;color:var(--mut);font-size:15px}
+.lcg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:12px}
+.lc{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;padding:16px;border-radius:14px;background:var(--pn);min-height:122px}
+.lc svg{color:var(--ac);width:30px;height:30px}.lc b{font-size:14px}.lc span{color:var(--mut);font-size:12px}.lc:hover{border-color:var(--ac);box-shadow:var(--sh);transform:translateY(-1px)}
+.lf{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:24px;padding-top:16px;border-top:1px solid var(--bd)}.lskip{margin-left:auto;color:var(--mut);font-size:12px;display:flex;gap:6px;align-items:center}
+#launch h4,.fb .lcg+h4{font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--mut);margin:20px 0 8px}
+#top button,.brand b,.tab{white-space:nowrap}#ptitle{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px}#kbtn{min-width:200px}
+</style></head><body>
+<header id="top">
+ <div class="brand"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" fill="#2a9d5c"/><rect x="6" y="6" width="5" height="5" rx="1" fill="#fff"/><rect x="13" y="6" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="6" y="13" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="13" y="13" width="5" height="5" rx="1" fill="#fff"/></svg><b>GUI Builder</b></div>
+ <nav id="menubar">
+  <div class="menu"><button class="mb">File</button><div class="dd" id="dd-file"><button onclick="launchOpen()">New project…</button><button onclick="tplOpen()">New from template…</button><button onclick="openJson()">Open / save JSON…</button><hr><button onclick="openSettings()">Settings…</button></div></div>
+  <div class="menu"><button class="mb">Edit</button><div class="dd"><button onclick="undo()">Undo<kbd>Ctrl+Z</kbd></button><button onclick="redo()">Redo<kbd>Ctrl+Y</kbd></button><hr><button onclick="dup()">Duplicate<kbd>Ctrl+D</kbd></button><button onclick="del()">Delete<kbd>Del</kbd></button><hr><button onclick="groupSel()">Group in Panel<kbd>Ctrl+G</kbd></button><button onclick="ungroupSel()">Ungroup<kbd>Ctrl+Shift+G</kbd></button><button onclick="zSel(1)">Bring to front<kbd>Ctrl+]</kbd></button><button onclick="zSel(-1)">Send to back<kbd>Ctrl+[</kbd></button><button onclick="saveComp()">Save as component</button></div></div>
+  <div class="menu"><button class="mb">View</button><div class="dd"><button onclick="zoom(1)">Zoom in</button><button onclick="zoom(-1)">Zoom out</button><button onclick="fitZoom()">Fit to window<kbd>Ctrl+0</kbd></button><button onclick="$('gui').classList.toggle('dbg')">Show element borders</button><button onclick="cmdkOpen()">Command palette<kbd>Ctrl+K</kbd></button><hr><label><span><input type="checkbox" id="sn"> Snap to grid</span></label></div></div>
+  <div class="menu"><button class="mb">Project</button><div class="dd" id="dd-proj"><button onclick="openAddScreen()">New screen…</button><button onclick="deleteCur()">Delete current screen</button><hr><button onclick="switchTab('right','p-proj')">Project settings</button><button onclick="switchTab('right','p-col')">Colors and themes</button><hr><button onclick="flow()">Logic (tabs)</button><button onclick="gopen()">Logic (node graph)</button></div></div>
+  <div class="menu"><button class="mb">Assets</button><div class="dd"><button onclick="texMaker()">Texture Maker</button><button onclick="pxOpen()">Pixel editor</button><button onclick="drawStart()">Draw on screen</button><hr><button onclick="switchTab('left','p-asset')">Textures and themes</button></div></div>
+  <div class="menu"><button class="mb">Mod</button><div class="dd" id="dd-mod"><button onclick="switchTab('left','p-mod')">Mod GUI</button></div></div>
+  <div class="menu"><button class="mb">Export</button><div class="dd" id="dd-export"><button onclick="exJava()">Show generated Java</button></div></div>
+  <div class="menu"><button class="mb">AI</button><div class="dd"><button onclick="switchTab('right','p-proj')">AI Settings…</button><button onclick="aiCmd()">Execute AI command</button><button onclick="aiImport()">Import from Java with AI</button></div></div>
+  <div class="menu"><button class="mb">Help</button><div class="dd"><button onclick="helpOpen()">Quick guide</button></div></div>
+ </nav>
+ <div class="sp"></div><button id="kbtn" onclick="cmdkOpen()"><span>🔍 Search commands…</span><kbd>Ctrl K</kbd></button><span id="ptitle" style="margin-left:12px"></span><div class="sp"></div>
+ <button class="ic" onclick="undo()" title="Undo (Ctrl+Z)">↶</button><button class="ic" onclick="redo()" title="Redo (Ctrl+Y)">↷</button>
+ <button id="pv" onclick="togglePrev()" style="min-width:104px">▶ Preview</button><button class="pri" onclick="exJava()">Generate Java</button>
+</header>
+<main id="shell">
+ <aside id="left">
+  <div class="tabs"><button class="tab on" data-g="left" data-p="p-comp">Components</button><button class="tab" data-g="left" data-p="p-asset">Assets</button><button class="tab" data-g="left" data-p="p-mod">Mod</button></div>
+  <div class="pane on" id="p-comp" data-pg="left"><p class="hint">Drag onto canvas or click. If a Panel is selected, the component goes inside.</p><div id="lib"></div><div id="cl"></div></div>
+  <div class="pane" id="p-asset" data-pg="left"><div id="th"></div></div>
+  <div class="pane" id="p-mod" data-pg="left"><p class="hint">Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions.</p><button class="pri" onclick="linkMod()" style="width:100%">📁 Link a mod…</button><div id="mg"></div></div>
+  <div id="layers"><div class="sec">Layers</div><div id="hr"></div></div>
+ </aside>
+ <section id="stage"><div id="stabs"></div><div id="ws"><div id="gui"></div></div><div id="zc"><button onclick="zoom(-1)" title="Zoom out">−</button><span id="zl"></span><button onclick="zoom(1)" title="Zoom in">+</button><button onclick="fitZoom()" title="Fit">⤢</button></div></section>
+ <aside id="right">
+  <div class="tabs"><button class="tab on" data-g="right" data-p="p-el">Element</button><button class="tab" data-g="right" data-p="p-proj">Project</button><button class="tab" data-g="right" data-p="p-col">Colors</button><button class="tab" id="tprob" data-g="right" data-p="p-prob">Problems</button></div>
+  <div class="pane on" id="p-el" data-pg="right"><div class="al"><button onclick="alignSel('l')" title="Align left">⇤</button><button onclick="alignSel('c')" title="Center horizontally">⇔</button><button onclick="alignSel('r')" title="Align right">⇥</button><button onclick="alignSel('t')" title="Align top">⤒</button><button onclick="alignSel('m')" title="Center vertically">↕</button><button onclick="alignSel('b')" title="Align bottom">⤓</button><button onclick="distSel('h')" title="Distribute horizontally">H⋯</button><button onclick="distSel('v')" title="Distribute vertically">V⋮</button></div><div class="qa"><button onclick="dup()">Duplicate</button><button onclick="del()">Delete</button><button onclick="flow()">Logic</button><button onclick="gopen()">Graph</button></div><div id="pr"></div></div>
+  <div class="pane form" id="p-proj" data-pg="right">
+   <h4>Project type</h4>
+   <label>Type<select id="ovs" onchange="setOverlay(this.value)"><option value="">New Screen</option><option value="title">Overlay: Main menu</option><option value="pause">Overlay: Pause menu</option><option value="inventory">Overlay: Player inventory</option><option value="creative">Overlay: Creative inventory</option><option value="custom">Overlay: GUI custom…</option></select></label>
+   <label>Anchor<select id="ova" onchange="P.overlay.anchor=this.value;push();ui()" style="display:none"><option>top-left</option><option>top-center</option><option>top-right</option><option>center</option><option>bottom-left</option><option>bottom-center</option><option>bottom-right</option><option>gui</option></select></label>
+   <label>Target class<input id="ovc" placeholder="net.mod.MiaScreen" style="display:none" onchange="P.overlay.custom=this.value;push()"></label>
+   <label>Dimensioni<span class="two"><input id="sw" type="number"><span>×</span><input id="sh" type="number"></span></label>
+   <label>Platform<select id="ld2" onchange="P.loader=this.value;P.minecraft=this.value==='neoforge121'?'1.21.1':'1.20.1';push();statusUpd()"><option value="forge">Forge 1.20.1</option><option value="neoforge">NeoForge 1.20.1</option><option value="neoforge121">NeoForge 1.21.1</option></select></label>
+   <h4>Reference image</h4><label>Image<input type="file" id="refin" accept="image/*"></label><label>Opacity<input type="range" id="refop" min="10" max="100" value="40"></label><div class="row"><button onclick="refClear()">Remove reference</button></div><h4>Export</h4>
+   <label>Mod ID<input id="mod" value="mygui"></label><label>Package<input id="pkg" value="com.example.mygui"></label><label>Screen class<input id="cls" value="MainMenuScreen"></label>
+   <h4>AI (Ollama, opzionale)</h4>
+   <label>Model<input id="aim" value="qwen2.5-coder:14b"></label><label>Instruction<input id="aiq" placeholder="e.g. add a centered button"></label>
+   <div class="row"><button onclick="aiCmd()">Execute command</button><button onclick="aiImport()">Import Java</button></div>
+  </div>
+  <div class="pane" id="p-col" data-pg="right"><div id="colp"></div></div><div class="pane" id="p-prob" data-pg="right"><div id="probp"></div></div>
+ </aside>
+</main>
+<footer id="sb"><span id="sbl"></span><span class="sp"></span><span id="sbr"></span></footer>
+<div id="md"><div><textarea id="ta" style="width:100%;height:50vh;font:11px monospace"></textarea><p><button onclick="cp()">Copy</button> <button id="ld" class="pri" onclick="loadTa()">Load this JSON</button> <input type="file" id="fi" accept=".json"> <button onclick="md.style.display='none'">Close</button></p></div></div>
+<div id="aip"><b id="aih">AI</b> <button id="aix">Stop</button> <button id="aic">×</button><pre id="aio"></pre></div>
+<div id="db"></div><div id="dls"></div><div id="gp"></div><div id="pe"></div><div id="gv"></div><div id="fl"></div><div id="tm"></div><div id="st"></div><div id="launch"></div><div id="cmdk"></div><div id="ctx"></div><div id="log"></div>
+<script>
+const $=id=>document.getElementById(id);let S=3,P,sel=null,hist=[],hi=-1,prev=false,n=0,drag=null;
+const D={button:{width:120,height:20,text:"Button",texture:"",slice:4},label:{width:60,height:9,text:"Label",color:"#404040"},slot:{width:18,height:18,slotIndex:0,slotType:"container"},player:{width:48,height:72,scale:30,skin:"",pose:"idle",model:"steve"},panel:{width:100,height:60,bg:true,color:"",texture:"",slice:4,layout:"none",gap:2,pad:4,hug:false,children:[]},input:{width:100,height:16,text:"",placeholder:"Type...",maxLength:32},progress:{width:80,height:8,value:50,min:0,max:100},checkbox:{width:70,height:12,text:"Option",checked:false},image:{width:32,height:32,texture:""}};
+const ACT=["","open_gui","close_gui","run_command","play_sound","send_message","set_variable","change_variable","give_item","custom_java_hook"];
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function mk(t){return {type:t,id:t+"_"+(++n),x:8,y:8,visible:true,locked:false,enabled:true,events:{},...structuredClone(D[t])}}
+function walk(l,f,p=null,d=0){for(const e of l){f(e,p,d,l);if(e.children)walk(e.children,f,e,d+1)}}
+function find(id){let r=null;walk(P.elements,(e,p,d,l)=>{if(e.id===id)r={e,p,l}});return r}
+function cur(){return sel&&find(sel)}
+function blank(){return {format:1,minecraft:"1.20.1",loader:CFG.loader,theme:CFG.theme,screen:{id:"main_menu",width:CFG.sw,height:CFG.sh},elements:[]}}
+function recount(){n=100;walk(P.elements,()=>n++)}
+function push(){hist=hist.slice(0,hi+1);hist.push(JSON.stringify(P));if(hist.length>120)hist.shift();hi=hist.length-1;if(CFG.autosave!==false)try{localStorage.setItem("mcgb",hist[hi])}catch(e){if(!push.w){push.w=1;say("Autosave disabled: project is too large for local storage. Save to file!")}}}
+function undo(){if(hi>0){P=JSON.parse(hist[--hi]);fix()}}function redo(){if(hi<hist.length-1){P=JSON.parse(hist[++hi]);fix()}}
+function fix(){if(sel&&!find(sel))sel=null;ui()}
+function newP(){P=blank();sel=null;multi=new Set();$("cls").value=CFG.cls;hist=[];hi=-1;push();ui()}
+function add(t,grid){let c=cur();if(c&&c.e.type==="panel"&&c.e.children.length&&c.e.children.every(k=>k.type==="slot"))c=c.p?find(c.p.id):null;const l=c&&c.e.type==="panel"?c.e.children:P.elements;let e=mk(t);if(t==="label"&&P.overlay&&/^(title|pause)$/.test(P.overlay.target))e.color="#ffffff";
+ if(grid){e=mk("panel");e.id="grid_"+(++n);e.bg=false;e.width=grid[0]*18;e.height=grid[1]*18;e.x=7;e.y=grid[1]===1?141:83;let i=grid[1]>1?9:0;for(let r=0;r<grid[1];r++)for(let q=0;q<grid[0];q++){const s=mk("slot");s.x=q*18;s.y=r*18;s.slotIndex=i++;s.slotType="player";e.children.push(s)}}
+ l.push(e);sel=e.id;push();ui()}
+function del(){const c=cur();if(!c)return;c.l.splice(c.l.indexOf(c.e),1);sel=null;push();ui()}
+function dup(){const c=cur();if(!c)return;const k=structuredClone(c.e);walk([k],e=>{e.id=e.type+"_"+(++n)});k.x+=8;k.y+=8;c.l.splice(c.l.indexOf(c.e)+1,0,k);sel=k.id;push();ui()}
+function zoom(d){S=Math.max(2,Math.min(6,S+d));ui()}
+function togglePrev(){prev=!prev;$("pv").textContent=prev?"■ Exit Preview":"▶ Preview";ui()}
+function say(t){const l=$("log");l.textContent="▶ "+t;l.style.display="block";clearTimeout(say.t);say.t=setTimeout(()=>l.style.display="none",4500)}
+const V={};
+function cnd(c){if(!c)return true;const m=/^(\w+)\s*(>=|<=|==|!=|>|<)\s*(-?\d+)$/.exec(c.trim());if(!m)return true;const a=V[m[1]]||0,b=+m[3];return {">=":a>=b,"<=":a<=b,"==":a==b,"!=":a!=b,">":a>b,"<":a<b}[m[2]]}
+function run(e,ev){(e.events[ev]||[]).forEach(a=>{if(!a.action||!cnd(a.cond))return;let m;if(a.action==="close_gui"&&prev)setTimeout(previewBack,0);if(a.action==="open_gui"&&prev){const si=screenIndexBy(a.target);if(si>=0)setTimeout(()=>previewOpen(si),0)}
+ if(a.action==="set_variable"&&(m=/^(\w+)\s*=\s*(-?\d+)$/.exec(a.target||"")))V[m[1]]=+m[2];
+ else if(a.action==="change_variable"&&(m=/^(\w+)\s*([+-])=\s*(\d+)$/.exec(a.target||"")))V[m[1]]=(V[m[1]]||0)+(m[2]==="-"?-1:1)*m[3];
+ if(ev!=="tick"||/variable/.test(a.action))say(`${e.id}.${ev}: ${a.action} ${a.target||""}  vars=${JSON.stringify(V)}`)})}
+/* canvas */
+function draw(e,host){const d=document.createElement("div");d.className="n "+e.type+(e.id===sel||multi.has(e.id)?" sel":"")+(e.enabled?"":" off")+(e.type==="panel"&&e.bg===false?" nobg":"");
+ d.style.cssText=`left:${e.x*S}px;top:${e.y*S}px;width:${e.width*S}px;height:${e.height*S}px;`+(e.visible?"":"opacity:.25;");d.dataset.id=e.id;if(e.id==="draw_layer"){d.style.pointerEvents="none";if(DW)d.style.visibility="hidden"}
+ if(e.type==="label"){d.textContent=e.text;d.style.color=e.color}
+ else if(e.type==="button")d.textContent=e.text;
+ else if(e.type==="input"){if(prev){const i=document.createElement("input");i.value=e.text;i.placeholder=e.placeholder;i.maxLength=e.maxLength;i.oninput=()=>run(e,"change");d.append(i)}else d.textContent=e.text||e.placeholder}
+ else if(e.type==="progress"){const i=document.createElement("i");i.style.width=Math.max(0,Math.min(100,(e.value-e.min)/((e.max-e.min)||1)*100))+"%";d.append(i)}
+ else if(e.type==="checkbox"){const b=document.createElement("b");b.textContent=e.checked?"✓":"";d.append(b,e.text)}
+ else if(e.type==="slot")d.title="slot "+e.slotIndex;
+ else if(e.type==="image"){const a=(P.assets||{})[e.texture];if(a){d.style.backgroundImage=`url(${a})`;d.style.backgroundSize="100% 100%"}else d.textContent=e.texture||"image"}else if(e.type==="player")plyDraw(e,d);
+ if((e.type==="panel"||e.type==="button")&&e.texture&&(P.assets||{})[e.texture]){const s=Math.max(1,e.slice||4);d.style.background="none";d.style.border=`${s*S}px solid transparent`;d.style.borderImage=`url(${P.assets[e.texture]}) ${s} fill / ${s*S}px stretch`}
+ if(e.children)e.children.forEach(c=>draw(c,d));
+ if(e.id===sel&&!prev){const t=document.createElement("div");t.className="tag";t.textContent=`${e.id}  x:${e.x} y:${e.y}  ${e.width}×${e.height}`;const h=document.createElement("div");h.className="h";d.append(t,h)}
+ host.append(d)}
+function canvas(){const g=$("gui");g.style.setProperty("--s",S);applyTheme(g);g.style.width=P.screen.width*S+"px";g.style.height=P.screen.height*S+"px";g.innerHTML="";refDraw(g);P.elements.forEach(e=>draw(e,g))}
+$("gui").addEventListener("pointerdown",ev=>{const d=ev.target.closest(".n");if(!d){sel=null;multi=new Set();ui();return}const r=find(d.dataset.id);
+ if(prev){if(ev.target.tagName==="INPUT")return;if(r.e.type==="checkbox"){r.e.checked=!r.e.checked;run(r.e,"change");canvas()}if(r.e.enabled){run(r.e,"press");run(r.e,"click")}return}
+ sel=r.e.id;if(ev.shiftKey){multi.has(sel)&&multi.size>1?multi.delete(sel):multi.add(sel)}else if(!multi.has(sel))multi=new Set([sel]);const h=ev.target.closest(".h");drag=r.e.locked?null:{e:r.e,m:h?"r":"m",sx:ev.clientX,sy:ev.clientY,x:r.e.x,y:r.e.y,w:r.e.width,h:r.e.height,mv:false,grp:[...multi].map(i=>find(i)).filter(Boolean).map(c=>({e:c.e,x:c.e.x,y:c.e.y}))};ui()});
+addEventListener("pointermove",ev=>{if(!drag)return;const q=$("sn").checked?(CFG.snap||4):1,sn=v=>Math.round(v/q)*q;let dx=Math.round((ev.clientX-drag.sx)/S),dy=Math.round((ev.clientY-drag.sy)/S);if(!dx&&!dy&&!drag.mv)return;drag.mv=true;
+ if(drag.m==="m"){drag.grp.forEach(g=>{if(!g.e.locked){g.e.x=sn(g.x+dx);g.e.y=sn(g.y+dy)}})}else{drag.e.width=Math.max(1,sn(drag.w+dx));drag.e.height=Math.max(1,sn(drag.h+dy))}canvas();props()});
+addEventListener("pointerup",()=>{if(drag&&drag.mv)push();drag=null});
+addEventListener("keydown",ev=>{if(/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName))return;const c=cur(),k=ev.key;
+ if(!IS_MAC&&ev.ctrlKey&&k.toLowerCase()==="z"){ev.shiftKey?redo():undo();ev.preventDefault()}else if(!IS_MAC&&ev.ctrlKey&&k==="y"){redo();ev.preventDefault()}else if(!IS_MAC&&ev.ctrlKey&&k==="d"){dup();ev.preventDefault()}else if(k==="Delete"||k==="Backspace")del();
+ else if(c&&k.startsWith("Arrow")){const st=ev.shiftKey?10:1;selEls().forEach(({e})=>{if(k==="ArrowLeft")e.x-=st;if(k==="ArrowRight")e.x+=st;if(k==="ArrowUp")e.y-=st;if(k==="ArrowDown")e.y+=st});push();ui();ev.preventDefault()}});
+/* properties */
+const FT={button:["text","texture","slice"],label:["text","color"],slot:["slotIndex","slotType"],panel:["bg","color","texture","slice","layout","gap","pad","hug"],player:["scale","skin","pose","model"],input:["text","placeholder","maxLength"],progress:["value","min","max"],checkbox:["text","checked"],image:["texture"]};
+function props(){const c=cur(),pr=$("pr");statusUpd();if(!c){pr.innerHTML="<p class=m>Select an element on the canvas or in the hierarchy.</p>";return}const e=c.e;
+ const f=k=>{const v=e[k];if(typeof v==="boolean"||k==="bg")return `<label><input type=checkbox data-k="${k}" ${v!==false&&v?"checked":""}> ${k}</label>`;if(k==="pose"||k==="model"||k==="layout"){const o=k==="pose"?["idle","walk","wave","sit"]:k==="layout"?["none","vertical","horizontal"]:["steve","alex","creeper"];return `<label>${k}<select data-k="${k}">${o.map(x=>`<option ${x===v?"selected":""}>${x}</option>`).join("")}</select></label>`}if(k==="slotType")return `<label>${k}<select data-k="${k}">${["player","container","custom","output"].map(o=>`<option ${o===v?"selected":""}>${o}</option>`).join("")}</select></label>`;return `<label>${k}<input data-k="${k}" type="${typeof v==="number"?"number":k==="color"&&e.type==="label"?"color":"text"}" value="${esc(v)}"></label>`};
+ const evs=["click",...(e.type==="checkbox"||e.type==="input"?["change"]:[]),"hover"];
+ pr.innerHTML=`<h4>${e.type.toUpperCase()}</h4>`+["id","x","y","width","height"].map(f).join("")+(FT[e.type]||[]).map(f).join("")+f("visible")+f("locked")+f("enabled")+`<h4>Events → actions</h4>`+evs.map(v=>{const a=(e.events[v]||[])[0]||{};return `<label>${v}<select data-ev="${v}" data-f="action">${ACT.map(o=>`<option ${o===(a.action||"")?"selected":""}>${o}</option>`).join("")}</select><input data-ev="${v}" data-f="target" list="${TL[a.action||""]||""}" placeholder="target / command / text (e.g. coins=5, coins+=1)" value="${esc(a.target)}"><input data-ev="${v}" data-f="cond" placeholder="only if: coins>=10" value="${esc(a.cond)}"></label>`}).join("")}
+$("pr").addEventListener("change",ev=>{const t=ev.target,c=cur();if(!c)return;const e=c.e;
+ if(t.dataset.ev){const v=t.dataset.ev,a=(e.events[v]=e.events[v]||[{action:"",target:""}])[0];a[t.dataset.f]=t.value;if(!e.events[v][0].action&&!e.events[v][0].target)delete e.events[v]}
+ else{const k=t.dataset.k;let v=t.type==="checkbox"?t.checked:t.type==="number"?Number(t.value):t.value;if(k==="id"){v=v.replace(/\W/g,"_");if(!v||find(v)){props();return}sel=v}e[k]=v}push();ui()});
+$("sw").onchange=$("sh").onchange=()=>{P.screen.width=+$("sw").value||176;P.screen.height=+$("sh").value||166;push();ui()};
+/* hierarchy */
+function hier(){let h="";walk(P.elements,(e,p,d)=>{h+=`<div class="r${e.id===sel?" a":""}" data-id="${e.id}" style="padding-left:${8+d*16}px"><span>${e.type}: ${esc(e.id)}</span><b data-a=v>${e.visible?"👁":"–"}</b><b data-a=l>${e.locked?"🔒":"🔓"}</b><b data-a=u>▲</b><b data-a=d>▼</b></div>`});$("hr").innerHTML=h||"<p class=m style='padding:8px'>Empty GUI</p>"}
+$("hr").onclick=ev=>{const r=ev.target.closest(".r");if(!r)return;const c=find(r.dataset.id),a=ev.target.dataset.a;sel=r.dataset.id;
+ if(a==="v")c.e.visible=!c.e.visible;if(a==="l")c.e.locked=!c.e.locked;const i=c.l.indexOf(c.e);
+ if(a==="u"&&i>0)[c.l[i-1],c.l[i]]=[c.l[i],c.l[i-1]];if(a==="d"&&i<c.l.length-1)[c.l[i+1],c.l[i]]=[c.l[i],c.l[i+1]];if(a)push();ui()};
+/* library */
+const IC=p=>`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const ICONS={button:IC('<rect x="3" y="8" width="18" height="8" rx="2"/><path d="M8 12h8"/>'),label:IC('<path d="M5 6h14M12 6v12M9 18h6"/>'),slot:IC('<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/>'),player:IC('<circle cx="12" cy="7" r="3"/><path d="M6 21v-5a6 6 0 0 1 12 0v5"/>'),panel:IC('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/>'),input:IC('<rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 10v4"/>'),progress:IC('<rect x="3" y="9" width="18" height="6" rx="3"/><path d="M6 12h7"/>'),checkbox:IC('<rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/>'),image:IC('<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="m4 18 5-5 4 4 3-3 4 4"/>'),grid:IC('<rect x="3" y="3" width="5" height="5"/><rect x="9.5" y="3" width="5" height="5"/><rect x="16" y="3" width="5" height="5"/><rect x="3" y="9.5" width="5" height="5"/><rect x="9.5" y="9.5" width="5" height="5"/><rect x="16" y="9.5" width="5" height="5"/><rect x="3" y="16" width="5" height="5"/><rect x="9.5" y="16" width="5" height="5"/><rect x="16" y="16" width="5" height="5"/>'),hotbar:IC('<rect x="2" y="9" width="5" height="6"/><rect x="8" y="9" width="5" height="6"/><rect x="14" y="9" width="5" height="6"/>')};
+$("lib").innerHTML="<b>Components</b>"+Object.keys(D).map(t=>`<button draggable=true data-t="${t}" title="${t}">${ICONS[t]||""}<span>${t[0].toUpperCase()+t.slice(1)}</span></button>`).join("")+`<button data-g="9,3" title="Inventory 9x3">${ICONS.grid}<span>Inventory 9×3</span></button><button data-g="9,1" title="Hotbar 9x1">${ICONS.hotbar}<span>Hotbar 9×1</span></button>`;
+$("lib").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;b.dataset.g?add("panel",b.dataset.g.split(",").map(Number)):add(b.dataset.t)};
+$("lib").ondragstart=ev=>ev.dataTransfer.setData("t",ev.target.dataset.t||"");
+$("gui").ondragover=ev=>ev.preventDefault();
+$("gui").ondrop=ev=>{ev.preventDefault();const t=ev.dataTransfer.getData("t");if(!t)return;const r=$("gui").getBoundingClientRect(),h=ev.target.closest(".panel"),pc=h&&find(h.dataset.id);
+ const e=mk(t),ox=h?h.getBoundingClientRect():r;e.x=Math.round((ev.clientX-ox.left)/S);e.y=Math.round((ev.clientY-ox.top)/S);(pc?pc.e.children:P.elements).push(e);sel=e.id;push();ui()};
+function ui(){relayout();$("ld2").value=P.loader||"forge";libr();ovSync();document.title=P.screen.id+" - Minecraft GUI Builder";if(P.screen.cls)$("cls").value=P.screen.cls;screensRender();statusUpd();colorsRender();probRender();$("sw").value=P.screen.width;$("sh").value=P.screen.height;canvas();props();hier()}
+/* json */
+function openJson(){$("ta").value=JSON.stringify(P,null,2);$("md").style.display="flex";$("ld").style.display=""}
+function loadTa(){const prevP=P;try{const j=JSON.parse($("ta").value);if(!j||j.format!==1)throw new Error("campo format mancante o non supportato");P=normProject(j);recount();sel=null;multi=new Set();push();ui();$("md").style.display="none"}catch(e){P=prevP;say("JSON non valido: "+e.message);ui()}}
+$("fi").onchange=ev=>{const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{$("ta").value=r.result;loadTa()};r.readAsText(f)};
+function cp(){$("ta").select();try{navigator.clipboard.writeText($("ta").value)}catch(e){document.execCommand("copy")}}
+/* java generator */
+const js=s=>JSON.stringify(String(s??"")),col=c=>"0xFF"+(c||"#404040").slice(1).toUpperCase();
+function act(a,cls){const t=a.target||"";switch(a.action){
+ case"open_gui":{const ps=PSC[t];if(ps){if(ps.overlay)return`// TODO: CUSTOM IMPLEMENTATION: ${t} is an overlay on a vanilla GUI: cannot open as a screen.`;if(ps.container)return`// TODO: CUSTOM IMPLEMENTATION: ${t} has an inventory (Menu): open it server-side with ${t}Registry (see comment in class).`;return`this.minecraft.setScreen(new ${t}(this));`}const sc=(MOD&&MOD.screens||[]).find(s=>s.cls===t);if(sc){IMPS.add(sc.pkg+"."+sc.cls);return sc.ctor?`// TODO: CUSTOM IMPLEMENTATION: ${t}(${sc.ctor}) requires parameters: instantiate and open the screen manually.`:`this.minecraft.setScreen(new ${t}());`}return `this.minecraft.setScreen(new ${t||"TODO_Screen"}()); // TODO: CUSTOM IMPLEMENTATION: the class ${t} must exist in your project`}
+ case"close_gui":return "this.onClose();";
+ case"run_command":return `if (this.minecraft != null && this.minecraft.player != null) this.minecraft.player.connection.sendCommand(${js(t.replace(/^\//,""))});`;
+ case"play_sound":return `this.minecraft.getSoundManager().play(SimpleSoundInstance.forUI(SoundEvent.createVariableRangeEvent(${V121?"ResourceLocation.parse("+js(t)+")":"new ResourceLocation("+js(t)+")"}), 1.0F));`;
+ case"send_message":return `if (this.minecraft != null && this.minecraft.player != null) this.minecraft.player.sendSystemMessage(Component.literal(${js(t)}));`;
+case"set_variable":{const m=/^(\w+)\s*=\s*(-?\d+)$/.exec(t);return m?`vars.put("${m[1]}", ${m[2]});`:`// TODO: CUSTOM IMPLEMENTATION: set_variable invalid "${t}" (use name=number)`}
+ case"change_variable":{const m=/^(\w+)\s*([+-])=\s*(\d+)$/.exec(t);return m?`vars.merge("${m[1]}", ${m[2]==="-"?"-":""}${m[3]}, Integer::sum);`:`// TODO: CUSTOM IMPLEMENTATION: change_variable invalid "${t}" (use name+=n)`}
+ case"give_item":return `if (this.minecraft != null && this.minecraft.player != null) this.minecraft.player.connection.sendCommand(${js("give @p "+t)});`;
+ default:return `// TODO: CUSTOM IMPLEMENTATION: action "${a.action}" target "${t}" - implement manually.`}}
+function exJava(){$("ta").value=genAllFiles().map(f=>"// ===== "+f.path+" =====\n"+f.text).join("\n\n");$("md").style.display="flex";$("ld").style.display="none"}
+let CB=null;
+function copyEl(){const c=cur();if(c)CB=structuredClone(c.e)}
+function pasteEl(){if(!CB)return;const k=structuredClone(CB);walk([k],e=>{e.id=e.type+"_"+(++n)});k.x+=8;k.y+=8;const c=cur(),l=c&&c.e.type==="panel"?c.e.children:P.elements;l.push(k);sel=k.id;multi=new Set([k.id]);push();ui()}
+function selAll(){const cc=cur(),l=cc?cc.l:P.elements;multi=new Set(l.map(e=>e.id));sel=l[0]&&l[0].id;ui()}
+const IS_MAC=typeof navigator!=="undefined"&&/Mac/.test(navigator.platform||"");
+const kfix=s=>IS_MAC?String(s).replace("Ctrl+Shift+","⇧⌘").replace("Ctrl+","⌘"):s;
+addEventListener("keydown",ev=>{if(IS_MAC||/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName)||!ev.ctrlKey)return;if(ev.key==="c"){copyEl();ev.preventDefault()}if(ev.key==="v"&&CB){ev.preventDefault();pasteEl()}});
+function menuCmd(n){const f={undo:()=>undo(),redo:()=>redo(),copy:copyEl,cut:()=>{copyEl();del()},paste:pasteEl,selectAll:selAll,dup:()=>dup(),save:()=>nSave(),open:()=>nOpen(),new:()=>launchOpen()}[n];if(f)f()}
+if(window.native&&native.onCmd)native.onCmd(menuCmd);
+const ATLAS={size:[256,64],button:[0,0,120,20],button_hover:[0,20,120,20],button_pressed:[0,40,120,20],slot:[128,0,18,18],panel:[128,20,24,24],checkbox:[152,0,10,10],checkbox_checked:[162,0,10,10],progress_bg:[128,48,82,8],progress_fill:[128,56,82,8]};
+function atlasPng(){const c=document.createElement("canvas");c.width=256;c.height=64;const x=c.getContext("2d",{willReadFrequently:true}),A=ATLAS,T=THEMES[P.theme]||THEMES.vanilla;
+ const bv=(r,f,tl,br)=>{const[a,b,w,h]=r;x.fillStyle=br;x.fillRect(a,b,w,h);x.fillStyle=tl;x.fillRect(a,b,w-2,h-2);x.fillStyle=f;x.fillRect(a+2,b+2,w-4,h-4)};
+ bv(A.button,T.btn,T.tl,T.br);bv(A.button_hover,T.hov,T.tl,T.br);bv(A.button_pressed,T.br,T.br,T.tl);bv(A.slot,T.slot,T.br,T.tl);bv(A.panel,T.panel,T.tl,T.br);
+ bv(A.checkbox,"#000","#a0a0a0","#a0a0a0");bv(A.checkbox_checked,"#000","#a0a0a0","#a0a0a0");x.fillStyle="#3cc43c";x.fillRect(A.checkbox_checked[0]+3,A.checkbox_checked[1]+3,4,4);
+ x.fillStyle="#333";x.fillRect(...A.progress_bg);x.fillStyle="#3cc43c";x.fillRect(...A.progress_fill);return c.toDataURL("image/png").split(",")[1]}
+async function nAtlas(){await native.save({name:"atlas.png",ext:"png",b64:atlasPng()});await native.save({name:"atlas.json",ext:"json",text:JSON.stringify(ATLAS,null,2)})}
+/* ---- native (Electron) ---- */
+function png(){const k=4,c=document.createElement("canvas");c.width=P.screen.width*k;c.height=P.screen.height*k;const x=c.getContext("2d",{willReadFrequently:true});x.fillStyle="#c6c6c6";x.fillRect(0,0,c.width,c.height);x.font=8*k+"px monospace";x.textBaseline="top";
+ const T=THEMES[P.theme]||THEMES.vanilla,cl={button:T.btn,slot:T.slot,input:"#000",progress:"#333",panel:T.panel};
+ function d(e,ox,oy){if(!e.visible)return;const X=(ox+e.x)*k,Y=(oy+e.y)*k,w=e.width*k,h=e.height*k;
+  if(cl[e.type]&&!(e.type==="panel"&&e.bg===false)){x.fillStyle=cl[e.type];x.fillRect(X,Y,w,h);x.strokeStyle=e.type==="panel"?"#fff":"#000";x.lineWidth=k;x.strokeRect(X,Y,w,h)}
+  if(e.type==="progress"){x.fillStyle="#3cc43c";x.fillRect(X,Y,w*Math.max(0,Math.min(1,(e.value-e.min)/((e.max-e.min)||1))),h)}
+  if(e.text&&e.type!=="slot"){x.fillStyle=e.type==="label"?e.color:"#fff";const b=e.type==="button";x.fillText(e.text,b?X+w/2-x.measureText(e.text).width/2:X+2*k,b?Y+h/2-4*k:Y)}
+  (e.children||[]).forEach(q=>d(q,ox+e.x,oy+e.y))}
+ P.elements.forEach(e=>d(e,0,0));return c.toDataURL("image/png").split(",")[1]}
+async function nSave(){await native.save({name:P.screen.id+".gui.json",ext:"json",text:JSON.stringify(P,null,2)})}
+async function nOpen(){const t=await native.open();if(t){$("ta").value=t;loadTa()}}
+async function nPng(){await native.save({name:P.screen.id+".png",ext:"png",b64:png()})}
+async function nJava(){const np=nameProblems();if(np.length)return say(np[0]);if(P.screens&&P.screens.length>1)return say("With multiple screens use Export mod project or Write to mod");await native.save({name:$("cls").value+".java",ext:"java",text:gen()})}
+async function nMod(){const np=nameProblems();if(np.length)return say(np[0]);const m=await native.mod({mod:$("mod").value,pkg:$("pkg").value,cls:$("cls").value,json:JSON.stringify(P,null,2),java:"",files:[...exFiles(),{path:`src/main/resources/assets/${$("mod").value}/textures/gui/atlas.png`,b64:atlasPng()},{path:`src/main/resources/assets/${$("mod").value}/textures/gui/atlas.json`,text:JSON.stringify(ATLAS,null,2)}]});if(m)say("Exportto in "+m)}
+if(window.native){const mi=(m,t,f)=>{const b=document.createElement("button");b.textContent=t;b.setAttribute("onclick",f);$("dd-"+m).append(b)};
+ mi("file","Save to file…  (Ctrl+S)","nSave()");mi("file","Open from file…","nOpen()");mi("mod","📁 Link mod…","linkMod()");mi("mod","Write to mod","nWrite()");
+ mi("export","Export project mod…","nMod()");mi("export","Save Java to file…","nJava()");mi("export","Save PNG of the GUI…","nPng()");mi("export","Atlas texture PNG…","nAtlas()");
+ addEventListener("keydown",e=>{if(!IS_MAC&&e.ctrlKey&&e.key==="s"){e.preventDefault();nSave()}})}
+
+/* ---- v3: multi-select, componenti, temi, flow, template, AI ---- */
+let multi=new Set();
+const THEMES={vanilla:{btn:"#6f6f6f",hov:"#7c8cc8",tl:"#ffffff",br:"#373737",panel:"#c6c6c6",slot:"#8b8b8b",txt:"#ffffff"},dark:{btn:"#3a3a3f",hov:"#505058",tl:"#6a6a72",br:"#111111",panel:"#2a2a2e",slot:"#18181b",txt:"#e8e8e8"},fantasy:{btn:"#7a4e2d",hov:"#a06a3c",tl:"#e0b070",br:"#3a2210",panel:"#b8925a",slot:"#6b4a2a",txt:"#fff3c4"},modern:{btn:"#2d6cdf",hov:"#4a86f0",tl:"#8db4ff",br:"#1a3f8a",panel:"#eef1f6",slot:"#cfd6e4",txt:"#ffffff"},scifi:{btn:"#0b3d4a",hov:"#0f6277",tl:"#2de2e6",br:"#021a20",panel:"#0a1e26",slot:"#05141a",txt:"#2de2e6"}};
+function applyTheme(g){if(P.customTheme)THEMES.custom=P.customTheme;const t=THEMES[P.theme]||THEMES.vanilla;for(const k in t)g.style.setProperty("--"+k,t[k])}
+function ids(){const s=new Set(multi);if(sel)s.add(sel);return[...s].filter(i=>find(i))}
+function del(){const L=ids();if(!L.length)return;L.forEach(i=>{const c=find(i);if(c){const k=c.l.indexOf(c.e);if(k>=0)c.l.splice(k,1)}});sel=null;multi=new Set();push();ui()}
+function dup(){const L=ids();if(!L.length)return;const out=[];L.forEach(i=>{const c=find(i),k=structuredClone(c.e);walk([k],e=>{e.id=e.type+"_"+(++n)});k.x+=8;k.y+=8;c.l.splice(c.l.indexOf(c.e)+1,0,k);out.push(k.id)});sel=out[0];multi=new Set(out);push();ui()}
+function place(e){const c=cur(),l=c&&c.e.type==="panel"?c.e.children:P.elements;l.push(e);sel=e.id;multi=new Set([e.id])}
+function saveComp(){const c=cur();if(!c)return say("Select an element");(P.components=P.components||{})[c.e.id]=structuredClone(c.e);push();ui();say("Component saved: "+c.e.id)}
+function libr(){const cs=Object.keys(P.components||{}),as=Object.keys(P.assets||{});
+ $("cl").innerHTML="<b>Mie componenti</b>"+cs.map(k=>`<button data-c="${esc(k)}">${esc(k)}</button>`).join("");
+ $("th").innerHTML=`<b>Theme</b><select id="tsel" style="width:100%">${Object.keys(THEMES).map(t=>`<option ${t===(P.theme||"vanilla")?"selected":""}>${t}</option>`).join("")}</select><b>Texture</b><button onclick="texMaker()">🎨 Texture Maker</button><button onclick="pxOpen()">✏️ Pixel editor</button><span class=m style="font-size:10px">Shift+click on a texture = edit pixel</span><input type=file id="tin" accept="image/png" style="width:100%">`+as.map(k=>`<button data-a="${esc(k)}">🖼 ${esc(k)}</button>`).join("")}
+$("cl").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;const k=structuredClone(P.components[b.dataset.c]);walk([k],e=>{e.id=e.type+"_"+(++n)});k.x=8;k.y=8;place(k);push();ui()};
+$("th").onchange=ev=>{const t=ev.target;if(t.id==="tsel"){P.theme=t.value;push();ui()}else if(t.id==="tin")importTex(t.files[0])};
+$("th").onclick=ev=>{const b=ev.target.closest("button");if(!b||!b.dataset.a)return;const k=b.dataset.a,c=cur();if(ev.shiftKey){pxOpen(k);return}if(c&&c.e.type==="player"){c.e.skin=k}else if(c&&["image","panel","button"].includes(c.e.type)){c.e.texture=k;c.e.slice=((P.assetMeta||{})[k]||{}).slice||c.e.slice||4}else{place(mk("image"));cur().e.texture=k}push();ui()};
+function importTex(f){if(!f)return;const r=new FileReader();r.onload=()=>{const i=new Image();i.onload=()=>{const k=f.name.replace(/\.\w+$/,"").toLowerCase().replace(/\W/g,"_");(P.assets=P.assets||{})[k]=r.result;(P.assetDim=P.assetDim||{})[k]=[i.width,i.height];push();ui()};i.src=r.result};r.readAsDataURL(f)}
+function blit(e,mod,X,Y){const as=P.assets&&P.assets[e.texture],d=(P.assetDim||{})[e.texture],rl=RLC(mod,as?"textures/gui/"+e.texture+".png":e.texture);return d?`g.blit(${rl}, ${X}, ${Y}, ${e.width}, ${e.height}, 0.0F, 0.0F, ${d[0]}, ${d[1]}, ${d[0]}, ${d[1]});`:`g.blit(${rl}, ${X}, ${Y}, 0, 0, ${e.width}, ${e.height}); // TODO: CUSTOM IMPLEMENTATION: verify texture dimensions`}
+/* flow editor */
+const EVS=["click","hover","press","release","change","open","close","tick"];
+function flow(){const c=cur(),f=$("fl");if(!c){say("Select an element");return}
+ f.style.display="flex";f.innerHTML=`<div class=fb><b>Logic for ${esc(c.e.id)}</b> <button data-z=1>Close</button><div class=fw>`+EVS.map(v=>`<div class=fc><div class=ev>${v}</div>`+(c.e.events[v]||[]).map((a,i)=>`<div class=ar>↓</div><div class=cd><input data-v=${v} data-i=${i} data-f=cond placeholder="IF  coins>=10" value="${esc(a.cond)}"><select data-v=${v} data-i=${i} data-f=action>${ACT.map(o=>`<option ${o===a.action?"selected":""}>${o}</option>`).join("")}</select><input data-v=${v} data-i=${i} data-f=target placeholder="target" value="${esc(a.target)}"><button data-x="${v}:${i}">✕</button></div>`).join("")+`<div class=ar>↓</div><button data-add=${v}>+ action</button></div>`).join("")+"</div></div>"}
+$("fl").onchange=ev=>{const t=ev.target,c=cur();if(!c||!t.dataset.f)return;c.e.events[t.dataset.v][+t.dataset.i][t.dataset.f]=t.value;push();canvas();props()};
+$("fl").onclick=ev=>{const t=ev.target,c=cur();if(t.dataset.z){$("fl").style.display="none";return}if(!c)return;
+ if(t.dataset.add)(c.e.events[t.dataset.add]=c.e.events[t.dataset.add]||[]).push({action:"",target:"",cond:""});
+ else if(t.dataset.x){const[v,i]=t.dataset.x.split(":");c.e.events[v].splice(+i,1);if(!c.e.events[v].length)delete c.e.events[v]}else return;push();flow();props()};
+/* template loader */
+function scaffold(l,mod,pkg){const nf=l==="neoforge",cn=mod[0].toUpperCase()+mod.slice(1)+"Mod";if(l==="neoforge121")return scaf121(mod,pkg,cn);
+ const toml=`modLoader="javafml"\nloaderVersion="[47,)"\nlicense="All Rights Reserved"\n\n[[mods]]\nmodId="${mod}"\nversion="1.0.0"\ndisplayName="${mod}"\n\n[[dependencies.${mod}]]\nmodId="forge"\nmandatory=true\nversionRange="[47,)"\nordering="NONE"\nside="BOTH"\n\n[[dependencies.${mod}]]\nmodId="minecraft"\nmandatory=true\nversionRange="[1.20.1,1.21)"\nordering="NONE"\nside="BOTH"\n`;
+ const head=`version = '1.0.0'\ngroup = '${pkg}'\nbase { archivesName = '${mod}' }\njava.toolchain.languageVersion = JavaLanguageVersion.of(17)\n`;
+ const gr=nf?`// NeoForge 1.20.1 (NeoGradle 7). Verify versions with the official MDK.\nplugins {\n    id 'java'\n    id 'net.neoforged.gradle.userdev' version '7.0.145'\n}\n${head}\nruns {\n    configureEach { modSource project.sourceSets.main }\n    client { systemProperty 'forge.logging.console.level', 'debug' }\n}\n\ndependencies {\n    implementation 'net.neoforged:forge:1.20.1-47.1.106'\n}\n`
+ :`// Forge 1.20.1 (ForgeGradle 6). Verify versions with the official MDK.\nplugins {\n    id 'eclipse'\n    id 'idea'\n    id 'net.minecraftforge.gradle' version '[6.0,6.2)'\n}\n${head}\nminecraft {\n    mappings channel: 'official', version: '1.20.1'\n    runs {\n        client {\n            workingDirectory project.file('run')\n            property 'forge.logging.console.level', 'debug'\n            mods { ${mod} { source sourceSets.main } }\n        }\n    }\n}\n\ndependencies {\n    minecraft 'net.minecraftforge:forge:1.20.1-47.3.0'\n}\n`;
+ const st=`pluginManagement {\n    repositories {\n        gradlePluginPortal()\n        maven { url = '${nf?"https://maven.neoforged.net/releases":"https://maven.minecraftforge.net/"}' }\n    }\n}\nplugins { id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0' }\nrootProject.name = '${mod}'\n`;
+ return[{path:"build.gradle",text:gr},{path:"settings.gradle",text:st},{path:"gradle.properties",text:"org.gradle.jvmargs=-Xmx3G\norg.gradle.daemon=false\n"},{path:"src/main/resources/META-INF/mods.toml",text:toml},
+ {path:`src/main/java/${pkg.replace(/\./g,"/")}/${cn}.java`,text:`package ${pkg};\n\nimport net.minecraftforge.fml.common.Mod;\n\n@Mod("${mod}")\npublic class ${cn} {\n    public ${cn}() {\n        // TODO: CUSTOM IMPLEMENTATION: open the generated GUI (e.g. with a KeyMapping or a client command).\n    }\n}\n`}]}
+function exFiles(){const mod=$("mod").value,pkg=$("pkg").value,a=P.assets||{};return[...genAllFiles(),{path:"src/main/resources/pack.mcmeta",text:JSON.stringify({pack:{description:mod+" resources",pack_format:P.loader==="neoforge121"?34:15}},null,2)},...scaffold(P.loader||"forge",mod,pkg),...Object.keys(a).map(k=>({path:`src/main/resources/assets/${mod}/textures/gui/${k}.png`,b64:a[k].split(",")[1]}))]}
+/* validaction output AI */
+function sanitize(j){if(!j||!Array.isArray(j.elements))throw new Error("manca elements[]");const used=new Set();
+ const one=o=>{if(!o||!Object.hasOwn(D,o.type))return null;const b=mk(o.type);for(const k of Object.keys(b)){if(["children","events","id"].includes(k)||!(k in o))continue;if(typeof o[k]===typeof b[k]&&!(typeof o[k]==="number"&&!Number.isFinite(o[k])))b[k]=o[k]}b.width=Math.max(1,b.width);b.height=Math.max(1,b.height);
+  let id=String(o.id||b.id).replace(/\W/g,"_");while(used.has(id))id+="_";used.add(id);b.id=id;
+  for(const v of Object.keys(o.events||{}))if(Array.isArray(o.events[v])){const L=o.events[v].filter(a=>a&&a.action&&ACT.includes(a.action)).map(a=>({action:a.action,target:String(a.target??""),cond:String(a.cond??"")}));if(L.length)b.events[v]=L}
+  if(b.children)b.children=(Array.isArray(o.children)?o.children:[]).map(one).filter(Boolean);return b};
+ const s=j.screen||{};return{...P,screen:{...P.screen,id:String(s.id||P.screen.id).replace(/\W/g,"_"),width:+s.width||P.screen.width,height:+s.height||P.screen.height},elements:j.elements.map(one).filter(Boolean)}}
+const AISYS=`You edit Minecraft GUI projects. Reply with ONLY valid JSON: {"screen":{"id":"x","width":176,"height":166},"elements":[...]}. Element types: button,label,slot,panel,input,progress,checkbox,image. Common fields: type,id,x,y,width,height,visible,enabled. button/label/checkbox: text. label: color "#rrggbb". slot: slotIndex,slotType(player|container|custom|output). panel: bg(bool),children[] (child x,y relative to the panel). input: text,placeholder,maxLength. progress: value,min,max. checkbox: checked. image: texture. events: {"click":[{"action":"open_gui|close_gui|run_command|play_sound|send_message|set_variable|change_variable|give_item|custom_java_hook","target":"string","cond":"var>=10 or empty"}]}. Coordinates are GUI pixels, origin top-left. Keep existing elements unless asked to change them. Never invent other fields. Rules: keep every unchanged element byte-identical and in the same order; append new elements at the end; ids are unique snake_case; "centered" means x=(screen.width-width)/2; vanilla layout: slots are 18x18 spaced 18px, player inventory 9x3 starts at x=8,y=84 in a 176x166 screen, hotbar at x=8,y=142; label text is about 9px tall; every element must stay inside the screen.`;
+let AIBUF="",AIN=0,AIMODE="",AIBASE=[],AIBUSY=false;
+function scan(s){const i=s.indexOf('"elements"');if(i<0)return[];let k=s.indexOf("[",i);if(k<0)return[];const out=[];let d=0,st=false,es=false,b=-1;
+ for(k++;k<s.length;k++){const c=s[k];if(st){if(es)es=false;else if(c==="\\")es=true;else if(c==='"')st=false;continue}
+  if(c==='"')st=true;else if(c==="{"){if(d++===0)b=k}else if(c==="}"){if(--d===0){try{out.push(JSON.parse(s.slice(b,k+1)))}catch(e){}}}else if(c==="]"&&d===0)break}
+ return out}
+function fit(l,W,H){for(const e of l){e.width=Math.max(1,Math.min(e.width,W));e.height=Math.max(1,Math.min(e.height,H));e.x=Math.max(0,Math.min(e.x,W-e.width));e.y=Math.max(0,Math.min(e.y,H-e.height));if(e.children)fit(e.children,e.width,e.height)}return l}
+function aiShow(x){const o=$("aio");o.textContent=(x?x+"\n":"")+AIBUF.slice(-1200);o.scrollTop=1e9}
+function live(){const o=scan(AIBUF);if(o.length<=AIN)return;AIN=o.length;try{const s=sanitize({elements:o});P.elements=[...fit(s.elements,P.screen.width,P.screen.height),...(AIMODE==="cmd"?structuredClone(AIBASE.slice(o.length)):[])];const l=s.elements.at(-1);sel=l?l.id:null;canvas();hier();props()}catch(e){}}
+if(window.native&&native.onChunk)native.onChunk(t=>{if(!AIBUSY)return;AIBUF+=t;aiShow();live()});
+$("aix").onclick=()=>window.native&&native.stop();$("aic").onclick=()=>$("aip").style.display="none";
+async function aiRun(user,mode){if(!window.native)return say("AI is only available in desktop app (requires Ollama running).");
+ const snap=JSON.stringify(P);AIMODE=mode;AIBASE=structuredClone(P.elements);AIBUSY=true;$("ws").style.pointerEvents="none";$("aip").style.display="block";let err="",ok=null;
+ for(let t=1;t<=3&&!ok;t++){AIBUF="";AIN=0;P.elements=structuredClone(mode==="cmd"?AIBASE:[]);ui();$("aih").textContent=`AI — attempt ${t}/3`;aiShow("Waiting for model...");
+  const r=await native.ai({model:$("aim").value||"qwen2.5-coder:14b",host:CFG.host,ctx:CFG.ctx,system:AISYS,user:err?user+"\n\nYour previous answer was rejected: "+err+"\nReturn the corrected full JSON.":user});
+  if(r.error){err=r.error;if(/Interrotto|raggiungibile|HTTP/.test(err))break;continue}
+  try{const j=JSON.parse(r.text),s=sanitize(j);if(j.elements.length&&!s.elements.length)throw new Error("no valid element (tipi ammessi: "+Object.keys(D).join(",")+")");ok=s}catch(e){err=e.message;aiShow("Risposta scartata: "+err)}}
+ AIBUSY=false;$("ws").style.pointerEvents="";
+ if(!ok){P=JSON.parse(snap);sel=null;ui();$("aih").textContent="AI — cancelled";aiShow("No changes applied. "+err);return}
+ const fl=l=>{const m={};walk(l,e=>m[e.id]=JSON.stringify({...e,children:undefined}));return m},a=fl(JSON.parse(snap).elements),b=fl(ok.elements),K=Object.keys;
+ const add=K(b).filter(k=>!(k in a)).length,rem=K(a).filter(k=>!(k in b)).length,chg=K(b).filter(k=>k in a&&a[k]!==b[k]).length;
+ const f0=JSON.stringify(ok.elements);fit(ok.elements,ok.screen.width,ok.screen.height);const cl=f0!==JSON.stringify(ok.elements);
+ P=ok;recount();sel=null;multi=new Set();push();ui();$("aih").textContent="AI — completato";aiShow(`+${add} nuovi, ~${chg} modificati, -${rem} rimossi${cl?"; coordinate corrette dentro lo schermo":""}. Ctrl+Z per annullare.`)}
+function aiCmd(){const q=$("aiq").value.trim();if(q)aiRun(`Instruction: ${q}\nProject attuale:\n${JSON.stringify({screen:P.screen,elements:P.elements})}`,"cmd")}
+async function aiImport(){if(!window.native)return say("Only in desktop app.");const t=await native.openJava();if(t)aiRun(`Convert this Minecraft Screen Java source into the project JSON: reproduce widgets, positions, texts and click actions; use custom_java_hook for logic you cannot map.\n${t}`,"import")}
+
+/* ---- v4: settings, texture maker, panel custom ---- */
+const NINE_JAVA=`    private static void drawNine(GuiGraphics g, ResourceLocation tex, int x, int y, int w, int h, int s, int tw, int th) {
+        int mw = w - 2 * s, mh = h - 2 * s, tmw = tw - 2 * s, tmh = th - 2 * s;
+        g.blit(tex, x, y, s, s, 0, 0, s, s, tw, th);
+        g.blit(tex, x + w - s, y, s, s, tw - s, 0, s, s, tw, th);
+        g.blit(tex, x, y + h - s, s, s, 0, th - s, s, s, tw, th);
+        g.blit(tex, x + w - s, y + h - s, s, s, tw - s, th - s, s, s, tw, th);
+        g.blit(tex, x + s, y, mw, s, s, 0, tmw, s, tw, th);
+        g.blit(tex, x + s, y + h - s, mw, s, s, th - s, tmw, s, tw, th);
+        g.blit(tex, x, y + s, s, mh, 0, s, s, tmh, tw, th);
+        g.blit(tex, x + w - s, y + s, s, mh, tw - s, s, s, tmh, tw, th);
+        g.blit(tex, x + s, y + s, mw, mh, s, s, tmw, tmh, tw, th);
+    }
+
+`;
+const CD={showLaunch:true,snap:4,zoom:3,ui:"auto",model:"qwen2.5-coder:14b",host:"http://127.0.0.1:11434",ctx:16384,mod:"mygui",pkg:"com.example.mygui",cls:"MainMenuScreen",loader:"forge",theme:"vanilla",sw:176,sh:166,autosave:true};
+let CFG={...CD};try{CFG={...CD,...JSON.parse(localStorage.getItem("mcgb_cfg")||"{}")}}catch(e){}
+function saveCfg(){try{localStorage.setItem("mcgb_cfg",JSON.stringify(CFG))}catch(e){}}
+function applyCfg(fields){S=Math.max(2,Math.min(6,+CFG.zoom||3));const r=document.documentElement;if(r){CFG.ui==="auto"?r.removeAttribute("data-theme"):r.setAttribute("data-theme",CFG.ui)}
+ if(fields){["mod","pkg","cls"].forEach(k=>$(k).value=CFG[k]);$("aim").value=CFG.model}}
+const SF=[["Start screen on launch","showLaunch","chk"],["Interface","ui","sel:auto,light,dark"],["Snap (px)","snap","num"],["Initial zoom (2-6)","zoom","num"],["Autosave","autosave","chk"],["Theme for new projects","theme","sel:"+Object.keys(THEMES)],["Default GUI width","sw","num"],["Default GUI height","sh","num"],["Default loader","loader","sel:forge,neoforge,neoforge121"],["Mod ID","mod","txt"],["Java package","pkg","txt"],["Screen class","cls","txt"],["Ollama model","model","txt"],["Ollama host","host","txt"],["AI context (token)","ctx","num"]];
+function openSettings(){const s=$("st");s.style.display="flex";s.innerHTML=`<div class=fb><b>Settings</b> <button data-r=1>Reset</button> <button data-z=1>Close</button><h4>Current project</h4><div class=fr><label>Screen ID</label><input data-p=id value="${esc(P.screen.id)}"></div><div class=fr><label>With inventory (Menu)</label><input type=checkbox data-pc=1 ${P.container?"checked":""}></div><h4>Application</h4>`+SF.map(([l,k,t])=>`<div class=fr><label>${l}</label>`+(t==="chk"?`<input type=checkbox data-k=${k} ${CFG[k]?"checked":""}>`:t.startsWith("sel:")?`<select data-k=${k}>${t.slice(4).split(",").map(o=>`<option ${o===CFG[k]?"selected":""}>${o}</option>`).join("")}</select>`:`<input data-k=${k} type=${t==="num"?"number":"text"} value="${esc(CFG[k])}">`)+"</div>").join("")+"</div>"}
+$("st").onchange=ev=>{const t=ev.target;if(t.dataset.pc){P.container=t.checked;push();ui();return}if(t.dataset.p){P.screen.id=t.value.replace(/\W/g,"_")||"main_menu";push();ui();return}const k=t.dataset.k;if(!k)return;CFG[k]=t.type==="checkbox"?t.checked:t.type==="number"?+t.value:t.value;saveCfg();applyCfg(["mod","pkg","cls","model"].includes(k));ui()};
+$("st").onclick=ev=>{const t=ev.target;if(t.dataset.z)$("st").style.display="none";if(t.dataset.tpl){tplNew(t.dataset.tpl);$("st").style.display="none"}const ak=t.closest&&t.closest("[data-ak]");if(ak){addScreen(ak.dataset.ak);$("st").style.display="none"}if(t.dataset.r){CFG={...CD};saveCfg();applyCfg(true);ui();openSettings()}};
+/* texture maker */
+const mulberry=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function texDraw(x,o){const{w,h,bevel:b,outline:l}=o;x.clearRect(0,0,w,h);x.fillStyle=o.base;x.fillRect(0,0,w,h);
+ if(o.grad){const g=x.createLinearGradient(0,0,0,h);g.addColorStop(0,"rgba(255,255,255,"+o.grad/100+")");g.addColorStop(1,"rgba(0,0,0,"+o.grad/100+")");x.fillStyle=g;x.fillRect(0,0,w,h)}
+ const r=mulberry(o.seed||1);for(let i=0;i<w*h*o.noise/100;i++){x.fillStyle=r()<.5?"rgba(0,0,0,.12)":"rgba(255,255,255,.12)";x.fillRect(Math.floor(r()*w),Math.floor(r()*h),1,1)}
+ if(b){x.fillStyle=o.light;x.fillRect(l,l,w-2*l,b);x.fillRect(l,l,b,h-2*l);x.fillStyle=o.dark;x.fillRect(l,h-l-b,w-2*l,b);x.fillRect(w-l-b,l,b,h-2*l)}
+ if(l){x.strokeStyle=o.line;x.lineWidth=l;x.strokeRect(l/2,l/2,w-l,h-l)}}
+const TK={button:{w:120,h:20,base:"#6f6f6f",light:"#ffffff",dark:"#373737",line:"#000000",bevel:2,outline:1,noise:0,grad:0},panel:{w:24,h:24,base:"#c6c6c6",light:"#ffffff",dark:"#555555",line:"#000000",bevel:2,outline:0,noise:0,grad:0},slot:{w:18,h:18,base:"#8b8b8b",light:"#373737",dark:"#ffffff",line:"#000000",bevel:1,outline:0,noise:0,grad:0}};
+const TF=[["w","number"],["h","number"],["base","color"],["light","color"],["dark","color"],["line","color"],["bevel","number"],["outline","number"],["noise","number"],["grad","number"]],LIM={w:[4,256],h:[4,256],bevel:[0,8],outline:[0,4],noise:[0,100],grad:[0,60]};
+let TM=null;
+function texMaker(k){if(k||!TM){const kk=k||"panel";TM={kind:kk,...TK[kk],name:"my_"+kk,seed:1}}const s=$("tm");s.style.display="flex";
+ s.innerHTML=`<div class=fb><b>Texture Maker</b> <button data-z=1>Close</button><div class=fr><label>Type</label><select data-kind=1>${Object.keys(TK).map(o=>`<option ${o===TM.kind?"selected":""}>${o}</option>`).join("")}</select></div>`+TF.map(([f,t])=>`<div class=fr><label>${f}</label><input data-k=${f} type=${t} value="${TM[f]}"></div>`).join("")+`<div class=fr><label>nome asset</label><input data-k=name value="${esc(TM.name)}"></div><div class=fr><button data-auto=1>✨ Auto-colori dalla base</button><button data-save=1 class=pri>Save come asset</button></div><canvas id=tmc></canvas></div>`;tmDraw()}
+function tmDraw(){const c=$("tmc"),z=Math.min(6,Math.floor(420/TM.w)||1);c.width=TM.w;c.height=TM.h;c.style.width=TM.w*z+"px";c.style.height=TM.h*z+"px";texDraw(c.getContext("2d",{willReadFrequently:true}),TM)}
+function tmSave(){const c=document.createElement("canvas");c.width=TM.w;c.height=TM.h;texDraw(c.getContext("2d",{willReadFrequently:true}),TM);const k=TM.name.toLowerCase().replace(/\W/g,"_")||"texture";
+ (P.assets=P.assets||{})[k]=c.toDataURL("image/png");(P.assetDim=P.assetDim||{})[k]=[TM.w,TM.h];(P.assetMeta=P.assetMeta||{})[k]={slice:Math.max(1,TM.bevel+TM.outline)};push();ui();say("Texture saved: "+k+" (select in the Texture list to apply it)")}
+$("tm").oninput=ev=>{const t=ev.target,k=t.dataset.k;if(!k)return;if(t.type==="number"){const[a,b]=LIM[k];TM[k]=Math.max(a,Math.min(b,+t.value||a))}else TM[k]=t.value;tmDraw()};
+$("tm").onchange=ev=>{if(ev.target.dataset.kind)texMaker(ev.target.value)};
+$("tm").onclick=ev=>{const t=ev.target;if(t.dataset.z)$("tm").style.display="none";if(t.dataset.save)tmSave();if(t.dataset.auto){TM.light=shade(TM.base,.38);TM.dark=shade(TM.base,-.32);TM.line=shade(TM.base,-.62);texMaker()}};
+applyCfg(true);
+
+/* ---- v5: generatore Java completo, NeoForge 1.21.1, grafo, player, preview eventi ---- */
+let V121=false;
+const RLC=(ns,p)=>V121?`ResourceLocation.fromNamespaceAndPath(${js(ns)}, ${js(p)})`:`new ResourceLocation(${js(ns)}, ${js(p)})`;
+const BTN_JAVA=cls=>`    private class GuiButton extends Button {
+        private final ResourceLocation tex;
+        private final int tw;
+        private final int th;
+        private final int slice;
+        private final Runnable onHover;
+        private final Runnable onPressEv;
+        private final Runnable onReleaseEv;
+        private boolean wasHovered;
+
+        GuiButton(int x, int y, int w, int h, Component msg, Button.OnPress onPress, ResourceLocation tex, int tw, int th, int slice, Runnable onHover, Runnable onPressEv, Runnable onReleaseEv) {
+            super(x, y, w, h, msg, onPress, DEFAULT_NARRATION);
+            this.tex = tex;
+            this.tw = tw;
+            this.th = th;
+            this.slice = slice;
+            this.onHover = onHover;
+            this.onPressEv = onPressEv;
+            this.onReleaseEv = onReleaseEv;
+        }
+
+        @Override
+        protected void renderWidget(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+            boolean hovered = this.isHoveredOrFocused();
+            if (hovered && !wasHovered && onHover != null) onHover.run();
+            wasHovered = hovered;
+            if (tex == null) {
+                super.renderWidget(g, mouseX, mouseY, partialTick);
+                return;
+            }
+            drawNine(g, tex, getX(), getY(), getWidth(), getHeight(), slice, tw, th);
+            if (!this.active) g.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x80000000);
+            else if (hovered) g.fill(getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0x30FFFFFF);
+            g.drawCenteredString(${cls}.this.font, this.getMessage(), getX() + getWidth() / 2, getY() + (getHeight() - 8) / 2, 0xFFFFFF);
+        }
+
+        @Override
+        public void onClick(double mx, double my) {
+            super.onClick(mx, my);
+            if (onPressEv != null) onPressEv.run();
+        }
+
+        @Override
+        public void onRelease(double mx, double my) {
+            super.onRelease(mx, my);
+            if (onReleaseEv != null) onReleaseEv.run();
+        }
+    }
+
+`;
+function gen(){V121=P.loader==="neoforge121";if(P.customTheme)THEMES.custom=P.customTheme;IMPS.clear();if(!GENALL)PSC=pscMap();const CT=ctMode(),OV=!!(P.overlay&&P.overlay.on);
+ const W=P.screen.width,H=P.screen.height,cls=$("cls").value,pkg=$("pkg").value,mod=$("mod").value,F=[],I=[],R=[],HV=[],MC=[],MR=[],TC=[],OP=[],CL=[];let nine=false,btnc=false,ply=false;
+ const has=(e,k)=>(e.events[k]||[]).some(a=>a.action);
+ const L=(e,k,pad)=>(e.events[k]||[]).filter(a=>a.action).map(a=>{const m=/^(\w+)\s*(>=|<=|==|!=|>|<)\s*(-?\d+)$/.exec((a.cond||"").trim()),l=act(a);return m?`${pad}if (vars.getOrDefault("${m[1]}", 0) ${m[2]} ${m[3]}) {\n${pad}    ${l}\n${pad}}`:pad+l}).join("\n")||pad+"// no action";
+ const RUN=(e,k,pad)=>has(e,k)?`() -> {\n${L(e,k,pad+"    ")}\n${pad}}`:"null";
+ function em(e,ox,oy){if(!e.visible)return;const x=ox+e.x,y=oy+e.y,v="w_"+e.id.replace(/\W/g,"_"),X=`this.leftPos + ${x}`,Y=`this.topPos + ${y}`,X2=`this.leftPos + ${x+e.width}`,Y2=`this.topPos + ${y+e.height}`;
+  if(has(e,"tick"))TC.push(L(e,"tick","        "));if(has(e,"open"))OP.push(L(e,"open","            "));if(has(e,"close"))CL.push(L(e,"close","        "));
+  const ins=`mx >= ${X} && mx < ${X2} && my >= ${Y} && my < ${Y2}`;
+  if(e.type!=="button"){
+   if(has(e,"hover")){F.push(`    private boolean h_${v};`);HV.push(`        boolean n_${v} = mouseX >= ${X} && mouseX < ${X2} && mouseY >= ${Y} && mouseY < ${Y2};\n        if (n_${v} && !h_${v}) {\n${L(e,"hover","            ")}\n        }\n        h_${v} = n_${v};`)}
+   const c=["click","press"].filter(k=>has(e,k)).map(k=>L(e,k,"            "));if(c.length)MC.push(`        if (${ins}) {\n${c.join("\n")}\n        }`);
+   if(has(e,"release"))MR.push(`        if (${ins}) {\n${L(e,"release","            ")}\n        }`)}
+  switch(e.type){
+  case"button":{const ds=(P.assetDim||{})[e.texture],tex=e.texture&&P.assets&&P.assets[e.texture]&&ds,ev3=["hover","press","release"].some(k=>has(e,k));
+   if(e.texture&&!tex)I.push(`        // TODO: CUSTOM IMPLEMENTATION: texture "${e.texture}" del bottone ${e.id} non trovata negli asset del project.`);
+   if((tex||ev3)&&!OV){btnc=true;if(tex)nine=true;const sl=tex?Math.max(1,Math.min(e.slice||4,Math.floor(Math.min(e.width,e.height,ds[0],ds[1])/2))):0;
+    I.push(`        GuiButton ${v} = new GuiButton(${X}, ${Y}, ${e.width}, ${e.height}, Component.literal(${js(e.text)}), b -> {\n${L(e,"click","            ")}\n        }, ${tex?RLC(mod,"textures/gui/"+e.texture+".png"):"null"}, ${tex?ds[0]:0}, ${tex?ds[1]:0}, ${sl}, ${RUN(e,"hover","        ")}, ${RUN(e,"press","        ")}, ${RUN(e,"release","        ")});\n        ${v}.active = ${e.enabled};\n        this.addRenderableWidget(${v});`)}
+   else I.push(`        Button ${v} = Button.builder(Component.literal(${js(e.text)}), b -> {\n${L(e,"click","            ")}\n        }).bounds(${X}, ${Y}, ${e.width}, ${e.height}).build();\n        ${v}.active = ${e.enabled};\n        this.addRenderableWidget(${v});`);break}
+  case"input":I.push(`        EditBox ${v} = new EditBox(this.font, ${X}, ${Y}, ${e.width}, ${e.height}, Component.literal(${js(e.placeholder)}));\n        ${v}.setMaxLength(${e.maxLength});\n        ${v}.setValue(${js(e.text)});\n        ${v}.setResponder(s -> {\n${L(e,"change","            ")}\n        });\n        this.addRenderableWidget(${v});`);break;
+  case"checkbox":I.push(V121?`        this.addRenderableWidget(Checkbox.builder(Component.literal(${js(e.text)}), this.font)\n            .pos(${X}, ${Y})\n            .selected(${!!e.checked})\n            .onValueChange((cb, value) -> {\n${L(e,"change","                ")}\n            })\n            .build());`:`        this.addRenderableWidget(new Checkbox(${X}, ${Y}, ${e.width}, ${e.height}, Component.literal(${js(e.text)}), ${!!e.checked}) {\n            @Override public void onPress() {\n                super.onPress();\n${L(e,"change","                ")}\n            }\n        });`);break;
+  case"label":R.push(`        g.drawString(this.font, ${js(e.text)}, ${X}, ${Y}, ${col(e.color)}, false);`);break;
+  case"panel":{const as=P.assets&&P.assets[e.texture],d=(P.assetDim||{})[e.texture];if(e.texture&&as&&d){nine=true;R.push(`        drawNine(g, ${RLC(mod,"textures/gui/"+e.texture+".png")}, ${X}, ${Y}, ${e.width}, ${e.height}, ${Math.max(1,Math.min(e.slice||4,Math.floor(Math.min(e.width,e.height,d[0],d[1])/2)))}, ${d[0]}, ${d[1]});`)}else if(e.bg!==false)R.push(`        g.fill(${X}, ${Y}, ${X2}, ${Y2}, ${col(e.color||(THEMES[P.theme]||THEMES.vanilla).panel)});`);break}
+  case"slot":R.push(CT?`        g.fill(${X}, ${Y}, ${X2}, ${Y2}, 0xFF8B8B8B);`:`        g.fill(${X}, ${Y}, ${X2}, ${Y2}, 0xFF8B8B8B); // TODO: CUSTOM IMPLEMENTATION: slot .* requires an AbstractContainerMenu + AbstractContainerScreen; here it is only drawn.`);break;
+  case"progress":R.push(`        g.fill(${X}, ${Y}, ${X2}, ${Y2}, 0xFF333333);\n        g.fill(${X}, ${Y}, this.leftPos + ${x+Math.round(e.width*Math.max(0,Math.min(1,(e.value-e.min)/((e.max-e.min)||1))))}, ${Y2}, 0xFF3CC43C);`);break;
+  case"image":R.push(e.texture?`        ${blit(e,mod,X,Y)}`:`        // TODO: CUSTOM IMPLEMENTATION: image ${e.id} senza texture assegnata.`);break;
+  case"player":ply=true;if((e.pose&&e.pose!=="idle")||(e.model&&e.model!=="steve"))R.push(`        // NOTE: pose .* / model .* are valid only for preview: in game the real player is drawn.`);R.push(V121?`        if (this.minecraft != null && this.minecraft.player != null) {\n            InventoryScreen.renderEntityInInventoryFollowsMouse(g, ${X}, ${Y}, ${X2}, ${Y2}, ${e.scale}, 0.0625F, mouseX, mouseY, this.minecraft.player);\n        }`:`        if (this.minecraft != null && this.minecraft.player != null) {\n            InventoryScreen.renderEntityInInventoryFollowsMouse(g, this.leftPos + ${x+Math.round(e.width/2)}, ${Y2}, ${e.scale}, (float) (this.leftPos + ${x+Math.round(e.width/2)}) - mouseX, (float) (${Y}) - mouseY, this.minecraft.player);\n        }`);break}
+  (e.children||[]).forEach(c=>em(c,x,y))}
+ P.elements.forEach(e=>em(e,0,0));
+ if(OV)return genOverlay({I,R,HV,MC,MR,TC,OP,CL,ply,nine,cls,pkg,mod});if(OP.length)F.push("    private boolean opened;");
+ const M=(t,b)=>b.length?`\n    @Override\n    public boolean ${t}(double mx, double my, int button) {\n${b.join("\n")}\n        return super.${t}(mx, my, button);\n    }\n`:"";
+ const rendCT=`    @Override
+    protected void renderBg(GuiGraphics g, float partialTick, int mouseX, int mouseY) {
+${R.join("\n")}
+    }
+
+    @Override
+    protected void renderLabels(GuiGraphics g, int mouseX, int mouseY) {
+    }
+
+    @Override
+    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
+${V121?"":"        this.renderBackground(g);\n"}        super.render(g, mouseX, mouseY, partialTick);
+${HV.join("\n")}
+        this.renderTooltip(g, mouseX, mouseY);
+    }
+`;const rend=V121?`    @Override\n    public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partialTick) {\n        super.renderBackground(g, mouseX, mouseY, partialTick);\n${R.join("\n")}\n    }\n\n    @Override\n    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {\n        super.render(g, mouseX, mouseY, partialTick);\n${HV.join("\n")}\n    }\n`:`    @Override\n    public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {\n        this.renderBackground(g);\n${R.join("\n")}\n        super.render(g, mouseX, mouseY, partialTick);\n${HV.join("\n")}\n    }\n`;
+ return `package ${pkg};
+
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Checkbox;
+import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.Screen;${CT?`
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.world.entity.player.Inventory;`:""}${ply?"\nimport net.minecraft.client.gui.screens.inventory.InventoryScreen;":""}
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;${[...IMPS].map(i=>"\nimport "+i+";").join("")}
+
+/** Generato da Minecraft GUI Builder - target: ${V121?"Minecraft 1.21.1 / NeoForge":"Minecraft 1.20.1 / Forge"}. Schermo "${P.screen.id}". */
+public class ${cls} extends ${CT?`AbstractContainerScreen<${cls}Menu>`:"Screen"} {
+    private static final int GUI_WIDTH = ${W};
+    private static final int GUI_HEIGHT = ${H};
+${CT?"":`    private int leftPos;
+    private int topPos;
+`}    private final java.util.Map<String, Integer> vars = new java.util.HashMap<>();
+${F.join("\n")}${F.length?"\n":""}
+${CT?`    public ${cls}(${cls}Menu menu, Inventory inv, Component title) {
+        super(menu, inv, title);
+        this.imageWidth = GUI_WIDTH;
+        this.imageHeight = GUI_HEIGHT;
+    }`:`    private final Screen parent;
+
+    public ${cls}() {
+        this(null);
+    }
+
+    public ${cls}(Screen parent) {
+        super(Component.literal(${js(P.screen.id)}));
+        this.parent = parent;
+    }
+
+    @Override
+    public void onClose() {
+        if (this.minecraft != null) this.minecraft.setScreen(this.parent);
+    }`}
+
+    @Override
+    protected void init() {
+        super.init();
+${CT?"":`        this.leftPos = (this.width - GUI_WIDTH) / 2;
+        this.topPos = (this.height - GUI_HEIGHT) / 2;
+`}${I.join("\n")}${OP.length?`\n        if (!this.opened) {\n            this.opened = true;\n${OP.join("\n")}\n        }`:""}
+    }
+${TC.length?`\n    @Override\n    public void tick() {\n        super.tick();\n${TC.join("\n")}\n    }\n`:""}${CL.length?`\n    @Override\n    public void removed() {\n        super.removed();\n${CL.join("\n")}\n    }\n`:""}${M("mouseClicked",MC)}${M("mouseReleased",MR)}
+${nine?NINE_JAVA:""}${btnc?BTN_JAVA(cls):""}${CT?rendCT:rend}}
+`}
+function scaf121(mod,pkg,cn){const dep=`[[dependencies.${mod}]]\nmodId="%"\ntype="required"\nversionRange="%"\nordering="NONE"\nside="BOTH"\n`;
+ return[{path:"build.gradle",text:`// NeoForge 1.21.1 (ModDevGradle). Verify versions with the official MDK.\nplugins {\n    id 'java-library'\n    id 'net.neoforged.moddev' version '1.0.11'\n}\n\nversion = '1.0.0'\ngroup = '${pkg}'\nbase { archivesName = '${mod}' }\njava.toolchain.languageVersion = JavaLanguageVersion.of(21)\n\nneoForge {\n    version = '21.1.77'\n    runs { client { client() } }\n    mods { "${mod}" { sourceSet sourceSets.main } }\n}\n`},
+ {path:"settings.gradle",text:`pluginManagement {\n    repositories {\n        gradlePluginPortal()\n        maven { url = 'https://maven.neoforged.net/releases' }\n    }\n}\nplugins { id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0' }\nrootProject.name = '${mod}'\n`},
+ {path:"gradle.properties",text:"org.gradle.jvmargs=-Xmx3G\norg.gradle.daemon=false\n"},
+ {path:"src/main/resources/META-INF/neoforge.mods.toml",text:`modLoader="javafml"\nloaderVersion="[1,)"\nlicense="All Rights Reserved"\n\n[[mods]]\nmodId="${mod}"\nversion="1.0.0"\ndisplayName="${mod}"\n\n`+dep.replace("%","neoforge").replace("%","[21.1,)")+"\n"+dep.replace("%","minecraft").replace("%","[1.21.1]")},
+ {path:`src/main/java/${pkg.replace(/\./g,"/")}/${cn}.java`,text:`package ${pkg};\n\nimport net.neoforged.bus.api.IEventBus;\nimport net.neoforged.fml.common.Mod;\n\n@Mod("${mod}")\npublic class ${cn} {\n    public ${cn}(IEventBus modEventBus) {\n        // TODO: CUSTOM IMPLEMENTATION: open the generated GUI (e.g. with a KeyMapping or a client command).\n    }\n}\n`}]}
+/* player preview */
+/* preview: hover/press/release/open/close/tick */
+let PH=null,PT=null;
+$("gui").addEventListener("pointerover",ev=>{if(!prev)return;const d=ev.target.closest(".n"),id=d&&d.dataset.id;if(id!==PH){PH=id||null;const r=id&&find(id);if(r&&r.e.enabled)run(r.e,"hover")}});
+$("gui").addEventListener("pointerup",ev=>{if(!prev)return;const d=ev.target.closest(".n"),r=d&&find(d.dataset.id);if(r&&r.e.enabled)run(r.e,"release")});
+function togglePrev(){prev=!prev;$("pv").textContent=prev?"■ Exit Preview":"▶ Preview";clearInterval(PT);PH=null;
+ if(prev){PSTART=P.cur;PSTACK=[];Object.keys(V).forEach(k=>delete V[k]);walk(P.elements,e=>run(e,"open"));PT=setInterval(()=>walk(P.elements,e=>run(e,"tick")),50)}else{walk(P.elements,e=>run(e,"close"));if(P.screens&&PSTART!==undefined&&P.cur!==PSTART)switchScreen(PSTART)}ui()}
+/* grafo a nodi */
+const ge=()=>cur()&&cur().e;let GP=null,GD=null;
+function gbuild(e){const nodes=[],edges=[];let id=0,y=20;for(const v of Object.keys(e.events||{})){let prev="n"+(++id);nodes.push({id:prev,type:"event",ev:v,x:20,y});let x=240,b=0;for(const a of e.events[v]){const q="n"+(++id);if(a.cond){const c="n"+(++id);nodes.push({id:c,type:"if",cond:a.cond,x,y:y+55});nodes.push({id:q,type:"action",action:a.action,target:a.target||"",x:x+210,y:y+55});edges.push([prev,c],[c,q]);b++;x+=0}else{nodes.push({id:q,type:"action",action:a.action,target:a.target||"",x,y});edges.push([prev,q]);prev=q;x+=210}}y+=170}return{nodes,edges,seq:nodes.length+20}}
+function gcompile(g){const ev={},by=Object.fromEntries(g.nodes.map(n=>[n.id,n])),out=id=>g.edges.filter(q=>q[0]===id).map(q=>by[q[1]]).filter(Boolean);
+ const wk=(n,c,l,seen)=>{if(seen.has(n.id))return;seen=new Set(seen).add(n.id);if(n.type==="if")out(n.id).forEach(m=>wk(m,n.cond||c,l,seen));else if(n.type==="action"){if(n.action)l.push({action:n.action,target:n.target||"",cond:c||""});out(n.id).forEach(m=>wk(m,c,l,seen))}};
+ g.nodes.filter(n=>n.type==="event").forEach(n=>{const l=[];out(n.id).forEach(m=>wk(m,"",l,new Set([n.id])));if(l.length)(ev[n.ev]=ev[n.ev]||[]).push(...l)});return ev}
+function gsync(){const e=ge();e.events=gcompile(e.graph);e.gsig=JSON.stringify(e.events);push();props()}
+function gopen(){const e=ge();if(!e)return say("Select an element");if(!e.graph||e.gsig!==JSON.stringify(e.events||{}))e.graph=gbuild(e);$("gv").style.display="flex";grender()}
+const nb=n=>n.type==="event"?`<select data-f=ev data-id=${n.id}>${EVS.map(o=>`<option ${o===n.ev?"selected":""}>${o}</option>`).join("")}</select>`:n.type==="if"?`<input data-f=cond data-id=${n.id} placeholder="coins>=10" value="${esc(n.cond)}">`:`<select data-f=action data-id=${n.id}>${ACT.map(o=>`<option ${o===n.action?"selected":""}>${o}</option>`).join("")}</select><input data-f=target data-id=${n.id} list="${TL[n.action||""]||""}" placeholder="target" value="${esc(n.target)}">`;
+function grender(){const e=ge(),g=e.graph;$("gv").innerHTML=`<div class=fb style="width:96vw;height:90vh;display:flex;flex-direction:column"><div><b>Logic graph: ${esc(e.id)}</b> <button data-p=1>+ Node</button><button data-o=1>Order</button><button data-z=1>Close</button> <span class=m>Double click on background = search node. Click on right port ● then on empty space = new connected node, or on left port ● of another node to connect. Click on a wire = delete. Actions after an IF inherit the condition.</span></div><div id=gc style="position:relative;flex:1;overflow:auto;border:1px solid var(--bd);margin-top:6px"><svg id=gs width=2400 height=1400 style="position:absolute;left:0;top:0"></svg>`+g.nodes.map(n=>`<div class="gn ${n.type}" data-id=${n.id} style="left:${n.x}px;top:${n.y}px"><div class=gh>${n.type}<b data-del=${n.id} style="cursor:pointer">✕</b></div>${nb(n)}${n.type!=="event"?`<i class="po pi" data-in=${n.id}></i>`:""}<i class="po pq" data-out=${n.id}></i></div>`).join("")+"</div></div>";gedges()}
+function gedges(){const g=ge().graph,by={};g.nodes.forEach(n=>by[n.id]=n);$("gs").innerHTML=g.edges.map(([a,b],i)=>{const A=by[a],B=by[b];if(!A||!B)return"";const x1=A.x+180,y1=A.y+45,x2=B.x,y2=B.y+45;return `<path data-e="${i}" d="M${x1} ${y1} C${x1+70} ${y1} ${x2-70} ${y2} ${x2} ${y2}" fill="none" stroke="#2d8cff" stroke-width="3" style="cursor:pointer;pointer-events:stroke"/>`}).join("")}
+$("gv").onpointerdown=ev=>{const hd=ev.target.closest(".gh");if(!hd||ev.target.dataset.del)return;const n=ge().graph.nodes.find(q=>q.id===hd.parentNode.dataset.id);GD={n,el:hd.parentNode,sx:ev.clientX,sy:ev.clientY,x:n.x,y:n.y}};
+addEventListener("pointermove",ev=>{if(!GD)return;GD.n.x=Math.max(0,GD.x+ev.clientX-GD.sx);GD.n.y=Math.max(0,GD.y+ev.clientY-GD.sy);GD.el.style.left=GD.n.x+"px";GD.el.style.top=GD.n.y+"px";gedges()});
+addEventListener("pointerup",()=>{if(GD){GD=null;if(ge())push()}});
+$("gv").onclick=ev=>{const t=ev.target,e=ge();if(t.dataset.z){$("gv").style.display="none";return}if(!e)return;const g=e.graph;
+ if(t.dataset.n){const c=$("gc");g.nodes.push({id:"n"+(++g.seq),type:t.dataset.n,ev:"click",cond:"",action:"",target:"",x:c.scrollLeft+30,y:c.scrollTop+30});gsync();grender()}
+ else if(t.dataset.del){g.nodes=g.nodes.filter(n=>n.id!==t.dataset.del);g.edges=g.edges.filter(q=>q[0]!==t.dataset.del&&q[1]!==t.dataset.del);gsync();grender()}
+ else if(t.dataset.p){const b=t.getBoundingClientRect();gpal({clientX:b.left,clientY:b.bottom},null)}else if(t.dataset.o){e.graph=gbuild(e);gsync();grender()}else if(GP&&(t.id==="gc"||t.id==="gs")){gpal(ev,GP);GP=null}else if(t.dataset.out){GP=t.dataset.out;say("Now click the input port of the destination node")}
+ else if(t.dataset.in&&GP){if(GP!==t.dataset.in&&!g.edges.some(q=>q[0]===GP&&q[1]===t.dataset.in))g.edges.push([GP,t.dataset.in]);GP=null;gsync();grender()}
+ else if(t.dataset.e!==undefined){g.edges.splice(+t.dataset.e,1);gsync();grender()}};
+$("gv").onchange=ev=>{const t=ev.target,e=ge();if(!e||!t.dataset.f)return;e.graph.nodes.find(n=>n.id===t.dataset.id)[t.dataset.f]=t.value;gsync();if(t.dataset.f==="action")grender()};
+
+/* ---- v6: collegamento mod, blueprint, editor pixel ---- */
+let MOD=null;const IMPS=new Set(),TL={give_item:"dl_give",play_sound:"dl_snd",open_gui:"dl_scr"};
+function fillMod(){const m=MOD||{},id=m.modId||"",L=(a,f)=>(a||[]).map(x=>`<option value="${esc(f(x))}">`).join("");
+ $("dls").innerHTML=`<datalist id=dl_give>${L(m.items,x=>id+":"+x)}${L(m.blocks,x=>id+":"+x)}</datalist><datalist id=dl_snd>${L(m.sounds,x=>id+":"+x)}<option value="minecraft:ui.button.click"><option value="minecraft:block.note_block.pling"><option value="minecraft:entity.experience_orb.pickup"></datalist><datalist id=dl_scr>${L(m.screens,x=>x.cls)}${L(P&&P.screens?P.screens.map((s,i)=>clsOf(i)):[],x=>x)}</datalist>`;fillMg()}
+async function linkMod(p){if(!window.native)return say("Only in desktop app.");const r=await native.scan(typeof p==="string"?p:undefined);if(!r)return;if(!r.ok)return say("No Java source in "+r.root);
+ MOD=r;if(r.modId)$("mod").value=r.modId;if(r.pkg)$("pkg").value=r.pkg;P.assets=P.assets||{};P.assetDim=P.assetDim||{};for(const t of r.textures){P.assets[t.name]="data:image/png;base64,"+t.b64;P.assetDim[t.name]=t.dim}
+ push();fillMod();ui();say(`Mod "${r.modId}": ${r.items.length} item, ${r.blocks.length} blocchi, ${r.sounds.length} suoni, ${r.screens.length} screen, ${r.textures.length} texture GUI`)}
+async function nWrite(){const np=nameProblems();if(np.length)return say(np[0]);if(!MOD)return say("First link a mod (📁 Link mod)");const mod=$("mod").value,pkg=$("pkg").value,cls=$("cls").value,a=P.assets||{};
+ const files=[...genAllFiles(),{path:`gui/${cls}.gui.json`,text:JSON.stringify(P,null,2)},...Object.keys(a).filter(k=>!MOD.textures.some(t=>t.name===k)).map(k=>({path:`src/main/resources/assets/${mod}/textures/gui/${k}.png`,b64:a[k].split(",")[1]}))];
+ const r=await native.write({root:MOD.root,files});say(r&&r.ok?`Scritti ${r.n} file nella mod`:(r&&r.error)||"Undoto")}
+if(window.native&&native.startDir)native.startDir().then(d=>{if(d)linkMod(d)});
+/* palette blueprint */
+let GPAL=null;
+function gtpl(){const m=MOD||{},id=m.modId||"",T=[];EVS.forEach(v=>T.push({l:"Event: "+v,n:{type:"event",ev:v}}));T.push({l:"IF condition",n:{type:"if"}});
+ ACT.filter(Boolean).forEach(a=>T.push({l:"Action: "+a,n:{type:"action",action:a}}));
+ (m.items||[]).concat(m.blocks||[]).forEach(x=>T.push({l:"Give "+id+":"+x,n:{type:"action",action:"give_item",target:id+":"+x}}));
+ (m.screens||[]).forEach(s=>T.push({l:"Open screen "+s.cls,n:{type:"action",action:"open_gui",target:s.cls}}));
+ (m.sounds||[]).forEach(x=>T.push({l:"Sound "+id+":"+x,n:{type:"action",action:"play_sound",target:id+":"+x}}));if(P.screens)P.screens.forEach((s,i)=>{if(i!==P.cur)T.push({l:"Open screen "+s.name,n:{type:"action",action:"open_gui",target:clsOf(i)}})});return T}
+function gpal(ev,from){const c=$("gc"),r=c.getBoundingClientRect(),p=$("gp");GPAL={x:ev.clientX-r.left+c.scrollLeft,y:ev.clientY-r.top+c.scrollTop,from};p.style.display="block";p.style.left=ev.clientX+"px";p.style.top=ev.clientY+"px";p.innerHTML='<input id=gpq placeholder="Search node..." style="width:100%"><div id=gpl></div>';gfilter("");$("gpq").focus()}
+function gfilter(q){const T=gtpl().filter(t=>t.l.toLowerCase().includes(q.toLowerCase())).slice(0,40);GPAL.T=T;$("gpl").innerHTML=T.map((t,i)=>`<div class=gpi data-i=${i}>${esc(t.l)}</div>`).join("")}
+function gadd(t){const e=ge();if(!t||!e)return;const g=e.graph,n={id:"n"+(++g.seq),x:GPAL.x,y:GPAL.y,ev:"click",cond:"",action:"",target:"",...t.n};g.nodes.push(n);if(GPAL.from&&n.type!=="event")g.edges.push([GPAL.from,n.id]);$("gp").style.display="none";gsync();grender()}
+$("gp").onclick=ev=>{const i=ev.target.dataset.i;if(i!==undefined)gadd(GPAL.T[+i])};
+$("gp").oninput=ev=>{if(ev.target.id==="gpq")gfilter(ev.target.value)};
+$("gp").onkeydown=ev=>{if(ev.key==="Enter")gadd(GPAL.T[0]);if(ev.key==="Escape")$("gp").style.display="none"};
+$("gv").ondblclick=ev=>{if(ev.target.id==="gc"||ev.target.id==="gs")gpal(ev,null)};
+/* editor pixel */
+let PX=null,PDN=false,DW=false;
+function pxz(){const c=$("pxv"),z=Math.max(2,Math.floor(480/Math.max(c.width,c.height)));c.style.width=c.width*z+"px";c.style.height=c.height*z+"px"}
+function pxOpen(name){const a=name&&(P.assets||{})[name],d=name&&(P.assetDim||{})[name];PX={tool:"pen",hist:[]};const s=$("pe");s.style.display="flex";
+ s.innerHTML=`<div class=fb><b>Pixel editor</b> <button data-z=1>Close</button><div class=fr><label>Larghezza</label><input data-d=w type=number value=${d?d[0]:16}><label>Altezza</label><input data-d=h type=number value=${d?d[1]:16}></div><div class=fr>${[["pen","✏️ Matita"],["erase","🧽 Gomma"],["fill","🪣 Riempi"],["pick","💧 Contagocce"]].map(([t,l])=>`<button data-t=${t}>${l}</button>`).join("")}<input type=color id=pxc value="${CFG.brush||"#000000"}"><label style="width:auto"><input type=checkbox id=pxm> specchio</label><button data-u=1>↶</button><button data-clr=1>Pulisci</button></div><div class=fr><label>nome asset</label><input id=pxn value="${esc(name||"my_pixels")}"><button data-save=1>Save come asset</button></div><canvas id=pxv></canvas></div>`;
+ const c=$("pxv");c.width=d?d[0]:16;c.height=d?d[1]:16;pxz();if(a){const i=new Image();i.onload=()=>c.getContext("2d",{willReadFrequently:true}).drawImage(i,0,0);i.src=a}}
+function pxDo(ev,first){const c=$("pxv"),x=c.getContext("2d",{willReadFrequently:true}),r=c.getBoundingClientRect(),px=Math.floor((ev.clientX-r.left)*c.width/r.width),py=Math.floor((ev.clientY-r.top)*c.height/r.height);if(px<0||py<0||px>=c.width||py>=c.height)return;
+ const col=$("pxc").value,m=$("pxm").checked,t=PX.tool;if(first&&t!=="pick"){PX.hist.push(x.getImageData(0,0,c.width,c.height));if(PX.hist.length>30)PX.hist.shift()}
+ const dot=(a,b)=>{if(t==="erase")x.clearRect(a,b,1,1);else{x.fillStyle=col;x.fillRect(a,b,1,1)}};
+ if(t==="pen"||t==="erase"){dot(px,py);if(m)dot(c.width-1-px,py)}
+ else if(t==="pick"){const d=x.getImageData(px,py,1,1).data;$("pxc").value="#"+[d[0],d[1],d[2]].map(v=>v.toString(16).padStart(2,"0")).join("")}
+ else if(t==="fill"&&first){const im=x.getImageData(0,0,c.width,c.height),D=im.data,W=c.width,at=(a,b)=>(b*W+a)*4,T0=D.slice(at(px,py),at(px,py)+4),F=[1,3,5].map(i=>parseInt(col.slice(i,i+2),16)).concat(255);if(T0.every((v,i)=>v===F[i]))return;const st=[[px,py]];
+  while(st.length){const[a,b]=st.pop();if(a<0||b<0||a>=W||b>=c.height)continue;const i=at(a,b);if(D[i]!==T0[0]||D[i+1]!==T0[1]||D[i+2]!==T0[2]||D[i+3]!==T0[3])continue;D[i]=F[0];D[i+1]=F[1];D[i+2]=F[2];D[i+3]=255;st.push([a+1,b],[a-1,b],[a,b+1],[a,b-1])}x.putImageData(im,0,0)}}
+$("pe").onpointerdown=ev=>{if(ev.target.id==="pxv"){PDN=true;pxDo(ev,true)}};
+addEventListener("pointermove",ev=>{if(PDN&&PX&&ev.target.id==="pxv")pxDo(ev,false)});
+addEventListener("pointerup",()=>{PDN=false});
+$("pe").onclick=ev=>{const t=ev.target,c=$("pxv");if(t.dataset.z)$("pe").style.display="none";else if(t.dataset.t)PX.tool=t.dataset.t;else if(t.dataset.u&&PX.hist.length)c.getContext("2d",{willReadFrequently:true}).putImageData(PX.hist.pop(),0,0);
+ else if(t.dataset.clr){PX.hist.push(c.getContext("2d",{willReadFrequently:true}).getImageData(0,0,c.width,c.height));c.getContext("2d",{willReadFrequently:true}).clearRect(0,0,c.width,c.height)}
+ else if(t.dataset.save){const k=($("pxn").value||"pixels").toLowerCase().replace(/\W/g,"_");(P.assets=P.assets||{})[k]=c.toDataURL("image/png");(P.assetDim=P.assetDim||{})[k]=[c.width,c.height];push();ui();say("Texture saved: "+k)}};
+$("pe").onchange=ev=>{const t=ev.target;if(!t.dataset.d)return;const c=$("pxv"),cl=v=>Math.max(1,Math.min(256,+v||16)),w=t.dataset.d==="w"?cl(t.value):c.width,hh=t.dataset.d==="h"?cl(t.value):c.height,tmp=document.createElement("canvas");tmp.width=c.width;tmp.height=c.height;tmp.getContext("2d",{willReadFrequently:true}).drawImage(c,0,0);c.width=w;c.height=hh;c.getContext("2d",{willReadFrequently:true}).drawImage(tmp,0,0);pxz()};
+fillMod();
+
+/* ---- v7: container/menu, player pose, Mod GUI ---- */
+function ctMode(){if(!P.container||(P.overlay&&P.overlay.on))return false;let f=false;walk(P.elements,e=>{if(e.type==="slot"&&e.visible)f=true});return f}
+function genExtra(){V121=P.loader==="neoforge121";if(!ctMode())return[];const cls=$("cls").value,pkg=$("pkg").value,mod=$("mod").value,C=[],PL=[];
+ const rec=(l,ox,oy)=>l.forEach(e=>{if(!e.visible)return;const x=ox+e.x,y=oy+e.y;if(e.type==="slot")(e.slotType==="player"?PL:C).push({x:x+1,y:y+1,t:e.slotType,i:Math.max(0,Math.min(35,e.slotIndex|0))});if(e.children)rec(e.children,x,y)});rec(P.elements,0,0);
+ const n=C.length,sl=C.map((s,i)=>s.t==="output"?`        this.addSlot(new Slot(container, ${i}, ${s.x}, ${s.y}) {\n            @Override\n            public boolean mayPlace(ItemStack stack) {\n                return false;\n            }\n        });`:`        this.addSlot(new Slot(container, ${i}, ${s.x}, ${s.y}));`).join("\n"),ps=PL.map(s=>`        this.addSlot(new Slot(inv, ${s.i}, ${s.x}, ${s.y}));`).join("\n"),M=cls+"Menu",RG=cls+"Registry",key=P.screen.id;
+ const menu=`package ${pkg};
+
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+
+/** Generato da Minecraft GUI Builder (${V121?"1.21.1 / NeoForge":"1.20.1 / Forge"}). Non compilato dal generatore: verifica con la tua build. */
+public class ${M} extends AbstractContainerMenu {
+    private static final int CONTAINER_SLOTS = ${n};
+    private final Container container;
+
+    /** Lato client. */
+    public ${M}(int id, Inventory inv, FriendlyByteBuf buf) {
+        this(id, inv, new SimpleContainer(CONTAINER_SLOTS));
+    }
+
+    /** Server side: pass your Container (e.g. a BlockEntity). */
+    public ${M}(int id, Inventory inv, Container container) {
+        super(${RG}.TYPE.get(), id);
+        checkContainerSize(container, CONTAINER_SLOTS);
+        this.container = container;
+        container.startOpen(inv.player);
+${sl}
+${ps}
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        ItemStack copy = ItemStack.EMPTY;
+        Slot slot = this.slots.get(index);
+        if (slot != null && slot.hasItem()) {
+            ItemStack stack = slot.getItem();
+            copy = stack.copy();
+            if (index < CONTAINER_SLOTS) {
+                if (!this.moveItemStackTo(stack, CONTAINER_SLOTS, this.slots.size(), true)) return ItemStack.EMPTY;
+            } else if (!this.moveItemStackTo(stack, 0, CONTAINER_SLOTS, false)) {
+                return ItemStack.EMPTY;
+            }
+            if (stack.isEmpty()) slot.setByPlayer(ItemStack.EMPTY);
+            else slot.setChanged();
+        }
+        return copy;
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return this.container.stillValid(player);
+    }
+
+    @Override
+    public void removed(Player player) {
+        super.removed(player);
+        this.container.stopOpen(player);
+    }
+}
+`;
+ const reg=V121?`package ${pkg};
+
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.inventory.MenuType;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+public class ${RG} {
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(BuiltInRegistries.MENU, ${js(mod)});
+    public static final DeferredHolder<MenuType<?>, MenuType<${M}>> TYPE = MENUS.register(${js(key)}, () -> IMenuTypeExtension.create(${M}::new));
+
+    // TODO: CUSTOM IMPLEMENTATION: chiama ${RG}.MENUS.register(modEventBus) nel costruttore della mod
+    // e apri il menu lato server con player.openMenu(new SimpleMenuProvider(...), buf -> {}).
+
+    @EventBusSubscriber(modid = ${js(mod)}, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class Client {
+        @SubscribeEvent
+        public static void onRegisterScreens(RegisterMenuScreensEvent event) {
+            event.register(TYPE.get(), ${cls}::new);
+        }
+    }
+}
+`:`package ${pkg};
+
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+
+public class ${RG} {
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(ForgeRegistries.MENU_TYPES, ${js(mod)});
+    public static final RegistryObject<MenuType<${M}>> TYPE = MENUS.register(${js(key)}, () -> IForgeMenuType.create(${M}::new));
+
+    // TODO: CUSTOM IMPLEMENTATION: chiama ${RG}.MENUS.register(modEventBus) nel costruttore della mod
+    // e apri il menu lato server con NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(...), buf -> {}).
+
+    @Mod.EventBusSubscriber(modid = ${js(mod)}, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class Client {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            event.enqueueWork(() -> MenuScreens.register(TYPE.get(), ${cls}::new));
+        }
+    }
+}
+`;
+ return[{name:M,text:menu},{name:RG,text:reg}]}
+function plyDraw(e,d){const u=e.height*S/32,cx=e.width*S/2,sk=(P.assets||{})[e.skin],md=e.model||"steve",ps=e.pose||"idle",aw=md==="alex"?3:4,cr=md==="creeper";d.style.display="block";
+ const B=cr?[[8,8,8,8,-4,0,"#4caf50",""],[20,20,8,12,-4,8,"#43a047",""],[0,16,4,6,-4,20,"#388e3c","lr"],[0,16,4,6,0,20,"#388e3c","ll"]]:[[8,8,8,8,-4,0,"#c69c6d",""],[20,20,8,12,-4,8,"#00a8a8",""],[44,20,aw,12,-4-aw,8,"#c69c6d","ar"],[36,52,aw,12,4,8,"#c69c6d","al"],[4,20,4,12,-4,20,"#3a3a9a","lr"],[20,52,4,12,0,20,"#3a3a9a","ll"]];
+ B.forEach(([sx,sy,w,h,px,py,c,k])=>{const q=document.createElement("div");let st=`position:absolute;left:${cx+px*u}px;top:${py*u}px;width:${w*u}px;height:${h*u}px;transform-origin:50% 0;`;
+  st+=sk&&!cr?`background:url(${sk}) -${sx*u}px -${sy*u}px/${64*u}px ${64*u}px;image-rendering:pixelated;`:`background:${c};`;
+  if(k){let an="",rot=0;if(ps==="walk"){an=(k==="ar"||k==="ll")?"swa":"swb";rot=an==="swa"?20:-20}else if(ps==="wave"&&k==="al"){an="wv";rot=150}else if(ps==="sit"&&(k==="lr"||k==="ll"))st+=`height:${h*u*.55}px;`;
+   if(an&&prev)st+=`animation:${an} .5s ease-in-out infinite alternate;`;else if(rot)st+=`transform:rotate(${rot}deg);`}
+  q.style.cssText=st;d.append(q)})}
+/* sidebar Mod GUI + import */
+function fillMg(){const m=MOD||{};$("mg").innerHTML=m.screens&&m.screens.length?`<b>Mod GUI (${m.screens.length})</b>`+m.screens.map(s=>`<div class=mgi title="${esc(s.pkg)} - ${s.kind}${s.ctor?" ("+esc(s.ctor)+")":""}"><b>${esc(s.cls)}</b><button data-imp="${esc(s.cls)}">Importa</button><button data-pv="${esc(s.cls)}">▶</button></div>`).join(""):""}
+async function importScreen(cls,play){if(!window.native)return;const r=await native.importScreen(cls);if(!r||r.error)return say((r&&r.error)||"Import fallito");
+ if(!r.found){say(`Nessun widget riconosciuto in ${cls}${r.skipped?` (${r.skipped} con coordinate calcolate)`:""}: provo con l'AI...`);return aiRun(`Convert this Minecraft Screen Java source into the project JSON: reproduce widgets, positions, texts and click actions; use custom_java_hook for logic you cannot map.\n${r.src}`,"import")}
+ const id=cls.replace(/([a-z])([A-Z])/g,"$1_$2").toLowerCase().replace(/\W/g,"_");P=sanitize({screen:{...r.screen,id},elements:r.elements});recount();sel=null;multi=new Set();push();ui();
+ say(`${cls}: ${r.found} elementi importati, ${r.skipped} non riconosciuti${r.notes&&r.notes.length?" - es. "+r.notes[0]:""}`);if(play&&!prev)togglePrev()}
+$("mg").onclick=ev=>{const b=ev.target.closest("button");if(!b)return;if(b.dataset.imp)importScreen(b.dataset.imp,false);else if(b.dataset.pv)importScreen(b.dataset.pv,true)};
+fillMg();
+
+/* ---- v8: disegno a pixel direttamente sullo schermo ---- */
+function drawStart(){if(DW)return;if(prev)togglePrev();$("pe").style.display="none";DW=true;sel=null;multi=new Set();ui();
+ const g=$("gui"),W=P.screen.width,H=P.screen.height,ov=document.createElement("canvas");ov.id="pxv";ov.width=W;ov.height=H;ov.style.cssText="position:absolute;left:0;top:0;width:100%;height:100%;image-rendering:pixelated;z-index:30;cursor:crosshair;touch-action:none";
+ PX={tool:"pen",hist:[]};const a=(P.assets||{}).draw_layer;if(a){const i=new Image();i.onload=()=>ov.getContext("2d",{willReadFrequently:true}).drawImage(i,0,0,W,H);i.src=a}
+ ov.onpointerdown=ev=>{PDN=true;pxDo(ev,true)};g.append(ov);
+ const b=$("db");b.style.display="flex";b.innerHTML=`<b>Disegno sullo schermo</b>${[["pen","✏️"],["erase","🧽"],["fill","🪣"],["pick","💧"]].map(([t,l])=>`<button data-t=${t} title=${t}>${l}</button>`).join("")}<input type=color id=pxc value="${CFG.brush||"#ff0000"}"><label style="width:auto"><input type=checkbox id=pxm> specchio</label><button data-u=1>↶</button><button data-clr=1>Pulisci</button><button data-done=1>✔ Fine</button><button data-cancel=1>✖ Undo</button>`}
+function drawEnd(save){const ov=$("pxv");if(save&&ov){const d=ov.getContext("2d",{willReadFrequently:true}).getImageData(0,0,ov.width,ov.height).data;let any=false;for(let i=3;i<d.length;i+=4)if(d[i]){any=true;break}
+  P.assets=P.assets||{};P.assetDim=P.assetDim||{};const f=find("draw_layer");
+  if(any){P.assets.draw_layer=ov.toDataURL("image/png");P.assetDim.draw_layer=[ov.width,ov.height];if(!f){const e=mk("image");e.id="draw_layer";e.x=0;e.y=0;e.width=ov.width;e.height=ov.height;e.texture="draw_layer";e.locked=true;P.elements.push(e)}else{f.e.width=ov.width;f.e.height=ov.height}}
+  else{delete P.assets.draw_layer;delete P.assetDim.draw_layer;if(f)f.l.splice(f.l.indexOf(f.e),1)}push()}
+ DW=false;PDN=false;$("db").style.display="none";ui()}
+$("db").onclick=ev=>{const t=ev.target,c=$("pxv");if(!c)return;const x=c.getContext("2d",{willReadFrequently:true});if(t.dataset.t)PX.tool=t.dataset.t;else if(t.dataset.u&&PX.hist.length)x.putImageData(PX.hist.pop(),0,0);else if(t.dataset.clr){PX.hist.push(x.getImageData(0,0,c.width,c.height));x.clearRect(0,0,c.width,c.height)}else if(t.dataset.done)drawEnd(true);else if(t.dataset.cancel)drawEnd(false)};
+
+/* ---- v9: overlay su GUI vanilla, guida, rifiniture ---- */
+const OVT={title:{cls:"net.minecraft.client.gui.screens.TitleScreen",w:320,h:240,a:"top-center",n:"TitleScreen"},pause:{cls:"net.minecraft.client.gui.screens.PauseScreen",w:320,h:240,a:"top-center",n:"PauseScreen"},inventory:{cls:"net.minecraft.client.gui.screens.inventory.InventoryScreen",w:176,h:166,a:"gui",n:"InventoryScreen"},creative:{cls:"net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen",w:195,h:136,a:"gui",n:"CreativeScreen"},custom:{cls:"",w:176,h:166,a:"gui",n:"CustomScreen"}};
+function setOverlay(k){if(!k)delete P.overlay;else{const t=OVT[k];P.overlay={on:true,target:k,anchor:t.a,custom:(P.overlay&&P.overlay.custom)||""};P.screen.width=t.w;P.screen.height=t.h;if(/^(MainMenuScreen|\w+Additions)$/.test($("cls").value))$("cls").value=t.n+"Additions";P.screen.cls=$("cls").value}push();fitZoom()}
+function fitZoom(){const w=$("ws"),v=Math.floor(Math.min((w.clientWidth-60)/P.screen.width,(w.clientHeight-60)/P.screen.height));if(v>0)S=Math.max(2,Math.min(6,v));ui()}
+function ovSync(){const o=P.overlay;$("ovs").value=o?o.target:"";$("ova").style.display=o?"":"none";if(o)$("ova").value=o.anchor;$("ovc").style.display=o&&o.target==="custom"?"":"none";if(o)$("ovc").value=o.custom||""}
+function anc(){const a=P.overlay.anchor,W=P.screen.width,H=P.screen.height;return[/center$/.test(a)?Math.round(W/2):/right$/.test(a)?W:0,a==="center"?Math.round(H/2):/^bottom/.test(a)?H:0]}
+const REF=(()=>{const inv=[["p",0,0,176,166,""],["r",26,8,49,70,"Player"]];for(let i=0;i<4;i++)inv.push(["s",7,7+i*18]);inv.push(["s",76,61]);for(let r=0;r<2;r++)for(let c=0;c<2;c++)inv.push(["s",97+c*18,17+r*18]);inv.push(["s",153,27]);for(let r=0;r<3;r++)for(let c=0;c<9;c++)inv.push(["s",7+c*18,83+r*18]);for(let c=0;c<9;c++)inv.push(["s",7+c*18,141]);
+ return{title:[["t",60,40,200,40,"MINECRAFT"],["b",60,108,200,20,"Singleplayer"],["b",60,132,200,20,"Multiplayer"],["b",60,156,200,20,"Minecraft Realms"],["b",60,180,98,20,"Options..."],["b",162,180,98,20,"Quit Game"]],
+ pause:[["b",58,68,204,20,"Back to Game"],["b",58,92,98,20,"Advancements"],["b",164,92,98,20,"Statistics"],["b",58,116,98,20,"Give Feedback"],["b",164,116,98,20,"Report Bugs"],["b",58,140,98,20,"Options..."],["b",164,140,98,20,"Open to LAN"],["b",58,164,204,20,"Save and Quit to Title"]],inventory:inv,creative:[["p",0,0,195,136,""]]}})();
+function refDraw(g){const o=P.overlay;g.style.background=o?(o.target==="inventory"||o.target==="creative"||o.target==="custom"?"#c6c6c6":"#1b1b22"):"";g.title=o?"Approximate vanilla reference (dashed lines): Java uses the real game coordinates.":"";if(P.ref){const r=document.createElement("div");r.className="rf";r.style.cssText=`position:absolute;inset:0;pointer-events:none;background:url(${P.ref.data}) 0 0/100% 100%;opacity:${(P.ref.op||40)/100};image-rendering:pixelated`;g.append(r)}if(!o)return;
+ const [ax,ay]=anc();for(const[t,x,y,w,h,l]of REF[o.target]||[]){const d=document.createElement("div");d.className="rf";d.style.cssText=`position:absolute;left:${x*S}px;top:${y*S}px;width:${(w||18)*S}px;height:${(h||18)*S}px;pointer-events:none;box-sizing:border-box;display:flex;align-items:center;justify-content:center;color:#ddd;font-size:${7*S}px;`+(t==="b"?"border:1px dashed #aaa;background:#ffffff18;":t==="s"?"border:1px solid #3a3a3a;background:#8b8b8b99;":t==="p"?"border:2px solid #fff;border-color:#fff #555 #555 #fff;background:#c6c6c6;":t==="r"?"border:1px solid #333;background:#0003;color:#444;":"color:#9a9a9a;font-weight:700;letter-spacing:2px;");d.textContent=l;g.append(d)}
+ const m=document.createElement("div");m.className="rf";m.style.cssText=`position:absolute;left:${ax*S-4}px;top:${ay*S-4}px;width:8px;height:8px;border-radius:50%;background:#e33;pointer-events:none;z-index:40`;m.title="Punto di ancoraggio";g.append(m)}
+function genOverlay(o){const W=P.screen.width,H=P.screen.height,[AX,AY]=anc(),ov=P.overlay,nf=P.loader==="neoforge121",tc=ov.target==="custom"?ov.custom:OVT[ov.target].cls,sc=tc?tc.split(".").pop():"Screen";
+ const AE={"top-left":["0","0"],"top-center":["screen.width / 2","0"],"top-right":["screen.width","0"],"center":["screen.width / 2","screen.height / 2"],"bottom-left":["0","screen.height"],"bottom-center":["screen.width / 2","screen.height"],"bottom-right":["screen.width","screen.height"],"gui":[`(screen.width - ${W}) / 2`,`(screen.height - ${H}) / 2`]},[ex,ey]=AE[ov.anchor]||AE["top-left"];
+ const off=(b,n)=>n<0?`${b} - ${-n}`:`${b} + ${n}`;
+ const fx=s=>s.replace(/this\.leftPos \+ (-?\d+)/g,(m,n)=>off("ax",+n-AX)).replace(/this\.topPos \+ (-?\d+)/g,(m,n)=>off("ay",+n-AY)).replace(/this\.addRenderableWidget\(/g,"event.addListener(").replace(/this\.minecraft/g,"mc").replace(/this\.font/g,"mc.font").replace(/this\.onClose\(\)/g,"screen.onClose()").replace(/new (\w+)\(this\)/g,"new $1(screen)");
+ const note=(o.HV.length||o.MC.length||o.MR.length||o.TC.length||o.OP.length||o.CL.length)?"        // NOTE: hover/press/release/tick/open/close on non-button elements are not supported in overlay mode (remain only in JSON).\n":"";
+ const guard=`        Screen screen = event.getScreen();\n        if (!(screen instanceof ${sc})) return;\n        Minecraft mc = Minecraft.getInstance();\n        int ax = ${ex};\n        int ay = ${ey};\n`;
+ const imp=nf?["net.minecraft.client.Minecraft","net.minecraft.client.gui.GuiGraphics","net.minecraft.client.gui.components.Button","net.minecraft.client.gui.components.Checkbox","net.minecraft.client.gui.components.EditBox","net.minecraft.client.gui.screens.Screen","net.minecraft.client.resources.sounds.SimpleSoundInstance","net.minecraft.network.chat.Component","net.minecraft.resources.ResourceLocation","net.minecraft.sounds.SoundEvent","net.neoforged.api.distmarker.Dist","net.neoforged.bus.api.SubscribeEvent","net.neoforged.fml.common.EventBusSubscriber","net.neoforged.neoforge.client.event.ScreenEvent"]:["net.minecraft.client.Minecraft","net.minecraft.client.gui.GuiGraphics","net.minecraft.client.gui.components.Button","net.minecraft.client.gui.components.Checkbox","net.minecraft.client.gui.components.EditBox","net.minecraft.client.gui.screens.Screen","net.minecraft.client.resources.sounds.SimpleSoundInstance","net.minecraft.network.chat.Component","net.minecraft.resources.ResourceLocation","net.minecraft.sounds.SoundEvent","net.minecraftforge.api.distmarker.Dist","net.minecraftforge.client.event.ScreenEvent","net.minecraftforge.eventbus.api.SubscribeEvent","net.minecraftforge.fml.common.Mod"];
+ if(o.ply)imp.push("net.minecraft.client.gui.screens.inventory.InventoryScreen");if(tc&&tc.includes("."))imp.push(tc);[...IMPS].forEach(i=>imp.push(i));
+ const ann=nf?`@EventBusSubscriber(modid = ${js(o.mod)}, value = Dist.CLIENT)`:`@Mod.EventBusSubscriber(modid = ${js(o.mod)}, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)`;
+ return `package ${o.pkg};\n\n${[...new Set(imp)].sort().map(i=>"import "+i+";").join("\n")}\n\n/** Generated by Minecraft GUI Builder - overlay on ${sc} (${nf?"1.21.1 / NeoForge":"1.20.1 / Forge"}). Registers by itself: no extra code in the mod. */\n${ann}\npublic class ${o.cls} {\n    private static final java.util.Map<String, Integer> vars = new java.util.HashMap<>();\n\n    @SubscribeEvent\n    public static void onScreenInit(ScreenEvent.Init.Post event) {\n${guard}${fx(o.I.join("\n"))}\n    }\n\n    @SubscribeEvent\n    public static void onScreenRender(ScreenEvent.Render.Post event) {\n${guard}        GuiGraphics g = event.getGuiGraphics();\n        int mouseX = event.getMouseX();\n        int mouseY = event.getMouseY();\n${note}${fx(o.R.join("\n"))}\n    }\n${o.nine?"\n"+NINE_JAVA:""}}\n`}
+/* aiuto, errori, drag&drop */
+function helpOpen(){const s=$("st");s.style.display="flex";s.innerHTML=`<div class=fb style="max-width:600px"><b>Quick guide</b> <button data-z=1>Close</button><h4>How to work</h4><p>1) Choose project type: <b>New Screen</b> or <b>Overlay</b> to add elements to an existing GUI (main menu, pause, inventory...). 2) Drag components onto canvas. 3) Set events and actions (Logic, Node graph). 4) Try with <b>Preview</b>. 5) <b>Generate Java</b>, or <b>📁 Link mod</b> + <b>Write to mod</b>.</p><h4>Shortcuts</h4><pre style="font:11px monospace;white-space:pre-wrap">Ctrl+Z / Ctrl+Y   undo / redo\nCtrl+C / Ctrl+V   copy / paste\nCtrl+D            duplicate\nCtrl+S            save (desktop app)\nDelete            delete\nArrows           move 1 px\nShift+click      multi-select\nDouble click in graph   search node\nShift+click on texture   edit pixel\nCtrl+K            command palette\nCtrl+G / Ctrl+Shift+G   group / ungroup\nCtrl+] / Ctrl+[   bring to front / send to back\nShift+arrows     move 10 px\nCtrl+scroll       zoom · Space+drag or middle button: pan</pre><h4>Multiple screens</h4><p>At the top of the canvas are screen tabs: click to switch between them, double click to rename, ＋ to add. To link them: select a button, set action <b>open_gui</b> and as target the class name of the other screen (suggested). In Preview the button really opens the other screen and <b>close_gui</b> goes back. In game, Esc returns to previous screen.</p><h4>Overlay</h4><p>The red point on canvas is the anchor: positions in Java are relative to that point, so they follow the window. Dashed lines are an approximate reference of the vanilla GUI.</p></div>`}
+addEventListener("error",e=>say("Errore: "+e.message));addEventListener("unhandledrejection",e=>say("Errore: "+(e.reason&&e.reason.message||e.reason)));
+if(document.body){document.body.addEventListener("dragover",e=>e.preventDefault());document.body.addEventListener("drop",async e=>{const f=e.dataTransfer.files[0];if(!f||!/\.json$/i.test(f.name))return;e.preventDefault();$("ta").value=await f.text();loadTa()})}
+
+/* ---- v10: nuova interfaccia: menu, schede, stato, colori ---- */
+const hx=h=>{h=String(h||"#000000").replace("#","");if(h.length===3)h=h.split("").map(c=>c+c).join("");return[0,2,4].map(i=>parseInt(h.slice(i,i+2),16)||0)};
+const toHex=(r,g,b)=>"#"+[r,g,b].map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
+function rgb2hsl(r,g,b){r/=255;g/=255;b/=255;const M=Math.max(r,g,b),m=Math.min(r,g,b);let h=0,s=0;const l=(M+m)/2;if(M!==m){const d=M-m;s=l>.5?d/(2-M-m):d/(M+m);h=M===r?(g-b)/d+(g<b?6:0):M===g?(b-r)/d+2:(r-g)/d+4;h*=60}return[h,s,l]}
+function hsl2hex(h,s,l){h=((h%360)+360)%360;const a=s*Math.min(l,1-l),f=n=>{const k=(n+h/30)%12;return l-a*Math.max(-1,Math.min(k-3,9-k,1))};return toHex(f(0)*255,f(8)*255,f(4)*255)}
+const shade=(c,d)=>{const[h,s,l]=rgb2hsl(...hx(c));return hsl2hex(h,s,Math.max(0,Math.min(1,l+d)))};
+const lum=c=>{const[r,g,b]=hx(c).map(v=>{v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4)});return .2126*r+.7152*g+.0722*b};
+const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
+function harmony(c){const[h,s,l]=rgb2hsl(...hx(c));return{"Complementary":[hsl2hex(h+180,s,l)],"Analogous":[hsl2hex(h-30,s,l),hsl2hex(h+30,s,l)],"Triad":[hsl2hex(h+120,s,l),hsl2hex(h+240,s,l)],"Lighter tints":[.12,.24,.36].map(d=>shade(c,d)),"Darker shades":[-.1,-.2,-.3].map(d=>shade(c,d))}}
+function themeFrom(c){const[h,s]=rgb2hsl(...hx(c));return{btn:c,hov:shade(c,.12),tl:shade(c,.35),br:shade(c,-.3),panel:hsl2hex(h,Math.min(s,.22),.78),slot:hsl2hex(h,Math.min(s,.18),.55),txt:contrast(c,"#ffffff")>=contrast(c,"#000000")?"#ffffff":"#111111"}}
+const MCP=[["#000000","Nero"],["#0000AA","Blu scuro"],["#00AA00","Verde scuro"],["#00AAAA","Acqua scuro"],["#AA0000","Rosso scuro"],["#AA00AA","Viola scuro"],["#FFAA00","Oro"],["#AAAAAA","Grigio"],["#555555","Grigio scuro"],["#5555FF","Blu"],["#55FF55","Verde"],["#55FFFF","Acqua"],["#FF5555","Rosso"],["#FF55FF","Viola chiaro"],["#FFFF55","Giallo"],["#FFFFFF","Bianco"]];
+let CP={base:"#2a9d5c"};
+const sw=(list,cur)=>`<div class=sw>${list.map(c=>`<i data-c="${Array.isArray(c)?c[0]:c}" title="${Array.isArray(c)?c[1]+" ":""}${(Array.isArray(c)?c[0]:c).toUpperCase()}" style="background:${Array.isArray(c)?c[0]:c}" class="${(Array.isArray(c)?c[0]:c).toLowerCase()===cur.toLowerCase()?"cur":""}"></i>`).join("")}</div>`;
+function bgFor(e){const c=find(e.id),p=c&&c.p;if(p&&p.color)return p.color;if(P.overlay&&/^(title|pause)$/.test(P.overlay.target))return"#1b1b22";return(THEMES[P.theme||"vanilla"]||THEMES.vanilla).panel}
+function colorsRender(){const el=$("colp");if(!el)return;const b=CP.base,c=cur(),e=c&&c.e,has=e&&(e.type==="label"||e.type==="panel"),H=harmony(b),T=THEMES[P.theme||"vanilla"]||THEMES.vanilla;
+ let ct="";if(e&&e.type==="label"){const bg=bgFor(e),r=contrast(e.color||"#404040",bg),best=contrast("#ffffff",bg)>=contrast("#000000",bg)?"#ffffff":"#000000";ct=`<h4>Text contrast</h4><p class=hint>Text <b>${esc(e.color||"#404040")}</b> on <b>${esc(bg)}</b>: <span class="badge ${r>=7?"ok":r>=4.5?"ok":r>=3?"warn":"bad"}">${r.toFixed(1)}:1 ${r>=7?"AAA":r>=4.5?"AA":r>=3?"weak":"bad"}</span></p>${r<4.5?`<div class=row><button data-c="${best}">Use ${best==="#ffffff"?"white":"black"} (${contrast(best,bg).toFixed(1)}:1)</button></div>`:""}`}
+ el.innerHTML=`<h4>Color</h4><div class=row style="align-items:center"><input type=color id=cpb value="${b}"><input id=cph value="${b}" style="flex:1" maxlength=7></div><div class=row><button data-ap=1 ${has?"":"disabled"} title="${has?"":"Select a label or a panel"}">To element</button><button data-br=1>As brush</button></div><div class=row><button data-th=1 class=pri>✨ Generate theme from this color</button></div>${ct}`
+ +Object.entries(H).map(([k,v])=>`<h4>${k}</h4>${sw(v,b)}`).join("")+`<h4>Palette Minecraft</h4>${sw(MCP,b)}<h4>Active theme (${esc(P.theme||"vanilla")})</h4>${sw(Object.values(T).filter((v,i,a)=>a.indexOf(v)===i),b)}<h4>Recent</h4>${sw(CFG.recent||[],b)||""}`}
+function cpPick(c){CP.base=c.length===7?c:CP.base;CFG.recent=[CP.base,...(CFG.recent||[]).filter(x=>x!==CP.base)].slice(0,12);saveCfg();colorsRender()}
+$("colp").onclick=ev=>{const t=ev.target;if(t.dataset.c)cpPick(t.dataset.c);else if(t.dataset.ap){const c=cur();if(c&&(c.e.type==="label"||c.e.type==="panel")){c.e.color=CP.base;push();ui()}}
+ else if(t.dataset.br){CFG.brush=CP.base;saveCfg();say("Color pennello impostato: "+CP.base)}
+ else if(t.dataset.th){P.customTheme=themeFrom(CP.base);THEMES.custom=P.customTheme;P.theme="custom";push();ui();say("Theme personalizzato applicato")}};
+$("colp").onchange=ev=>{const t=ev.target;if(t.id==="cpb"||t.id==="cph"){const v=(t.value||"").trim();if(/^#[0-9a-fA-F]{6}$/.test(v))cpPick(v.toLowerCase())}};
+function statusUpd(){const c=cur(),e=c&&c.e;$("sbl").textContent=e?`${e.type} · ${e.id} · x ${e.x}  y ${e.y} · ${e.width}×${e.height}`:`${P.screen.id} · ${P.screen.width}×${P.screen.height}`;$("sbr").textContent=`Autosaveto · ${({forge:"Forge 1.20.1",neoforge:"NeoForge 1.20.1",neoforge121:"NeoForge 1.21.1"})[P.loader||"forge"]}`;$("zl").textContent=S+"×";$("ptitle").textContent=P.screen.id+(P.overlay?" · overlay":"")}
+function switchTab(g,id){if(typeof document.querySelectorAll!=="function")return;document.querySelectorAll(`[data-pg="${g}"]`).forEach(p=>p.classList.toggle("on",p.id===id));document.querySelectorAll(`.tab[data-g="${g}"]`).forEach(t=>t.classList.toggle("on",t.dataset.p===id))}
+if(typeof document.addEventListener==="function")document.addEventListener("click",ev=>{const mb=ev.target.closest(".mb"),dd=ev.target.closest(".dd"),tab=ev.target.closest(".tab");
+ document.querySelectorAll(".menu").forEach(m=>{if(mb&&m===mb.parentNode)m.classList.toggle("open");else m.classList.remove("open")});if(tab)switchTab(tab.dataset.g,tab.dataset.p)});
+
+/* ---- v11: funzioni ispirate a Figma, Blockbench, Godot, Unreal e agli editor Minecraft ---- */
+const selEls=()=>ids().map(i=>find(i)).filter(Boolean);
+function alignSel(m){const L=selEls();if(!L.length)return;const par=L[0].p,W=par?par.width:P.screen.width,H=par?par.height:P.screen.height;
+ const bb=L.length>1?{x1:Math.min(...L.map(c=>c.e.x)),y1:Math.min(...L.map(c=>c.e.y)),x2:Math.max(...L.map(c=>c.e.x+c.e.width)),y2:Math.max(...L.map(c=>c.e.y+c.e.height))}:{x1:0,y1:0,x2:W,y2:H};
+ L.forEach(({e})=>{if(m==="l")e.x=bb.x1;if(m==="r")e.x=bb.x2-e.width;if(m==="c")e.x=Math.round((bb.x1+bb.x2-e.width)/2);if(m==="t")e.y=bb.y1;if(m==="b")e.y=bb.y2-e.height;if(m==="m")e.y=Math.round((bb.y1+bb.y2-e.height)/2)});push();ui()}
+function distSel(ax){const L=selEls().map(c=>c.e);if(L.length<3)return say("Select at least 3 elements (Shift+click)");const k=ax==="h"?"x":"y",s=ax==="h"?"width":"height";L.sort((a,b)=>a[k]-b[k]);
+ const first=L[0][k],last=L[L.length-1][k]+L[L.length-1][s],tot=L.reduce((t,e)=>t+e[s],0),gap=(last-first-tot)/(L.length-1);let pos=first;L.forEach(e=>{e[k]=Math.round(pos);pos+=e[s]+gap});push();ui()}
+function groupSel(){const L=selEls();if(!L.length)return;const l=L[0].l;if(L.some(c=>c.l!==l))return say("Elements must be in the same container");
+ const x1=Math.min(...L.map(c=>c.e.x)),y1=Math.min(...L.map(c=>c.e.y)),x2=Math.max(...L.map(c=>c.e.x+c.e.width)),y2=Math.max(...L.map(c=>c.e.y+c.e.height)),g=mk("panel");
+ g.id="group_"+(++n);g.bg=false;g.x=x1;g.y=y1;g.width=x2-x1;g.height=y2-y1;const idx=Math.min(...L.map(c=>l.indexOf(c.e)));
+ L.forEach(c=>{l.splice(l.indexOf(c.e),1);c.e.x-=x1;c.e.y-=y1;g.children.push(c.e)});l.splice(idx,0,g);sel=g.id;multi=new Set([g.id]);push();ui()}
+function ungroupSel(){const c=cur();if(!c||c.e.type!=="panel"||!c.e.children.length)return say("Select a Panel with elements inside");const g=c.e,i=c.l.indexOf(g);
+ g.children.forEach(k=>{k.x+=g.x;k.y+=g.y});c.l.splice(i,1,...g.children);sel=g.children[0].id;multi=new Set(g.children.map(k=>k.id));push();ui()}
+function zSel(d){selEls().forEach(({e,l})=>{l.splice(l.indexOf(e),1);d>0?l.push(e):l.unshift(e)});push();ui()}
+/* auto layout dei Panel (Figma / contenitori Godot) */
+function relayout(){for(let pass=0;pass<2;pass++)walk(P.elements,e=>{if(e.type!=="panel"||!e.layout||e.layout==="none"||!e.children.length)return;const v=e.layout==="vertical",g=+e.gap||0,pd=+e.pad||0;let pos=pd,mx=0;
+ e.children.forEach(c=>{if(c.visible===false)return;if(v){c.x=pd;c.y=pos;pos+=c.height+g;mx=Math.max(mx,c.width)}else{c.y=pd;c.x=pos;pos+=c.width+g;mx=Math.max(mx,c.height)}});
+ if(e.hug){if(v){e.width=mx+2*pd;e.height=Math.max(1,pos-g+pd)}else{e.width=Math.max(1,pos-g+pd);e.height=mx+2*pd}}})}
+/* controllo problemi (lint) */
+function lint(){const out=[],W=P.screen.width,H=P.screen.height,add=(sev,e,msg)=>out.push({sev,id:e&&e.id,msg});
+ walk(P.elements,(e,p)=>{if(e.visible===false)return;const pw=p?p.width:W,ph=p?p.height:H;
+  if(e.x<0||e.y<0||e.x+e.width>pw||e.y+e.height>ph)add("warn",e,`${e.id} goes outside ${p?"the container":"the screen"}`);
+  if(e.type==="button"&&!e.text&&!e.texture)add("info",e,`${e.id}: button without text`);
+  if(e.type==="button"&&e.height<20&&!e.texture)add("info",e,`${e.id}: height ${e.height}px, vanilla buttons are 20px`);
+  if(e.type==="label"){const c=contrast(e.color||"#404040",bgFor(e));if(c<3)add("warn",e,`${e.id}: text barely readable (${c.toFixed(1)}:1)`)}
+  if(["image","panel","button"].includes(e.type)&&e.texture&&!(P.assets||{})[e.texture])add("err",e,`${e.id}: texture "${e.texture}" not in assets`);
+  if(e.type==="image"&&!e.texture)add("warn",e,`${e.id}: image without texture`)});
+ const S_=[],rec=(l,ox,oy)=>l.forEach(e=>{if(e.visible===false)return;const x=ox+e.x,y=oy+e.y;if(e.type==="slot")S_.push({e,x,y});if(e.children)rec(e.children,x,y)});rec(P.elements,0,0);
+ for(let i=0;i<S_.length;i++)for(let j=i+1;j<S_.length;j++){const a=S_[i],b=S_[j];if(a.x<b.x+18&&b.x<a.x+18&&a.y<b.y+18&&b.y<a.y+18)add("err",a.e,`Slot ${a.e.id} and ${b.e.id} overlap`)}
+ const seen={};S_.filter(s=>s.e.slotType==="player").forEach(s=>{(seen[s.e.slotIndex]=seen[s.e.slotIndex]||[]).push(s.e)});Object.values(seen).forEach(l=>{if(l.length>1)add("err",l[1],`Inventory index ${l[0].slotIndex} duplicateted (${l.map(e=>e.id).join(", ")})`)});
+ if(P.container&&!S_.length)add("warn",null,"Menu mode active but no slots");
+ {const known=new Set(Object.keys(pscMap()).map(s=>s.toLowerCase()).concat((MOD&&MOD.screens||[]).map(s=>s.cls.toLowerCase())));walk(P.elements,e=>{for(const v of Object.keys(e.events||{}))(e.events[v]||[]).forEach(a=>{if(a.action==="open_gui"&&a.target&&!known.has(String(a.target).toLowerCase())&&screenIndexBy(a.target)<0)add("warn",e,`${e.id}: screen "${a.target}" not found in project`)})})}
+ if(P.overlay){const[AX,AY]=anc(),a=P.overlay.anchor,wins=[[320,180,"1280×720 a scala 4"],[427,240,"854×480 a scala 2"]];let k=0;
+  const r2=(l,ox,oy)=>l.forEach(e=>{if(e.visible===false)return;const x=ox+e.x,y=oy+e.y;if(!(e.type==="panel"&&e.children.length&&e.bg===false)){for(const[ww,wh,nm]of wins){const axw=/center$/.test(a)?ww/2:/right$/.test(a)?ww:a==="gui"?(ww-W)/2:0,ayw=a==="center"?wh/2:/^bottom/.test(a)?wh:a==="gui"?(wh-H)/2:0,X=axw+(x-AX),Y=ayw+(y-AY);
+   if(X<0||Y<0||X+e.width>ww||Y+e.height>wh){if(k++<6)add("warn",e,`${e.id} exits the window with ${nm} (${ww}×${wh})`);break}}}if(e.children)r2(e.children,x,y)});r2(P.elements,0,0)}
+ return out}
+function probRender(){const el=$("probp");if(!el)return;const L=lint().concat(nameProblems().map(m=>({sev:"err",id:"",msg:m})));$("tprob").textContent=L.length?`Problems · ${L.length}`:"Problems";
+ el.innerHTML=L.length?L.map(p=>`<div class="pb ${p.sev}" data-id="${esc(p.id||"")}"><b>${p.sev==="err"?"●":p.sev==="warn"?"▲":"ℹ"}</b><span>${esc(p.msg)}</span></div>`).join(""):'<p class="hint">No problems found ✔</p>'}
+$("probp").onclick=ev=>{const d=ev.target.closest(".pb");if(d&&d.dataset.id&&find(d.dataset.id)){sel=d.dataset.id;multi=new Set([sel]);switchTab("right","p-el");ui()}};
+/* template GUI vanilla (coordinate reali) */
+const TPLS=[["chest1","Chest 9×1"],["chest2","Chest 9×2"],["chest3","Chest 9×3 (single)"],["chest4","Chest 9×4"],["chest5","Chest 9×5"],["chest6","Chest 9×6 (double)"],["furnace","Furnace"],["crafting","Crafting table"],["dispenser","Dispenser / Dropper 3×3"],["hopper","Hopper"],["inventory","Player inventory only"]];
+function tplBuild(k){const S_=(i,x,y,t)=>{const s=mk("slot");s.x=x-1;s.y=y-1;s.slotIndex=i;s.slotType=t||"container";return s};
+ const grid=(nm,x,y,w,hh,base,ty)=>{const g=mk("panel");g.id=nm+"_"+(++n);g.bg=false;g.x=x-1;g.y=y-1;g.width=w*18;g.height=hh*18;let i=base;for(let r=0;r<hh;r++)for(let c=0;c<w;c++){const s=mk("slot");s.x=c*18;s.y=r*18;s.slotIndex=i++;s.slotType=ty||"container";g.children.push(s)}return g};
+ const lab=(t,x,y)=>{const l=mk("label");l.text=t;l.x=x;l.y=y;l.width=Math.max(9,t.length*6);l.height=9;return l},bg=(w,hh)=>{const p=mk("panel");p.id="background";p.x=0;p.y=0;p.width=w;p.height=hh;p.locked=true;return p};
+ const inv=y=>[grid("inventory",8,y,9,3,9,"player"),grid("hotbar",8,y+58,9,1,0,"player")];let W=176,H=166,E=[],nm="Container",m=/^chest(\d)$/.exec(k);
+ if(m){const r=+m[1];H=114+r*18;nm="Chest";E=[bg(W,H),lab("Chest",8,6),grid("chest",8,18,9,r,0),lab("Inventory",8,H-94),...inv(103+(r-4)*18)]}
+ else if(k==="furnace"){nm="Furnace";E=[bg(W,H),lab("Furnace",8,6),S_(0,56,17),S_(1,56,53),S_(2,116,35,"output"),lab("Inventory",8,72),...inv(84)]}
+ else if(k==="crafting"){nm="Crafting";E=[bg(W,H),lab("Crafting",28,6),grid("craft",30,17,3,3,1),S_(0,124,35,"output"),lab("Inventory",8,72),...inv(84)]}
+ else if(k==="dispenser"){nm="Dispenser";E=[bg(W,H),lab("Dispenser",8,6),grid("dispenser",62,17,3,3,0),lab("Inventory",8,72),...inv(84)]}
+ else if(k==="hopper"){nm="Hopper";H=133;E=[bg(W,H),lab("Hopper",8,6),grid("hopper",44,20,5,1,0),lab("Inventory",8,39),...inv(51)]}
+ else{nm="Inventory";E=[bg(W,H),lab("Inventory",8,72),...inv(84)]}
+ return{E,W,H,nm}}
+function tplNew(k){newP();P.container=true;const b=tplBuild(k);P.elements=b.E;P.screen={id:b.nm.toLowerCase(),width:b.W,height:b.H,cls:b.nm+"Screen"};$("cls").value=P.screen.cls;recount();push();fitZoom()}
+function tplOpen(){const s=$("st");s.style.display="flex";s.innerHTML=`<div class=fb style="max-width:520px"><b>New from template</b> <button data-z=1>Close</button><p class=hint>Slot positions identical to vanilla GUI. Create a project in Menu mode (real slots, Menu + Screen).</p><div class=tplg>${TPLS.map(([k,l])=>`<button data-tpl=${k}>${l}</button>`).join("")}</div></div>`}
+/* reference image (like Unreal UMG background preview) */
+$("refin").onchange=ev=>{const f=ev.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{P.ref={data:r.result,op:+$("refop").value||40};push();ui()};r.readAsDataURL(f)};
+$("refop").oninput=()=>{if(P.ref){P.ref.op=+$("refop").value;ui()}};
+function refClear(){delete P.ref;push();ui()}
+/* command palette (Blockbench Action Control, Figma Quick Actions, VS Code) */
+function fz(q,s){q=q.toLowerCase();s=s.toLowerCase();const ix=s.indexOf(q);if(ix>=0)return 100+(ix===0||s[ix-1]===" "?20:0)-ix;let i=0,sc=0,last=-2;for(let j=0;j<s.length&&i<q.length;j++){if(s[j]===q[i]){sc+=(j===last+1?3:1)+(j===0||s[j-1]===" "?2:0);last=j;i++}}return i===q.length?sc:-1}
+function cmds(){const a=[["New project…","",()=>launchOpen(),"File"],["New from template…","",()=>tplOpen(),"File"],["Open / save JSON…","",()=>openJson(),"File"],["Settings…","",()=>openSettings(),"File"],
+ ["Undo","Ctrl+Z",()=>undo(),"Edit"],["Redo","Ctrl+Y",()=>redo(),"Edit"],["Duplicate","Ctrl+D",()=>dup(),"Edit"],["Delete","Del",()=>del(),"Edit"],["Group in Panel","Ctrl+G",()=>groupSel(),"Edit"],["Ungroup","Ctrl+Shift+G",()=>ungroupSel(),"Edit"],
+ ["Bring to front","Ctrl+]",()=>zSel(1),"Ordine"],["Send to back","Ctrl+[",()=>zSel(-1),"Ordine"],
+ ["Align left","",()=>alignSel("l"),"Allinea"],["Center horizontally","",()=>alignSel("c"),"Allinea"],["Align right","",()=>alignSel("r"),"Allinea"],["Align top","",()=>alignSel("t"),"Allinea"],["Center vertically","",()=>alignSel("m"),"Allinea"],["Align bottom","",()=>alignSel("b"),"Allinea"],["Distribute horizontally","",()=>distSel("h"),"Allinea"],["Distribute vertically","",()=>distSel("v"),"Allinea"],
+ ["Zoom in","Ctrl++",()=>zoom(1),"View"],["Zoom out","Ctrl+-",()=>zoom(-1),"View"],["Fit to window","Ctrl+0",()=>fitZoom(),"View"],["Show/hide borders","",()=>$("gui").classList.toggle("dbg"),"View"],["Preview on/off","",()=>togglePrev(),"View"],
+ ["Texture Maker","",()=>texMaker(),"Assets"],["Pixel editor","",()=>pxOpen(),"Assets"],["Draw on screen","",()=>drawStart(),"Assets"],["Logic a schede","",()=>flow(),"Logic"],["Logic a grafo","",()=>gopen(),"Logic"],
+ ["Vai a Problems","",()=>switchTab("right","p-prob"),"Vai a"],["Vai a Colors","",()=>switchTab("right","p-col"),"Vai a"],["Vai a Project","",()=>switchTab("right","p-proj"),"Vai a"],["Generate Java","",()=>exJava(),"Export"],["Quick guide","",()=>helpOpen(),"Help"]];
+ Object.keys(D).forEach(t=>a.push(["Add "+t,"",()=>add(t),"Components"]));TPLS.forEach(([k,l])=>a.push(["Template: "+l,"",()=>tplNew(k),"Template"]));
+ a.push(["New Screen (no overlay)","",()=>setOverlay(""),"Project"]);Object.keys(OVT).forEach(k=>a.push(["Overlay: "+k,"",()=>setOverlay(k),"Project"]));
+ a.push(["New screen…","",()=>openAddScreen(),"Schermate"],["Delete current screen","",()=>deleteCur(),"Schermate"]);if(P.screens)P.screens.forEach((s,i)=>a.push(["Go to screen: "+s.name,"",()=>switchScreen(i),"Schermate"]));if(window.native)a.push(["Link mod…","",()=>linkMod(),"Mod"],["Write to mod","",()=>nWrite(),"Mod"],["Save to file…","Ctrl+S",()=>nSave(),"File"]);return a}
+let CK={i:0,L:[]};
+function cmdkOpen(){const p=$("cmdk");p.style.display="flex";p.innerHTML='<div class="ck"><input id="cki" placeholder="Search a command…  (↑↓ Invio Esc)" autocomplete="off"><div id="ckl"></div></div>';CK.i=0;ckRender("");$("cki").focus()}
+function ckRender(q){const rec=CFG.recentCmds||[];let L=cmds().map(c=>({c,s:q?fz(q,c[0]+" "+c[3]):(rec.includes(c[0])?100-rec.indexOf(c[0]):0)}));if(q)L=L.filter(x=>x.s>0);L=L.sort((a,b)=>b.s-a.s).slice(0,40);CK.L=L;CK.i=Math.min(CK.i,Math.max(0,L.length-1));
+ $("ckl").innerHTML=L.map((x,i)=>`<div class="cki${i===CK.i?" on":""}" data-i=${i}><span>${esc(x.c[0])}</span><em>${esc(x.c[3])}</em><kbd>${esc(kfix(x.c[1]))}</kbd></div>`).join("")||'<p class="hint" style="padding:10px">Nessun comando trovato</p>'}
+function ckRun(i){const x=CK.L[i];if(!x)return;$("cmdk").style.display="none";CFG.recentCmds=[x.c[0],...(CFG.recentCmds||[]).filter(n=>n!==x.c[0])].slice(0,8);saveCfg();x.c[2]()}
+$("cmdk").oninput=ev=>{if(ev.target.id==="cki")ckRender(ev.target.value)};
+$("cmdk").onkeydown=ev=>{if(ev.key==="ArrowDown"){CK.i=Math.min(CK.L.length-1,CK.i+1);ckRender($("cki").value);ev.preventDefault()}else if(ev.key==="ArrowUp"){CK.i=Math.max(0,CK.i-1);ckRender($("cki").value);ev.preventDefault()}else if(ev.key==="Enter")ckRun(CK.i);else if(ev.key==="Escape")$("cmdk").style.display="none"};
+$("cmdk").onclick=ev=>{const d=ev.target.closest(".cki");if(d)ckRun(+d.dataset.i);else if(ev.target.id==="cmdk")$("cmdk").style.display="none"};
+/* menu contestuale, scorciatoie, pan e zoom */
+let CTXI=null,SPACE=false,PN=null;
+$("gui").addEventListener("contextmenu",ev=>{ev.preventDefault();if(prev)return;const d=ev.target.closest(".n");if(d){const id=d.dataset.id;if(!multi.has(id)){sel=id;multi=new Set([id]);ui()}}
+ const it=[["Duplicate",()=>dup()],["Delete",()=>del()],["Group in Panel",()=>groupSel()],["Ungroup",()=>ungroupSel()],["Bring to front",()=>zSel(1)],["Send to back",()=>zSel(-1)],["Center horizontally",()=>alignSel("c")],["Center vertically",()=>alignSel("m")],["Logic…",()=>flow()],["Graph a nodi…",()=>gopen()]];
+ CTXI=it;const m=$("ctx");m.style.left=ev.clientX+"px";m.style.top=ev.clientY+"px";m.style.display="block";m.innerHTML=it.map(([t],i)=>`<button data-i=${i}>${t}</button>`).join("")});
+$("ctx").onclick=ev=>{const b=ev.target.closest("button");$("ctx").style.display="none";if(b&&CTXI)CTXI[+b.dataset.i][1]()};
+addEventListener("click",()=>{$("ctx").style.display="none"});
+addEventListener("keydown",ev=>{const ed=/INPUT|TEXTAREA|SELECT/.test(ev.target.tagName),k=ev.key.toLowerCase(),c=ev.ctrlKey||ev.metaKey;
+ if(c&&(k==="k"||(ev.shiftKey&&k==="p"))){ev.preventDefault();cmdkOpen();return}
+ if(k==="escape"){$("ctx").style.display="none";if($("launch").style.display==="flex"){$("launch").style.display="none";return}if(!ed&&!DW){sel=null;multi=new Set();ui()}return}
+ if(ed)return;
+ if(c&&k==="g"){ev.preventDefault();ev.shiftKey?ungroupSel():groupSel()}else if(c&&k==="]"){ev.preventDefault();zSel(1)}else if(c&&k==="["){ev.preventDefault();zSel(-1)}
+ else if(c&&k==="a"){ev.preventDefault();selAll()}
+ else if(c&&k==="0"){ev.preventDefault();fitZoom()}else if(c&&(k==="="||k==="+")){ev.preventDefault();zoom(1)}else if(c&&k==="-"){ev.preventDefault();zoom(-1)}
+ else if(k===" "){ev.preventDefault();SPACE=true}});
+addEventListener("keyup",ev=>{if(ev.key===" ")SPACE=false});
+$("ws").addEventListener("pointerdown",ev=>{if(ev.button===1||SPACE){ev.preventDefault();ev.stopPropagation();PN={x:ev.clientX,y:ev.clientY,l:$("ws").scrollLeft,t:$("ws").scrollTop}}},true);
+addEventListener("pointermove",ev=>{if(PN){$("ws").scrollLeft=PN.l-(ev.clientX-PN.x);$("ws").scrollTop=PN.t-(ev.clientY-PN.y)}});
+addEventListener("pointerup",()=>{PN=null});
+$("ws").addEventListener("wheel",ev=>{if(ev.ctrlKey){ev.preventDefault();zoom(ev.deltaY<0?1:-1)}},{passive:false});
+
+/* ---- v12: robustezza, validaction, macOS ---- */
+function normProject(j){if(!j||typeof j!=="object"||!Array.isArray(j.elements))throw new Error("manca l'elenco elements");const s=j.screen&&typeof j.screen==="object"?j.screen:{},q=sanitize({screen:{id:s.id,width:s.width,height:s.height},elements:j.elements});const out={...j,format:1,screen:{...q.screen,cls:typeof s.cls==="string"?s.cls:undefined},elements:q.elements};
+ if(Array.isArray(j.screens)&&j.screens.length){out.screens=j.screens.map((d,i)=>{if(!d||typeof d!=="object")d={};const sd=d.screen&&typeof d.screen==="object"?d.screen:{},q2=sanitize({screen:{id:sd.id,width:sd.width,height:sd.height},elements:Array.isArray(d.elements)?d.elements:[]});return{name:String(d.name||q2.screen.id||"Screen "+(i+1)),custom:!!d.custom,screen:{...q2.screen,cls:typeof sd.cls==="string"?sd.cls:undefined},elements:q2.elements,overlay:d.overlay&&d.overlay.on?d.overlay:undefined,container:d.container?true:undefined}});out.cur=Math.min(Math.max(0,j.cur|0),out.screens.length-1);const a=out.screens[out.cur];out.screens[out.cur]=a.custom?{name:a.name,custom:true}:{name:a.name}}
+ return out}
+function nameProblems(){const p=[],m=$("mod").value,k=$("pkg").value,c=$("cls").value;if(!/^[a-z][a-z0-9_]{0,63}$/.test(m))p.push("Invalid Mod ID: only lowercase, numbers and _, must start with a letter");if(!/^[A-Za-z_]\w*(\.[A-Za-z_]\w*)*$/.test(k))p.push("Invalid Java package (example: com.example.mod)");if(!/^[A-Z]\w*$/.test(c))p.push("Invalid class name (example: MainMenuScreen)");return p}
+$("mod").oninput=$("pkg").oninput=$("cls").oninput=()=>probRender();
+if(IS_MAC&&typeof document.querySelectorAll==="function")document.querySelectorAll("kbd").forEach(k=>{k.textContent=kfix(k.textContent.replace("Ctrl K","Ctrl+K"))});
+
+/* ---- v13: start screen and projects with multiple screens ---- */
+let PSC={},GENALL=false,HAD_AUTO=false,PSTACK=[],PSTART;
+const KIND_NAME={"ov:title":"Main menu","ov:pause":"Pause menu","ov:inventory":"Inventory","ov:creative":"Creative","blank":"Custom screen",chest3:"Chest",furnace:"Furnace",crafting:"Crafting",dispenser:"Dispenser",hopper:"Hopper"};
+const KINDS=[["Add to Minecraft GUIs",[["ov:title","Main menu","Game start screen: add your buttons and texts","button"],["ov:pause","Pause menu","The menu that opens with Esc during the game","panel"],["ov:inventory","Player inventory","Add elements to the inventory GUI","grid"],["ov:creative","Creative inventory","Add elements to the creative mode GUI","image"]]],
+ ["Create a new screen",[["blank","Empty screen","Your own GUI, with buttons, texts, images and actions","panel"]]],
+ ["Containers with inventory (real slots)",[["chest3","Chest","Chest with player inventory","slot"],["furnace","Furnace","Furnace with input, fuel and output","slot"],["crafting","Crafting table","3x3 grid with result","grid"],["dispenser","Dispenser / Dropper","3x3 grid","grid"],["hopper","Hopper","5 slots in a row","hotbar"]]]];
+function kindCards(mode){return KINDS.map(([hd,l])=>`<h4>${hd}</h4><div class="lcg">${l.map(([k,t,d,ic])=>`<button class="lc" data-${mode}="${k}">${ICONS[ic]||""}<b>${t}</b><span>${d}</span></button>`).join("")}</div>`).join("")}
+function ensureScreens(){if(!Array.isArray(P.screens)||!P.screens.length){P.screens=[{name:P.screen.id||"Screen 1"}];P.cur=0}if(!(P.cur>=0&&P.cur<P.screens.length))P.cur=0}
+const pascal=s=>String(s).replace(/[^A-Za-z0-9]+(.)?/g,(m,c)=>c?c.toUpperCase():"").replace(/^./,c=>c.toUpperCase());
+function defCls(name){let c=pascal(name)||"Custom";if(!/Screen\d*$/i.test(c))c+="Screen";return /^[A-Z]/.test(c)?c:"S"+c}
+function screenData(i){ensureScreens();return i===P.cur?{name:P.screens[i].name,screen:P.screen,elements:P.elements,overlay:P.overlay,container:P.container}:P.screens[i]}
+function clsOf(i){const d=screenData(i);return i===P.cur?$("cls").value:(d.screen&&d.screen.cls)||defCls(d.name)}
+const hasSlotIn=l=>{let f=false;walk(l,e=>{if(e.type==="slot"&&e.visible!==false)f=true});return f};
+function pscMap(){const m={};if(!P.screens||!P.screens.length){m[$("cls").value]={overlay:!!(P.overlay&&P.overlay.on),container:ctMode()};return m}
+ P.screens.forEach((_,i)=>{const d=screenData(i),ov=!!(d.overlay&&d.overlay.on);m[clsOf(i)]={overlay:ov,container:!ov&&!!d.container&&hasSlotIn(d.elements||[])}});return m}
+function screenIndexBy(t){const q=String(t||"").trim().toLowerCase();if(!q)return-1;ensureScreens();for(let i=0;i<P.screens.length;i++){const d=screenData(i);if(clsOf(i).toLowerCase()===q||String(d.name).toLowerCase()===q||(d.screen&&String(d.screen.id).toLowerCase()===q))return i}return-1}
+function switchScreen(i){ensureScreens();if(i===P.cur||!P.screens[i])return;P.screen.cls=$("cls").value;
+ const a=P.screens[P.cur];P.screens[P.cur]={name:a.name,custom:a.custom,screen:P.screen,elements:P.elements,overlay:P.overlay,container:P.container};
+ const d=P.screens[i];P.screens[i]={name:d.name,custom:d.custom};P.cur=i;P.screen=d.screen;P.elements=d.elements;if(d.overlay)P.overlay=d.overlay;else delete P.overlay;if(d.container)P.container=true;else delete P.container;
+ sel=null;multi=new Set();$("cls").value=P.screen.cls||defCls(d.name);if(!prev)push();ui();fitZoom()}
+function buildKind(kind){if(kind.startsWith("ov:")){const k=kind.slice(3),t=OVT[k];return{name:KIND_NAME[kind],screen:{id:k,width:t.w,height:t.h,cls:t.n+"Additions"},elements:[],overlay:{on:true,target:k,anchor:t.a,custom:""}}}
+ if(kind==="blank")return{name:KIND_NAME.blank,screen:{id:"custom",width:176,height:166},elements:[]};const b=tplBuild(kind);return{name:KIND_NAME[kind]||b.nm,screen:{id:b.nm.toLowerCase(),width:b.W,height:b.H,cls:b.nm+"Screen"},elements:b.E,container:true}}
+function addScreen(kind){ensureScreens();const d=buildKind(kind),N=P.screens.map(s=>s.name);let nm=d.name,k=2;while(N.includes(nm))nm=d.name+" "+(k++);d.name=nm;d.custom=true;
+ const ids=P.screens.map((_,i)=>String((screenData(i).screen||{}).id));let id=d.screen.id,j=2;while(ids.includes(id))id=d.screen.id+(j++);d.screen.id=id;
+ const cs=P.screens.map((_,i)=>clsOf(i));let c=d.screen.cls||defCls(nm);j=2;const c0=c;while(cs.includes(c))c=c0+(j++);d.screen.cls=c;
+ P.screens.push(d);switchScreen(P.screens.length-1)}
+function deleteScreen(i){ensureScreens();if(P.screens.length<2)return say("At least one screen is required");if(i===P.cur)switchScreen(i>0?i-1:1);P.screens.splice(i,1);if(P.cur>i)P.cur--;push();ui()}
+function deleteCur(){ensureScreens();if(P.screens.length<2)return say("At least one screen is required");if(confirm('Delete the screen "'+P.screens[P.cur].name+'"?'))deleteScreen(P.cur)}
+function renameScreen(i,name){ensureScreens();P.screens[i].name=name;P.screens[i].custom=true;push();ui()}
+function screensRender(){ensureScreens();const a=P.screens[P.cur];if(!a.custom)a.name=(P.overlay&&KIND_NAME["ov:"+P.overlay.target])||P.screen.id;
+ $("stabs").innerHTML=P.screens.map((s,i)=>`<button class="stab${i===P.cur?" on":""}" data-i="${i}" title="Classe: ${esc(clsOf(i))}  ·  double click to rename">${esc(s.name)}${P.screens.length>1?`<span class="x" data-x="${i}" title="Delete">×</span>`:""}</button>`).join("")+`<button class="stab add" data-add="1">＋ Screen</button>`;fillMod()}
+$("cls").onchange=()=>{P.screen.cls=$("cls").value;push();ui()};
+$("stabs").onclick=ev=>{const x=ev.target.closest("[data-x]"),t=ev.target.closest(".stab");if(x){ev.stopPropagation();ensureScreens();const i=+x.dataset.x;if(confirm('Delete the screen "'+P.screens[i].name+'"?'))deleteScreen(i);return}if(!t)return;if(t.dataset.add)return openAddScreen();switchScreen(+t.dataset.i)};
+$("stabs").ondblclick=ev=>{const t=ev.target.closest(".stab");if(!t||t.dataset.add)return;const i=+t.dataset.i,s=P.screens[i];t.innerHTML=`<input value="${esc(s.name)}" size="12">`;const inp=t.querySelector("input");let fin=false;inp.focus();inp.select();
+ const done=()=>{if(fin)return;fin=true;const v=inp.value.trim();if(v)renameScreen(i,v);else screensRender()};inp.onkeydown=e=>{e.stopPropagation();if(e.key==="Enter")done();if(e.key==="Escape"){fin=true;screensRender()}};inp.onblur=done};
+function openAddScreen(){const s=$("st");s.style.display="flex";s.innerHTML=`<div class=fb style="max-width:900px"><b>New screen</b> <button data-z=1>Close</button><p class=hint>The new screen is added to the project. To link it: select a button, choose the action <b>open_gui</b> and as target the class name of the screen.</p>${kindCards("ak")}</div>`}
+/* generaction Java di tutte le schermate */
+function genAllFiles(){ensureScreens();const base="src/main/java/"+$("pkg").value.replace(/\./g,"/")+"/",out=[],run=()=>{out.push({path:base+$("cls").value+".java",text:gen()});genExtra().forEach(f=>out.push({path:base+f.name+".java",text:f.text}))};
+ if(P.screens.length<2){GENALL=false;run();return out}
+ const keep={screen:P.screen,elements:P.elements,overlay:P.overlay,container:P.container},keepCls=$("cls").value;PSC=pscMap();GENALL=true;
+ try{P.screens.forEach((_,i)=>{const d=screenData(i);P.screen=d.screen;P.elements=d.elements;if(d.overlay)P.overlay=d.overlay;else delete P.overlay;if(d.container)P.container=true;else delete P.container;$("cls").value=clsOf(i);if(i===P.cur)$("cls").value=keepCls;run()})}
+ finally{GENALL=false;P.screen=keep.screen;P.elements=keep.elements;if(keep.overlay)P.overlay=keep.overlay;else delete P.overlay;if(keep.container)P.container=true;else delete P.container;$("cls").value=keepCls}
+ return out}
+/* preview with screen navigation */
+function previewOpen(i){if(!prev||i===P.cur||!P.screens[i])return;walk(P.elements,e=>run(e,"close"));PSTACK.push(P.cur);switchScreen(i);walk(P.elements,e=>run(e,"open"))}
+function previewBack(){if(!prev)return;if(PSTACK.length){walk(P.elements,e=>run(e,"close"));switchScreen(PSTACK.pop());walk(P.elements,e=>run(e,"open"))}else togglePrev()}
+/* launch screen */
+function launchOpen(){const l=$("launch");l.style.display="flex";l.innerHTML=`<div class="lw"><div class="lh"><svg width="44" height="44" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" fill="#2a9d5c"/><rect x="6" y="6" width="5" height="5" rx="1" fill="#fff"/><rect x="13" y="6" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="6" y="13" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="13" y="13" width="5" height="5" rx="1" fill="#fff"/></svg><div><h1>Minecraft GUI Builder</h1><p>What type of GUI do you want to create?</p></div></div>${kindCards("lk")}<div class="lf">${HAD_AUTO?'<button class="pri" data-lk="continue">▶ Continue last project</button>':""}${window.native?'<button data-lk="open">📂 Open a file…</button><button data-lk="mod">📁 Link to mod…</button>':""}<button data-lk="json">Open / paste JSON…</button><label class="lskip"><input type="checkbox" id="lskip" ${CFG.showLaunch===false?"checked":""}> Do not show on startup</label></div></div>`}
+$("launch").onclick=ev=>{if(ev.target.id==="lskip"){CFG.showLaunch=!ev.target.checked;saveCfg();return}const b=ev.target.closest("[data-lk]");if(b)launchPick(b.dataset.lk)};
+function launchPick(k){const l=$("launch");l.style.display="none";if(k==="continue")return;if(k==="open")return nOpen();if(k==="mod"){linkMod();return switchTab("left","p-mod")}if(k==="json")return openJson();
+ newP();if(k.startsWith("ov:"))setOverlay(k.slice(3));else if(k!=="blank")tplNew(k);switchTab("left","p-comp");
+ say(k.startsWith("ov:")?"The dashed lines are Minecraft elements: add yours above, with the components on the left.":"Ready: drag components onto the canvas.")}
+/* init */
+try{const s=localStorage.getItem("mcgb");if(s){P=blank();P=normProject(JSON.parse(s));recount();hist=[JSON.stringify(P)];hi=0;HAD_AUTO=true}}catch(e){P=undefined}
+if(!P)newP();else ui();if(CFG.showLaunch!==false)launchOpen();
+</script></body></html>

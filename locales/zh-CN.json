@@ -1,0 +1,308 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "文件",
+    "edit": "编辑",
+    "view": "视图",
+    "project": "项目",
+    "asset": "资源",
+    "mod": "模组",
+    "export": "导出",
+    "ai": "AI",
+    "help": "帮助",
+    "new_project": "新建项目…",
+    "new_from_template": "从模板新建…",
+    "open_save_json": "打开/保存 JSON…",
+    "settings": "设置…",
+    "undo": "撤销",
+    "redo": "重做",
+    "duplicate": "复制",
+    "delete": "删除",
+    "group": "分组到面板",
+    "ungroup": "取消分组",
+    "bring_front": "置于顶层",
+    "send_back": "置于底层",
+    "save_component": "保存为组件",
+    "zoom_in": "放大",
+    "zoom_out": "缩小",
+    "fit_window": "适应窗口",
+    "show_borders": "显示元素边框",
+    "command_palette": "命令面板",
+    "snap_grid": "网格吸附",
+    "generate_java": "生成 Java",
+    "import_java_ai": "使用 AI 从 Java 导入",
+    "quick_guide": "快速指南"
+  },
+  "tabs": {
+    "components": "组件",
+    "assets": "资源",
+    "mod": "模组",
+    "layers": "图层",
+    "element": "元素",
+    "project": "项目",
+    "colors": "颜色",
+    "problems": "问题"
+  },
+  "components": {
+    "button": "按钮",
+    "label": "标签",
+    "panel": "面板",
+    "image": "图像",
+    "slot": "槽位",
+    "input": "输入框",
+    "checkbox": "复选框",
+    "progress": "进度条",
+    "player": "玩家"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "宽度",
+    "height": "高度",
+    "text": "文本",
+    "texture": "纹理",
+    "visible": "可见",
+    "locked": "锁定",
+    "enabled": "启用",
+    "bg": "背景",
+    "pose": "姿势",
+    "model": "模型",
+    "layout": "布局",
+    "slotType": "槽位类型",
+    "slotIndex": "槽位索引",
+    "placeholder": "占位符",
+    "maxLength": "最大长度",
+    "value": "值",
+    "min": "最小值",
+    "max": "最大值",
+    "opacity": "不透明度",
+    "reference": "引用"
+  },
+  "properties_values": {
+    "pose_idle": "静止",
+    "pose_walk": "行走",
+    "pose_wave": "挥手",
+    "pose_sit": "坐下",
+    "layout_none": "无",
+    "layout_vertical": "垂直",
+    "layout_horizontal": "水平",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "玩家",
+    "slotType_container": "容器",
+    "slotType_custom": "自定义",
+    "slotType_output": "输出"
+  },
+  "mod": {
+    "link_folder": "链接模组文件夹以查看其 GUI、导入它们并在操作中使用其物品、方块和声音。",
+    "link_button": "链接模组…",
+    "give": "给予",
+    "open_screen": "打开屏幕",
+    "sound": "声音"
+  },
+  "project": {
+    "mod_id": "模组 ID",
+    "package": "包名",
+    "screen_class": "屏幕类",
+    "ai_model": "模型",
+    "ai_instruction": "指令",
+    "ai_placeholder": "例如：添加一个居中的按钮"
+  },
+  "settings": {
+    "start_screen": "启动时显示初始屏幕",
+    "interface": "界面",
+    "snap": "网格 (px)",
+    "initial_zoom": "初始缩放 (2-6)",
+    "auto_save": "自动保存",
+    "theme": "新项目的主题",
+    "default_width": "默认 GUI 宽度",
+    "default_height": "默认 GUI 高度",
+    "default_loader": "默认加载器",
+    "ollama_model": "Ollama 模型",
+    "ollama_host": "Ollama 主机",
+    "ai_context": "AI 上下文 (tokens)"
+  },
+  "settings_values": {
+    "interface_auto": "自动",
+    "interface_light": "浅色",
+    "interface_dark": "深色",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "在画布或层次结构中选择一个元素。",
+    "invalid_mod_id": "无效的模组 ID：仅小写字母、数字和 _，必须以字母开头",
+    "invalid_package": "无效的 Java 包（例如：com.example.mod）",
+    "invalid_class": "无效的类名（例如：MainMenuScreen）"
+  },
+  "hints": {
+    "drag_canvas": "拖动到画布或点击。如果选择了面板，组件将进入内部。",
+    "empty_gui": "空 GUI。拖动组件或点击以添加。",
+    "select_element": "选择元素"
+  },
+  "alignment": {
+    "align_left": "左对齐",
+    "align_center_h": "水平居中",
+    "align_right": "右对齐",
+    "align_top": "上对齐",
+    "align_center_v": "垂直居中",
+    "align_bottom": "下对齐",
+    "distribute_h": "水平分布",
+    "distribute_v": "垂直分布"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "target / command / text (例如：coins=5, coins+=1)",
+    "placeholder_cond": "仅当：coins>=10"
+  },
+  "dialogs": {
+    "new_screen": "新屏幕",
+    "close": "关闭",
+    "new_screen_hint": "新屏幕已添加到项目中。要链接它：选择一个按钮，选择操作 open_gui 并将目标设置为屏幕的类名。",
+    "template_new": "从模板新建",
+    "template_hint": "槽位位置与原版 GUI 相同。创建菜单模式项目（真实槽位、菜单 + 屏幕）。",
+    "overwrite": "覆盖",
+    "cancel": "取消"
+  },
+  "pixel_editor": {
+    "title": "像素编辑器",
+    "width": "宽度",
+    "height": "高度",
+    "pencil": "铅笔",
+    "eraser": "橡皮擦",
+    "fill": "填充",
+    "eyedropper": "吸管",
+    "mirror": "镜像",
+    "clear": "清除",
+    "asset_name": "资源名称",
+    "save_asset": "保存为资源"
+  },
+  "color_picker": {
+    "title": "颜色",
+    "to_element": "到元素",
+    "as_brush": "作为画笔",
+    "generate_theme": "从此颜色生成主题"
+  },
+  "lint": {
+    "goes_outside_screen": "超出屏幕",
+    "exits_from_window": "超出窗口",
+    "overlap": "重叠",
+    "menu_mode_active": "菜单模式激活但没有槽位",
+    "screen_not_found": "项目中未找到屏幕 \"{target}\"",
+    "inventory_index_duplicated": "物品栏索引 {index} 重复 ({ids})",
+    "no_java_source": "{root} 中没有 Java 源代码"
+  },
+  "generated_java": {
+    "overlay_comment": "由 Minecraft GUI Builder 生成 - {screen} ({version}) 上的覆盖层。自动注册：模组中无需额外代码。",
+    "forge_comment": "由 Minecraft GUI Builder 生成 - 目标：Minecraft 1.20.1 / Forge。屏幕 \"{screen}\"。",
+    "overlay_vanilla": "TODO：自定义实现：{target} 是原版 GUI 上的覆盖层：无法作为屏幕打开。",
+    "has_inventory": "TODO：自定义实现：{target} 有物品栏（菜单）：使用 {target}Registry 在服务器端打开（请参阅类中的注释）。",
+    "requires_params": "TODO：自定义实现：{target}({params}) 需要参数：手动实例化并打开屏幕。",
+    "must_exist": "TODO：自定义实现：类 {target} 必须存在于您的项目中",
+    "open_gui": "TODO：自定义实现：打开生成的 GUI（例如，使用 KeyMapping 或客户端命令）。"
+  },
+  "gradle": {
+    "verify_versions": "使用官方 MDK 验证版本。"
+  },
+  "messages": {
+    "autosave_disabled": "自动保存已禁用：项目对于本地存储来说太大。保存到文件！",
+    "exported_to": "已导出到 {path}",
+    "mod_linked": "模组 \"{modId}\"：{items} 物品、{blocks} 方块、{sounds} 声音、{screens} 屏幕、{textures} GUI 纹理",
+    "import_failed": "导入失败",
+    "only_desktop": "仅在桌面应用中可用。",
+    "requires_ollama": "AI 仅在桌面应用中可用（需要运行 Ollama）。",
+    "waiting": "等待中",
+    "attempt": "尝试",
+    "completed": "已完成",
+    "cancelled": "已取消",
+    "no_valid_element": "没有有效元素",
+    "response_discarded": "响应已丢弃",
+    "no_change_applied": "未应用更改",
+    "added": "已添加",
+    "modified": "已修改",
+    "removed": "已删除",
+    "coordinates_correct": "坐标正确",
+    "inside_screen": "在屏幕内",
+    "only_desktop": "仅在桌面应用中可用"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "您想创建什么类型的 GUI？",
+    "continue_last": "继续上一个项目",
+    "open_file": "打开文件…",
+    "link_mod": "链接模组…",
+    "open_json": "打开/粘贴 JSON…",
+    "dont_show": "启动时不显示"
+  },
+  "preview": {
+    "toggle": "退出预览",
+    "start": "▶ 预览"
+  },
+  "screens": {
+    "new": "新屏幕…",
+    "delete_current": "删除当前屏幕",
+    "go_to": "转到屏幕：{name}"
+  },
+  "mod_actions": {
+    "link": "链接模组…",
+    "write": "写入模组",
+    "save_file": "保存到文件…",
+    "export_project": "导出模组项目…",
+    "save_java": "保存 Java 到文件…",
+    "save_png": "保存 GUI PNG…",
+    "save_atlas": "纹理图集 PNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "如何工作",
+    "how_to_work_text": "1) 选择项目类型：新屏幕或覆盖层以向现有 GUI 添加元素（主菜单、暂停、物品栏...）。2) 将组件拖动到画布。3) 设置事件和操作（逻辑、节点图）。4) 使用预览测试。5) 生成 Java，或链接模组 + 写入模组。",
+    "shortcuts": "快捷键",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   撤销 / 重做\nCtrl+C / Ctrl+V   复制 / 粘贴\nCtrl+D            复制\nCtrl+S            保存（桌面应用）\nDel              删除\n箭头键           移动 1 px\nShift+click      多选\n双击节点图       搜索节点\nShift+点击纹理   编辑像素\nCtrl+K            命令面板\nCtrl+G / Ctrl+Shift+G   分组 / 取消分组\nCtrl+] / Ctrl+[   置于顶层 / 置于底层\nShift+箭头键     移动 10 px\nCtrl+滚轮       缩放 · 空格+拖动或中键：平移",
+    "multiple_screens": "多个屏幕",
+    "multiple_screens_text": "画布顶部有屏幕选项卡：点击在屏幕之间切换，双击重命名，＋ 添加更多。要链接它们：选择一个按钮，设置操作 open_gui 并将目标设置为另一个屏幕的类名（建议）。在预览中，按钮真正打开另一个屏幕，close_gui 返回。在游戏中，Esc 返回到上一个屏幕。",
+    "overlay": "覆盖层",
+    "overlay_text": "画布上的红点是锚点：Java 中的位置相对于该点，因此跟随窗口。虚线是原版 GUI 的近似参考。"
+  },
+  "language": {
+    "title": "语言",
+    "select": "选择语言"
+  },
+  "templates": {
+    "chest3": "箱子（3 行）",
+    "furnace": "熔炉",
+    "hopper": "漏斗",
+    "blank": "空白屏幕",
+    "title": "主菜单添加",
+    "pause": "暂停菜单添加",
+    "inventory": "物品栏添加",
+    "creative": "创造模式物品栏添加"
+  }
+}

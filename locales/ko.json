@@ -1,0 +1,308 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "파일",
+    "edit": "편집",
+    "view": "보기",
+    "project": "프로젝트",
+    "asset": "리소스",
+    "mod": "Mod",
+    "export": "내보내기",
+    "ai": "AI",
+    "help": "도움말",
+    "new_project": "새 프로젝트…",
+    "new_from_template": "템플릿에서 새로…",
+    "open_save_json": "JSON 열기/저장…",
+    "settings": "설정…",
+    "undo": "실행 취소",
+    "redo": "다시 실행",
+    "duplicate": "복제",
+    "delete": "삭제",
+    "group": "패널에 그룹화",
+    "ungroup": "그룹 해제",
+    "bring_front": "맨 앞으로",
+    "send_back": "맨 뒤로",
+    "save_component": "구성 요소로 저장",
+    "zoom_in": "확대",
+    "zoom_out": "축소",
+    "fit_window": "창에 맞추기",
+    "show_borders": "요소 테두리 표시",
+    "command_palette": "명령 팔레트",
+    "snap_grid": "그리드 스냅",
+    "generate_java": "Java 생성",
+    "import_java_ai": "AI로 Java에서 가져오기",
+    "quick_guide": "빠른 가이드"
+  },
+  "tabs": {
+    "components": "구성 요소",
+    "assets": "리소스",
+    "mod": "Mod",
+    "layers": "레이어",
+    "element": "요소",
+    "project": "프로젝트",
+    "colors": "색상",
+    "problems": "문제"
+  },
+  "components": {
+    "button": "버튼",
+    "label": "레이블",
+    "panel": "패널",
+    "image": "이미지",
+    "slot": "슬롯",
+    "input": "입력",
+    "checkbox": "체크박스",
+    "progress": "진행률",
+    "player": "플레이어"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "너비",
+    "height": "높이",
+    "text": "텍스트",
+    "texture": "텍스처",
+    "visible": "표시",
+    "locked": "잠금",
+    "enabled": "활성화",
+    "bg": "배경",
+    "pose": "포즈",
+    "model": "모델",
+    "layout": "레이아웃",
+    "slotType": "슬롯 유형",
+    "slotIndex": "슬롯 인덱스",
+    "placeholder": "플레이스홀더",
+    "maxLength": "최대 길이",
+    "value": "값",
+    "min": "최소",
+    "max": "최대",
+    "opacity": "불투명도",
+    "reference": "참조"
+  },
+  "properties_values": {
+    "pose_idle": "대기",
+    "pose_walk": "걷기",
+    "pose_wave": "손 흔들기",
+    "pose_sit": "앉기",
+    "layout_none": "없음",
+    "layout_vertical": "수직",
+    "layout_horizontal": "수평",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "플레이어",
+    "slotType_container": "컨테이너",
+    "slotType_custom": "사용자 정의",
+    "slotType_output": "출력"
+  },
+  "mod": {
+    "link_folder": "Mod 폴더를 연결하여 GUI를 보고 가져오며 작업에서 항목, 블록, 소리를 사용합니다.",
+    "link_button": "Mod 연결…",
+    "give": "주기",
+    "open_screen": "화면 열기",
+    "sound": "소리"
+  },
+  "project": {
+    "mod_id": "Mod ID",
+    "package": "패키지",
+    "screen_class": "화면 클래스",
+    "ai_model": "모델",
+    "ai_instruction": "지시",
+    "ai_placeholder": "예: 중앙에 버튼 추가"
+  },
+  "settings": {
+    "start_screen": "시작 시 시작 화면 표시",
+    "interface": "인터페이스",
+    "snap": "그리드 (px)",
+    "initial_zoom": "초기 확대 (2-6)",
+    "auto_save": "자동 저장",
+    "theme": "새 프로젝트의 테마",
+    "default_width": "기본 GUI 너비",
+    "default_height": "기본 GUI 높이",
+    "default_loader": "기본 로더",
+    "ollama_model": "Ollama 모델",
+    "ollama_host": "Ollama 호스트",
+    "ai_context": "AI 컨텍스트 (tokens)"
+  },
+  "settings_values": {
+    "interface_auto": "자동",
+    "interface_light": "밝게",
+    "interface_dark": "어둡게",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "캔버스 또는 계층 구조에서 요소를 선택하세요.",
+    "invalid_mod_id": "잘못된 Mod ID: 소문자, 숫자, _만, 문자로 시작해야 함",
+    "invalid_package": "잘못된 Java 패키지(예: com.example.mod)",
+    "invalid_class": "잘못된 클래스 이름(예: MainMenuScreen)"
+  },
+  "hints": {
+    "drag_canvas": "캔버스로 드래그하거나 클릭하세요. 패널이 선택된 경우 구성 요소가 내부로 들어갑니다.",
+    "empty_gui": "빈 GUI. 구성 요소를 드래그하거나 클릭하여 추가하세요.",
+    "select_element": "요소 선택"
+  },
+  "alignment": {
+    "align_left": "왼쪽 정렬",
+    "align_center_h": "가로 중앙 정렬",
+    "align_right": "오른쪽 정렬",
+    "align_top": "위쪽 정렬",
+    "align_center_v": "세로 중앙 정렬",
+    "align_bottom": "아래쪽 정렬",
+    "distribute_h": "가로 분배",
+    "distribute_v": "세로 분배"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "target / command / text (예: coins=5, coins+=1)",
+    "placeholder_cond": "다음인 경우만: coins>=10"
+  },
+  "dialogs": {
+    "new_screen": "새 화면",
+    "close": "닫기",
+    "new_screen_hint": "새 화면이 프로젝트에 추가됩니다. 연결하려면: 버튼을 선택하고 작업 open_gui를 선택한 다음 대상을 화면의 클래스 이름으로 설정합니다.",
+    "template_new": "템플릿에서 새로",
+    "template_hint": "슬롯 위치는 바닐라 GUI와 동일합니다. 메뉴 모드 프로젝트를 생성합니다(실제 슬롯, 메뉴 + 화면).",
+    "overwrite": "덮어쓰기",
+    "cancel": "취소"
+  },
+  "pixel_editor": {
+    "title": "픽셀 에디터",
+    "width": "너비",
+    "height": "높이",
+    "pencil": "연필",
+    "eraser": "지우개",
+    "fill": "채우기",
+    "eyedropper": "색상 추출기",
+    "mirror": "미러",
+    "clear": "지우기",
+    "asset_name": "리소스 이름",
+    "save_asset": "리소스로 저장"
+  },
+  "color_picker": {
+    "title": "색상",
+    "to_element": "요소로",
+    "as_brush": "브러시로",
+    "generate_theme": "이 색상에서 테마 생성"
+  },
+  "lint": {
+    "goes_outside_screen": "화면 밖",
+    "exits_from_window": "창 밖",
+    "overlap": "중복",
+    "menu_mode_active": "메뉴 모드 활성화되었지만 슬롯 없음",
+    "screen_not_found": "프로젝트에서 화면 \"{target}\"을 찾을 수 없음",
+    "inventory_index_duplicated": "인벤토리 인덱스 {index} 중복({ids})",
+    "no_java_source": "{root}에 Java 소스 없음"
+  },
+  "generated_java": {
+    "overlay_comment": "Minecraft GUI Builder로 생성됨 - {screen}({version})의 오버레이. 자동 등록: Mod에 추가 코드 불필요.",
+    "forge_comment": "Minecraft GUI Builder로 생성됨 - 대상: Minecraft 1.20.1 / Forge. 화면 \"{screen}\".",
+    "overlay_vanilla": "TODO: 사용자 정의 구현: {target}은 바닐라 GUI의 오버레이입니다: 화면으로 열 수 없습니다.",
+    "has_inventory": "TODO: 사용자 정의 구현: {target}은 인벤토리(메뉴)가 있습니다: {target}Registry로 서버 측에서 여세요(클래스의 주석 참조).",
+    "requires_params": "TODO: 사용자 정의 구현: {target}({params})는 매개변수가 필요합니다: 수동으로 인스턴스화하고 화면을 여세요.",
+    "must_exist": "TODO: 사용자 정의 구현: 클래스 {target}은 프로젝트에 존재해야 합니다",
+    "open_gui": "TODO: 사용자 정의 구현: 생성된 GUI를 여세요(예: KeyMapping 또는 클라이언트 명령 사용)."
+  },
+  "gradle": {
+    "verify_versions": "공식 MDK로 버전을 확인하세요."
+  },
+  "messages": {
+    "autosave_disabled": "자동 저장 비활성화: 프로젝트가 로컬 저장소용으로 너무 큽니다. 파일에 저장하세요!",
+    "exported_to": "{path}로 내보내기",
+    "mod_linked": "Mod \"{modId}\": {items} 항목, {blocks} 블록, {sounds} 소리, {screens} 화면, {textures} GUI 텍스처",
+    "import_failed": "가져오기 실패",
+    "only_desktop": "데스크톱 앱에서만 사용 가능.",
+    "requires_ollama": "AI는 데스크톱 앱에서만 사용 가능(Ollama 실행 중 필요).",
+    "waiting": "대기 중",
+    "attempt": "시도",
+    "completed": "완료",
+    "cancelled": "취소됨",
+    "no_valid_element": "유효한 요소 없음",
+    "response_discarded": "응답 삭제됨",
+    "no_change_applied": "변경 사항 없음",
+    "added": "추가됨",
+    "modified": "수정됨",
+    "removed": "제거됨",
+    "coordinates_correct": "좌표 올바름",
+    "inside_screen": "화면 내",
+    "only_desktop": "데스크톱 앱에서만 사용 가능"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "어떤 유형의 GUI를 만들고 싶으신가요?",
+    "continue_last": "마지막 프로젝트 계속",
+    "open_file": "파일 열기…",
+    "link_mod": "Mod 연결…",
+    "open_json": "JSON 열기/붙여넣기…",
+    "dont_show": "시작 시 표시 안 함"
+  },
+  "preview": {
+    "toggle": "미리보기 종료",
+    "start": "▶ 미리보기"
+  },
+  "screens": {
+    "new": "새 화면…",
+    "delete_current": "현재 화면 삭제",
+    "go_to": "화면으로 이동: {name}"
+  },
+  "mod_actions": {
+    "link": "Mod 연결…",
+    "write": "Mod에 쓰기",
+    "save_file": "파일에 저장…",
+    "export_project": "Mod 프로젝트 내보내기…",
+    "save_java": "Java를 파일에 저장…",
+    "save_png": "GUI PNG 저장…",
+    "save_atlas": "텍스처 아틀라스 PNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "작업 방법",
+    "how_to_work_text": "1) 프로젝트 유형 선택: 새 화면 또는 오버레이로 기존 GUI에 요소 추가(메인 메뉴, 일시 정지, 인벤토리...). 2) 구성 요소를 캔버스로 드래그. 3) 이벤트 및 작업 설정(로직, 노드 그래프). 4) 미리보기로 테스트. 5) Java 생성 또는 Mod 연결 + Mod에 쓰기.",
+    "shortcuts": "단축키",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   실행 취소 / 다시 실행\nCtrl+C / Ctrl+V   복사 / 붙여넣기\nCtrl+D            복제\nCtrl+S            저장(데스크톱 앱)\nDel              삭제\n화살표 키        1px 이동\nShift+click      다중 선택\n노드 그래프 더블 클릭   노드 검색\nShift+텍스처 클릭   픽셀 편집\nCtrl+K            명령 팔레트\nCtrl+G / Ctrl+Shift+G   그룹화 / 그룹 해제\nCtrl+] / Ctrl+[   맨 앞으로 / 맨 뒤로\nShift+화살표 키    10px 이동\nCtrl+스크롤      줌 · 스페이스+드래그 또는 중간 버튼: 패닝",
+    "multiple_screens": "여러 화면",
+    "multiple_screens_text": "캔버스 상단에 화면 탭이 있습니다: 클릭하여 화면 간 전환, 더블 클릭하여 이름 변경, ＋로 추가. 연결하려면: 버튼을 선택하고 작업 open_gui를 설정한 다음 대상을 다른 화면의 클래스 이름으로 설정(권장). 미리보기에서 버튼은 실제로 다른 화면을 열고 close_gui로 돌아갑니다. 게임에서 Esc는 이전 화면으로 돌아갑니다.",
+    "overlay": "오버레이",
+    "overlay_text": "캔버스의 빨간 점은 앵커입니다: Java의 위치는 이 점에 상대적이므로 창을 따릅니다. 점선은 바닐라 GUI의 대략적인 참조입니다."
+  },
+  "language": {
+    "title": "언어",
+    "select": "언어 선택"
+  },
+  "templates": {
+    "chest3": "상자(3행)",
+    "furnace": "화로",
+    "hopper": "깔때기",
+    "blank": "빈 화면",
+    "title": "메인 메뉴 추가",
+    "pause": "일시 정지 메뉴 추가",
+    "inventory": "인벤토리 추가",
+    "creative": "크리에이티브 인벤토리 추가"
+  }
+}

@@ -1,0 +1,306 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "Fichier",
+    "edit": "Édition",
+    "view": "Affichage",
+    "project": "Projet",
+    "asset": "Ressource",
+    "mod": "Mod",
+    "export": "Exporter",
+    "ai": "IA",
+    "help": "Aide",
+    "new_project": "Nouveau projet…",
+    "new_from_template": "Nouveau depuis modèle…",
+    "open_save_json": "Ouvrir / sauvegarder JSON…",
+    "settings": "Paramètres…",
+    "undo": "Annuler",
+    "redo": "Rétablir",
+    "duplicate": "Dupliquer",
+    "delete": "Supprimer",
+    "group": "Grouper dans Panneau",
+    "ungroup": "Dissocier",
+    "bring_front": "Mettre au premier plan",
+    "send_back": "Mettre en arrière-plan",
+    "save_component": "Sauvegarder comme composant",
+    "zoom_in": "Zoom avant",
+    "zoom_out": "Zoom arrière",
+    "fit_window": "Ajuster à la fenêtre",
+    "show_borders": "Afficher bordures éléments",
+    "command_palette": "Palette de commandes",
+    "snap_grid": "Grille aimantée",
+    "generate_java": "Générer Java",
+    "import_java_ai": "Importer depuis Java avec IA",
+    "quick_guide": "Guide rapide"
+  },
+  "tabs": {
+    "components": "Composants",
+    "assets": "Ressources",
+    "mod": "Mod",
+    "layers": "Calques",
+    "element": "Élément",
+    "project": "Projet",
+    "colors": "Couleurs",
+    "problems": "Problèmes"
+  },
+  "components": {
+    "button": "Bouton",
+    "label": "Étiquette",
+    "panel": "Panneau",
+    "image": "Image",
+    "slot": "Emplacement",
+    "input": "Saisie",
+    "checkbox": "Case à cocher",
+    "progress": "Progression",
+    "player": "Joueur"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "largeur",
+    "height": "hauteur",
+    "text": "texte",
+    "texture": "texture",
+    "visible": "visible",
+    "locked": "verrouillé",
+    "enabled": "activé",
+    "bg": "arrière-plan",
+    "pose": "posture",
+    "model": "modèle",
+    "layout": "mise en page",
+    "slotType": "type emplacement",
+    "slotIndex": "index emplacement",
+    "placeholder": "espace réservé",
+    "maxLength": "longueur max",
+    "value": "valeur",
+    "min": "min",
+    "max": "max",
+    "opacity": "opacité",
+    "reference": "référence"
+  },
+  "properties_values": {
+    "pose_idle": "inactif",
+    "pose_walk": "marche",
+    "pose_wave": "salut",
+    "pose_sit": "assis",
+    "layout_none": "aucun",
+    "layout_vertical": "vertical",
+    "layout_horizontal": "horizontal",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "joueur",
+    "slotType_container": "conteneur",
+    "slotType_custom": "personnalisé",
+    "slotType_output": "sortie"
+  },
+  "mod": {
+    "link_folder": "Lier un dossier mod pour voir ses GUI, les importer et utiliser ses objets, blocs et sons dans les actions.",
+    "link_button": "Lier mod…",
+    "give": "Donner",
+    "open_screen": "Ouvrir écran",
+    "sound": "Son"
+  },
+  "project": {
+    "mod_id": "ID Mod",
+    "package": "Package",
+    "screen_class": "Classe écran",
+    "ai_model": "Modèle",
+    "ai_instruction": "Instruction",
+    "ai_placeholder": "ex. ajouter un bouton centré"
+  },
+  "settings": {
+    "start_screen": "Écran de démarrage au lancement",
+    "interface": "Interface",
+    "snap": "Grille (px)",
+    "initial_zoom": "Zoom initial (2-6)",
+    "auto_save": "Sauvegarde auto",
+    "theme": "Thème pour nouveaux projets",
+    "default_width": "Largeur GUI par défaut",
+    "default_height": "Hauteur GUI par défaut",
+    "default_loader": "Loader par défaut",
+    "ollama_model": "Modèle Ollama",
+    "ollama_host": "Hôte Ollama",
+    "ai_context": "Contexte IA (tokens)"
+  },
+  "settings_values": {
+    "interface_auto": "auto",
+    "interface_light": "clair",
+    "interface_dark": "sombre",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "Sélectionnez un élément sur le canevas ou dans la hiérarchie.",
+    "invalid_mod_id": "ID Mod invalide: seulement minuscules, chiffres et _, doit commencer par une lettre",
+    "invalid_package": "Package Java invalide (exemple: com.example.mod)",
+    "invalid_class": "Nom de classe invalide (exemple: MainMenuScreen)"
+  },
+  "hints": {
+    "drag_canvas": "Glisser sur le canevas ou cliquer. Si un Panneau est sélectionné, le composant va à l'intérieur.",
+    "empty_gui": "GUI vide. Glissez des composants ou cliquez pour ajouter.",
+    "select_element": "Sélectionner un élément"
+  },
+  "alignment": {
+    "align_left": "Aligner à gauche",
+    "align_center_h": "Centrer horizontalement",
+    "align_right": "Aligner à droite",
+    "align_top": "Aligner en haut",
+    "align_center_v": "Centrer verticalement",
+    "align_bottom": "Aligner en bas",
+    "distribute_h": "Distribuer horizontalement",
+    "distribute_v": "Distribuer verticalement"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "target / command / text (ex. coins=5, coins+=1)",
+    "placeholder_cond": "seulement si: coins>=10"
+  },
+  "dialogs": {
+    "new_screen": "Nouvel écran",
+    "close": "Fermer",
+    "new_screen_hint": "Le nouvel écran est ajouté au projet. Pour le lier: sélectionnez un bouton, choisissez l'action open_gui et comme target le nom de la classe de l'écran.",
+    "template_new": "Nouveau depuis modèle",
+    "template_hint": "Positions d'emplacements identiques aux GUI vanilla. Crée un projet en mode Menu (emplacements réels, Menu + Écran)."
+  },
+  "pixel_editor": {
+    "title": "Éditeur Pixel",
+    "width": "Largeur",
+    "height": "Hauteur",
+    "pencil": "Crayon",
+    "eraser": "Gomme",
+    "fill": "Remplir",
+    "eyedropper": "Pipette",
+    "mirror": "miroir",
+    "clear": "Effacer",
+    "asset_name": "nom ressource",
+    "save_asset": "Sauvegarder comme ressource"
+  },
+  "color_picker": {
+    "title": "Couleur",
+    "to_element": "À l'élément",
+    "as_brush": "Comme pinceau",
+    "generate_theme": "Générer thème depuis cette couleur"
+  },
+  "lint": {
+    "goes_outside_screen": "sort de l'écran",
+    "exits_from_window": "sort de la fenêtre",
+    "overlap": "chevauchement",
+    "menu_mode_active": "Mode Menu actif mais aucun emplacement",
+    "screen_not_found": "écran \"{target}\" non trouvé dans le projet",
+    "inventory_index_duplicated": "Index inventaire {index} dupliqué ({ids})",
+    "no_java_source": "Aucun source Java dans {root}"
+  },
+  "generated_java": {
+    "overlay_comment": "Généré par Minecraft GUI Builder - overlay sur {screen} ({version}). S'enregistre seul: aucun code extra dans le mod.",
+    "forge_comment": "Généré par Minecraft GUI Builder - target: Minecraft 1.20.1 / Forge. Écran \"{screen}\".",
+    "overlay_vanilla": "TODO: IMPLÉMENTATION PERSONNALISÉE: {target} est un overlay sur une GUI vanilla: ne peut pas être ouvert comme écran.",
+    "has_inventory": "TODO: IMPLÉMENTATION PERSONNALISÉE: {target} a un inventaire (Menu): ouvrez-le côté serveur avec {target}Registry (voir commentaire dans la classe).",
+    "requires_params": "TODO: IMPLÉMENTATION PERSONNALISÉE: {target}({params}) requiert des paramètres: instanciez et ouvrez l'écran manuellement.",
+    "must_exist": "TODO: IMPLÉMENTATION PERSONNALISÉE: la classe {target} doit exister dans votre projet",
+    "open_gui": "TODO: IMPLÉMENTATION PERSONNALISÉE: ouvrez la GUI générée (ex. avec un KeyMapping ou une commande client)."
+  },
+  "gradle": {
+    "verify_versions": "Vérifiez les versions avec le MDK officiel."
+  },
+  "messages": {
+    "autosave_disabled": "Sauvegarde auto désactivée: le projet est trop grand pour le stockage local. Sauvegardez sur fichier!",
+    "exported_to": "Exporté vers {path}",
+    "mod_linked": "Mod \"{modId}\": {items} objet, {blocks} blocs, {sounds} sons, {screens} écran, {textures} textures GUI",
+    "import_failed": "Échec de l'import",
+    "only_desktop": "Seulement dans l'app de bureau.",
+    "requires_ollama": "L'IA n'est disponible que dans l'app de bureau (requiert Ollama en cours d'exécution).",
+    "waiting": "En attente",
+    "attempt": "Tentative",
+    "completed": "terminé",
+    "cancelled": "annulé",
+    "no_valid_element": "aucun élément valide",
+    "response_discarded": "Réponse ignorée",
+    "no_change_applied": "Aucun changement appliqué",
+    "added": "ajouté",
+    "modified": "modifié",
+    "removed": "supprimé",
+    "coordinates_correct": "coordonnées correctes",
+    "inside_screen": "dans l'écran",
+    "only_desktop": "Seulement dans l'app de bureau"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "Quel type de GUI voulez-vous créer?",
+    "continue_last": "Continuer le dernier projet",
+    "open_file": "Ouvrir un fichier…",
+    "link_mod": "Lier un mod…",
+    "open_json": "Ouvrir / coller JSON…",
+    "dont_show": "Ne pas afficher au démarrage"
+  },
+  "preview": {
+    "toggle": "Quitter Aperçu",
+    "start": "▶ Aperçu"
+  },
+  "screens": {
+    "new": "Nouvel écran…",
+    "delete_current": "Supprimer écran actuel",
+    "go_to": "Aller à l'écran: {name}"
+  },
+  "mod_actions": {
+    "link": "Lier mod…",
+    "write": "Écrire dans le mod",
+    "save_file": "Sauvegarder sur fichier…",
+    "export_project": "Exporter projet mod…",
+    "save_java": "Sauvegarder Java sur fichier…",
+    "save_png": "Sauvegarder GUI PNG…",
+    "save_atlas": "Texture Atlas PNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "Comment travailler",
+    "how_to_work_text": "1) Choisissez le type de projet: Nouvel écran ou Overlay pour ajouter des éléments à une GUI existante (menu principal, pause, inventaire...). 2) Glissez des composants sur le canevas. 3) Définissez événements et actions (Logique, Graphe de nœuds). 4) Essayez avec Aperçu. 5) Générez Java, ou Liez mod + Écrire dans le mod.",
+    "shortcuts": "Raccourcis",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   annuler / rétablir\nCtrl+C / Ctrl+V   copier / coller\nCtrl+D            dupliquer\nCtrl+S            sauvegarder (app bureau)\nDel              supprimer\nFlèches           déplacer de 1 px\nShift+click      sélection multiple\nDouble clic dans le graphe   chercher nœud\nShift+click sur une texture   modifier pixel\nCtrl+K            palette de commandes\nCtrl+G / Ctrl+Shift+G   grouper / dissocier\nCtrl+] / Ctrl+[   mettre au premier plan / mettre en arrière-plan\nShift+flèches     déplacer de 10 px\nCtrl+scroll       zoom · Espace+glisser ou bouton central: panoramique",
+    "multiple_screens": "Écrans multiples",
+    "multiple_screens_text": "En haut du canevas il y a des onglets d'écran: cliquez pour passer d'un écran à l'autre, double clic pour renommer, ＋ pour en ajouter d'autres. Pour les lier: sélectionnez un bouton, définissez l'action open_gui et comme target le nom de la classe de l'autre écran (suggéré). Dans Aperçu le bouton ouvre vraiment l'autre écran et close_gui retourne. En jeu, Esc retourne à l'écran précédent.",
+    "overlay": "Overlay",
+    "overlay_text": "Le point rouge sur le canevas est l'ancre: les positions en Java sont relatives à ce point, donc suivent la fenêtre. Les lignes pointillées sont une référence approximative de la GUI vanilla."
+  },
+  "language": {
+    "title": "Langue",
+    "select": "Sélectionner Langue"
+  },
+  "templates": {
+    "chest3": "Coffre (3 rangées)",
+    "furnace": "Four",
+    "hopper": "Entonnoir",
+    "blank": "Écran Vide",
+    "title": "Ajouts Menu Principal",
+    "pause": "Ajouts Menu Pause",
+    "inventory": "Ajouts Inventaire",
+    "creative": "Ajouts Inventaire Créatif"
+  }
+}

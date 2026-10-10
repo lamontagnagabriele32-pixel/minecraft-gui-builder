@@ -1,0 +1,71 @@
+{
+  "name": "minecraft-gui-builder",
+  "version": "1.0.0",
+  "description": "Visual GUI editor for Minecraft mods",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test tests/core.test.js tests/scan.test.js",
+    "test:app": "electron --no-sandbox tests/smoke.js",
+    "dist": "electron-builder --publish never",
+    "dist:win": "electron-builder --win --publish never",
+    "dist:mac": "electron-builder --mac --publish never",
+    "test:fuzz": "electron --no-sandbox tests/fuzz.js",
+    "test:edge": "electron --no-sandbox tests/edge.js"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.example.mcguibuilder",
+    "productName": "Minecraft GUI Builder",
+    "icon": "build/icon.png",
+    "files": [
+      "scan.js",
+      "main.js",
+      "preload.js",
+      "renderer/**",
+      "build/icon.png"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "icon": "build/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "language": "1033"
+    },
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "universal"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "universal"
+          ]
+        }
+      ],
+      "icon": "build/icon.png",
+      "identity": null,
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "title": "${productName} ${version}"
+    }
+  },
+  "author": "Minecraft GUI Builder"
+}

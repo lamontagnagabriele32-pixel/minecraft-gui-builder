@@ -1,0 +1,308 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "File",
+    "edit": "Edit",
+    "view": "View",
+    "project": "Project",
+    "asset": "Asset",
+    "mod": "Mod",
+    "export": "Export",
+    "ai": "AI",
+    "help": "Help",
+    "new_project": "New project…",
+    "new_from_template": "New from template…",
+    "open_save_json": "Open / save JSON…",
+    "settings": "Settings…",
+    "undo": "Undo",
+    "redo": "Redo",
+    "duplicate": "Duplicate",
+    "delete": "Delete",
+    "group": "Group in Panel",
+    "ungroup": "Ungroup",
+    "bring_front": "Bring to front",
+    "send_back": "Send to back",
+    "save_component": "Save as component",
+    "zoom_in": "Zoom in",
+    "zoom_out": "Zoom out",
+    "fit_window": "Fit to window",
+    "show_borders": "Show element borders",
+    "command_palette": "Command palette",
+    "snap_grid": "Snap to grid",
+    "generate_java": "Generate Java",
+    "import_java_ai": "Import from Java with AI",
+    "quick_guide": "Quick guide"
+  },
+  "tabs": {
+    "components": "Components",
+    "assets": "Assets",
+    "mod": "Mod",
+    "layers": "Layers",
+    "element": "Element",
+    "project": "Project",
+    "colors": "Colors",
+    "problems": "Problems"
+  },
+  "components": {
+    "button": "Button",
+    "label": "Label",
+    "panel": "Panel",
+    "image": "Image",
+    "slot": "Slot",
+    "input": "Input",
+    "checkbox": "Checkbox",
+    "progress": "Progress",
+    "player": "Player"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "width",
+    "height": "height",
+    "text": "text",
+    "texture": "texture",
+    "visible": "visible",
+    "locked": "locked",
+    "enabled": "enabled",
+    "bg": "bg",
+    "pose": "pose",
+    "model": "model",
+    "layout": "layout",
+    "slotType": "slotType",
+    "slotIndex": "slotIndex",
+    "placeholder": "placeholder",
+    "maxLength": "maxLength",
+    "value": "value",
+    "min": "min",
+    "max": "max",
+    "opacity": "opacity",
+    "reference": "reference"
+  },
+  "properties_values": {
+    "pose_idle": "idle",
+    "pose_walk": "walk",
+    "pose_wave": "wave",
+    "pose_sit": "sit",
+    "layout_none": "none",
+    "layout_vertical": "vertical",
+    "layout_horizontal": "horizontal",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "player",
+    "slotType_container": "container",
+    "slotType_custom": "custom",
+    "slotType_output": "output"
+  },
+  "mod": {
+    "link_folder": "Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions.",
+    "link_button": "Link mod…",
+    "give": "Give",
+    "open_screen": "Open screen",
+    "sound": "Sound"
+  },
+  "project": {
+    "mod_id": "Mod ID",
+    "package": "Package",
+    "screen_class": "Screen class",
+    "ai_model": "Model",
+    "ai_instruction": "Instruction",
+    "ai_placeholder": "e.g. add a centered button"
+  },
+  "settings": {
+    "start_screen": "Start screen on launch",
+    "interface": "Interface",
+    "snap": "Snap (px)",
+    "initial_zoom": "Initial zoom (2-6)",
+    "auto_save": "Auto save",
+    "theme": "Theme for new projects",
+    "default_width": "Default GUI width",
+    "default_height": "Default GUI height",
+    "default_loader": "Default loader",
+    "ollama_model": "Ollama model",
+    "ollama_host": "Ollama host",
+    "ai_context": "AI context (tokens)"
+  },
+  "settings_values": {
+    "interface_auto": "auto",
+    "interface_light": "light",
+    "interface_dark": "dark",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "Select an element on the canvas or in the hierarchy.",
+    "invalid_mod_id": "Invalid Mod ID: only lowercase, numbers and _, must start with a letter",
+    "invalid_package": "Invalid Java package (example: com.example.mod)",
+    "invalid_class": "Invalid class name (example: MainMenuScreen)"
+  },
+  "hints": {
+    "drag_canvas": "Drag to canvas or click. If a Panel is selected, the component goes inside.",
+    "empty_gui": "Empty GUI. Drag components or click to add.",
+    "select_element": "Select an element"
+  },
+  "alignment": {
+    "align_left": "Align left",
+    "align_center_h": "Center horizontally",
+    "align_right": "Align right",
+    "align_top": "Align top",
+    "align_center_v": "Center vertically",
+    "align_bottom": "Align bottom",
+    "distribute_h": "Distribute horizontally",
+    "distribute_v": "Distribute vertically"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "target / command / text (e.g. coins=5, coins+=1)",
+    "placeholder_cond": "only if: coins>=10"
+  },
+  "dialogs": {
+    "new_screen": "New screen",
+    "close": "Close",
+    "new_screen_hint": "The new screen is added to the project. To link it: select a button, choose the action open_gui and as target the class name of the screen.",
+    "template_new": "New from template",
+    "template_hint": "Slot positions identical to vanilla GUIs. Creates a project in Menu mode (real slots, Menu + Screen).",
+    "overwrite": "Overwrite",
+    "cancel": "Cancel"
+  },
+  "pixel_editor": {
+    "title": "Pixel Editor",
+    "width": "Width",
+    "height": "Height",
+    "pencil": "Pencil",
+    "eraser": "Eraser",
+    "fill": "Fill",
+    "eyedropper": "Eyedropper",
+    "mirror": "mirror",
+    "clear": "Clear",
+    "asset_name": "asset name",
+    "save_asset": "Save as asset"
+  },
+  "color_picker": {
+    "title": "Color",
+    "to_element": "To element",
+    "as_brush": "As brush",
+    "generate_theme": "Generate theme from this color"
+  },
+  "lint": {
+    "goes_outside_screen": "goes outside the screen",
+    "exits_from_window": "exits from the window",
+    "overlap": "overlap",
+    "menu_mode_active": "Menu mode active but no slots",
+    "screen_not_found": "screen \"{target}\" not found in project",
+    "inventory_index_duplicated": "Inventory index {index} duplicated ({ids})",
+    "no_java_source": "No Java source in {root}"
+  },
+  "generated_java": {
+    "overlay_comment": "Generated by Minecraft GUI Builder - overlay on {screen} ({version}). Registers itself: no extra code in the mod.",
+    "forge_comment": "Generated by Minecraft GUI Builder - target: Minecraft 1.20.1 / Forge. Screen \"{screen}\".",
+    "overlay_vanilla": "TODO: CUSTOM IMPLEMENTATION: {target} is an overlay on a vanilla GUI: cannot open as screen.",
+    "has_inventory": "TODO: CUSTOM IMPLEMENTATION: {target} has an inventory (Menu): open it server-side with {target}Registry (see comment in class).",
+    "requires_params": "TODO: CUSTOM IMPLEMENTATION: {target}({params}) requires parameters: instantiate and open screen manually.",
+    "must_exist": "TODO: CUSTOM IMPLEMENTATION: class {target} must exist in your project",
+    "open_gui": "TODO: CUSTOM IMPLEMENTATION: open the generated GUI (e.g. with a KeyMapping or a client command)."
+  },
+  "gradle": {
+    "verify_versions": "Verify versions with the official MDK."
+  },
+  "messages": {
+    "autosave_disabled": "Autosave disabled: the project is too large for local storage. Save to file!",
+    "exported_to": "Exported to {path}",
+    "mod_linked": "Mod \"{modId}\": {items} item, {blocks} blocks, {sounds} sounds, {screens} screen, {textures} GUI textures",
+    "import_failed": "Import failed",
+    "only_desktop": "Only in desktop app.",
+    "requires_ollama": "AI is only available in desktop app (requires Ollama running).",
+    "waiting": "Waiting",
+    "attempt": "Attempt",
+    "completed": "completed",
+    "cancelled": "cancelled",
+    "no_valid_element": "no valid element",
+    "response_discarded": "Response discarded",
+    "no_change_applied": "No change applied",
+    "added": "added",
+    "modified": "modified",
+    "removed": "removed",
+    "coordinates_correct": "coordinates correct",
+    "inside_screen": "inside the screen",
+    "only_desktop": "Only in desktop app"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "What type of GUI do you want to create?",
+    "continue_last": "Continue last project",
+    "open_file": "Open a file…",
+    "link_mod": "Link a mod…",
+    "open_json": "Open / paste JSON…",
+    "dont_show": "Don't show on launch"
+  },
+  "preview": {
+    "toggle": "Exit Preview",
+    "start": "▶ Preview"
+  },
+  "screens": {
+    "new": "New screen…",
+    "delete_current": "Delete current screen",
+    "go_to": "Go to screen: {name}"
+  },
+  "mod_actions": {
+    "link": "Link mod…",
+    "write": "Write to mod",
+    "save_file": "Save to file…",
+    "export_project": "Export mod project…",
+    "save_java": "Save Java to file…",
+    "save_png": "Save GUI PNG…",
+    "save_atlas": "Atlas texture PNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "How to work",
+    "how_to_work_text": "1) Choose project type: New screen or Overlay to add elements to an existing GUI (main menu, pause, inventory...). 2) Drag components to canvas. 3) Set events and actions (Logic, Node graph). 4) Try with Preview. 5) Generate Java, or Link mod + Write to mod.",
+    "shortcuts": "Shortcuts",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   undo / redo\nCtrl+C / Ctrl+V   copy / paste\nCtrl+D            duplicate\nCtrl+S            save (desktop app)\nDel              delete\nArrows           move by 1 px\nShift+click      multi-selection\nDouble click in graph   search node\nShift+click on a texture   edit pixels\nCtrl+K            command palette\nCtrl+G / Ctrl+Shift+G   group / ungroup\nCtrl+] / Ctrl+[   bring to front / send to back\nShift+arrows     move by 10 px\nCtrl+scroll       zoom · Space+drag or middle button: pan",
+    "multiple_screens": "Multiple screens",
+    "multiple_screens_text": "At the top of the canvas there are screen tabs: click to switch between screens, double click to rename, ＋ to add more. To link them: select a button, set action open_gui and as target the class name of the other screen (suggested). In Preview the button really opens the other screen and close_gui goes back. In game, Esc returns to the previous screen.",
+    "overlay": "Overlay",
+    "overlay_text": "The red dot on canvas is the anchor: positions in Java are relative to that point, so they follow the window. Dashed lines are an approximate reference of the vanilla GUI."
+  },
+  "language": {
+    "title": "Language",
+    "select": "Select Language"
+  },
+  "templates": {
+    "chest3": "Chest (3 rows)",
+    "furnace": "Furnace",
+    "hopper": "Hopper",
+    "blank": "Blank Screen",
+    "title": "Title Screen Additions",
+    "pause": "Pause Screen Additions",
+    "inventory": "Inventory Additions",
+    "creative": "Creative Inventory Additions"
+  }
+}

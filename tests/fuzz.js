@@ -1,0 +1,20 @@
+const {app}=require("electron");const os=require("os"),fs=require("fs"),path=require("path");app.setPath("userData",fs.mkdtempSync(path.join(os.tmpdir(),"fz-")));
+const TEST=`(async()=>{try{let seed=12345;const rnd=()=>(seed=(seed*1664525+1013904223)>>>0)/4294967296,pick=a=>a[Math.floor(rnd()*a.length)];
+ const errs={};const types=Object.keys(D);const els=()=>{const a=[];walk(P.elements,e=>a.push(e));return a};
+ const ops=[
+ ["add",()=>add(pick(types))],["addscreen",()=>addScreen(pick(["blank","ov:title","ov:pause","ov:inventory","chest3","furnace","hopper"]))],["switchscreen",()=>{ensureScreens();switchScreen(Math.floor(rnd()*P.screens.length))}],["delscreen",()=>{ensureScreens();if(P.screens.length>2)deleteScreen(Math.floor(rnd()*P.screens.length))}],["navigate",()=>{ensureScreens();const c=cur();if(c&&P.screens.length>1){c.e.events={click:[{action:"open_gui",target:clsOf(Math.floor(rnd()*P.screens.length))}]};push()}}],["genall",()=>{genAllFiles()}],["prevnav",()=>{if(prev&&P.screens&&P.screens.length>1){previewOpen(Math.floor(rnd()*P.screens.length));if(rnd()<.5)previewBack()}}],["addgrid",()=>add("panel",pick([[9,3],[9,1]]))],["select",()=>{const a=els();if(a.length){sel=pick(a).id;multi=new Set([sel])}}],
+ ["multi",()=>{const a=els();multi=new Set([pick(a)?.id,pick(a)?.id].filter(Boolean));sel=[...multi][0]||null}],
+ ["del",()=>del()],["dup",()=>dup()],["group",()=>groupSel()],["ungroup",()=>ungroupSel()],["z",()=>zSel(pick([1,-1]))],["align",()=>alignSel(pick(["l","c","r","t","m","b"]))],["dist",()=>distSel(pick(["h","v"]))],
+ ["undo",()=>undo()],["redo",()=>redo()],["setprop",()=>{const c=cur();if(c){const e=c.e;e.x=Math.floor(rnd()*200)-20;e.y=Math.floor(rnd()*200)-20;e.width=Math.floor(rnd()*100);e.height=Math.floor(rnd()*60);if(rnd()<.3)e.text=pick(["","a\\"b","<x>","long text here"]);push();ui()}}],
+ ["layout",()=>{const c=cur();if(c&&c.e.type==="panel"){c.e.layout=pick(["none","vertical","horizontal"]);c.e.hug=rnd()<.5;push();ui()}}],
+ ["events",()=>{const c=cur();if(c){c.e.events=pick([{click:[{action:"open_gui",target:"X",cond:"a>=1"}]},{hover:[{action:"play_sound",target:"minecraft:x",cond:""}],tick:[{action:"change_variable",target:"a+=1",cond:""}]},{open:[{action:"custom_java_hook",target:"q",cond:""}],release:[{action:"run_command",target:"/say \\"hi\\"",cond:""}]},{}]);push();ui()}}],
+ ["overlay",()=>setOverlay(pick(["","title","pause","inventory","creative","custom"]))],["tpl",()=>tplNew(pick(TPLS)[0])],["container",()=>{P.container=!P.container;push();ui()}],
+ ["loader",()=>{P.loader=pick(["forge","neoforge","neoforge121"]);ui()}],["gen",()=>{gen();genExtra()}],["lint",()=>lint()],["colors",()=>{cpPick(pick(["#ff0000","#00ff88","#123456"]));colorsRender()}],
+ ["theme",()=>{P.customTheme=themeFrom(pick(["#2a9d5c","#aa2200"]));THEMES.custom=P.customTheme;P.theme=pick(["vanilla","custom","dark","scifi"]);ui()}],
+ ["prev",()=>togglePrev()],["flow",()=>{if(cur()){flow();$("fl").style.display="none"}}],["graph",()=>{if(cur()){gopen();$("gv").style.display="none"}}],
+ ["reload",()=>{$("ta").value=JSON.stringify(P);loadTa()}],["fit",()=>fitZoom()],["json",()=>{JSON.stringify(P)}],["png",()=>{if(typeof png==="function")png()}],["atlas",()=>atlasPng()]];
+ for(let i=0;i<700;i++){const [n,f]=pick(ops);try{await f()}catch(e){const k=n+": "+e.message;errs[k]=errs[k]||String(e.stack).split("\\n").slice(1,3).join(" <- ")}}
+ if(prev)togglePrev();return{errs,n:els().length}}catch(e){return{fatal:e.message+' @ '+String(e.stack).split('\\n').slice(0,4).join(' <- ')}}})()`;
+app.on("browser-window-created",(_,w)=>{const c=w.webContents,cons=[];c.on("console-message",(e,l,m)=>{if(l>=2)cons.push(m.slice(0,160))});
+ c.on("did-finish-load",async()=>{let code=0;try{const r=await c.executeJavaScript(TEST);if(r.fatal||Object.keys(r.errs||{}).length)code=1;console.log("FUZZ",JSON.stringify(r,null,1));console.log("CONSOLE",JSON.stringify([...new Set(cons)].slice(0,12),null,1))}catch(e){console.log("EXEC",e.message);code=1}app.exit(code)})});
+require("../main.js");setTimeout(()=>app.exit(2),90000);

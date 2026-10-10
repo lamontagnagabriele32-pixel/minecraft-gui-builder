@@ -1,0 +1,308 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "ファイル",
+    "edit": "編集",
+    "view": "表示",
+    "project": "プロジェクト",
+    "asset": "リソース",
+    "mod": "Mod",
+    "export": "エクスポート",
+    "ai": "AI",
+    "help": "ヘルプ",
+    "new_project": "新規プロジェクト…",
+    "new_from_template": "テンプレートから新規…",
+    "open_save_json": "JSONを開く/保存…",
+    "settings": "設定…",
+    "undo": "元に戻す",
+    "redo": "やり直し",
+    "duplicate": "複製",
+    "delete": "削除",
+    "group": "パネルにグループ化",
+    "ungroup": "グループ解除",
+    "bring_front": "最前面へ",
+    "send_back": "最背面へ",
+    "save_component": "コンポーネントとして保存",
+    "zoom_in": "拡大",
+    "zoom_out": "縮小",
+    "fit_window": "ウィンドウに合わせる",
+    "show_borders": "要素の境界線を表示",
+    "command_palette": "コマンドパレット",
+    "snap_grid": "グリッドにスナップ",
+    "generate_java": "Javaを生成",
+    "import_java_ai": "AIでJavaからインポート",
+    "quick_guide": "クイックガイド"
+  },
+  "tabs": {
+    "components": "コンポーネント",
+    "assets": "リソース",
+    "mod": "Mod",
+    "layers": "レイヤー",
+    "element": "要素",
+    "project": "プロジェクト",
+    "colors": "色",
+    "problems": "問題"
+  },
+  "components": {
+    "button": "ボタン",
+    "label": "ラベル",
+    "panel": "パネル",
+    "image": "画像",
+    "slot": "スロット",
+    "input": "入力",
+    "checkbox": "チェックボックス",
+    "progress": "プログレス",
+    "player": "プレイヤー"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "幅",
+    "height": "高さ",
+    "text": "テキスト",
+    "texture": "テクスチャ",
+    "visible": "表示",
+    "locked": "ロック",
+    "enabled": "有効",
+    "bg": "背景",
+    "pose": "ポーズ",
+    "model": "モデル",
+    "layout": "レイアウト",
+    "slotType": "スロットタイプ",
+    "slotIndex": "スロットインデックス",
+    "placeholder": "プレースホルダー",
+    "maxLength": "最大長",
+    "value": "値",
+    "min": "最小",
+    "max": "最大",
+    "opacity": "不透明度",
+    "reference": "参照"
+  },
+  "properties_values": {
+    "pose_idle": "待機",
+    "pose_walk": "歩行",
+    "pose_wave": "手を振る",
+    "pose_sit": "座る",
+    "layout_none": "なし",
+    "layout_vertical": "垂直",
+    "layout_horizontal": "水平",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "プレイヤー",
+    "slotType_container": "コンテナ",
+    "slotType_custom": "カスタム",
+    "slotType_output": "出力"
+  },
+  "mod": {
+    "link_folder": "ModフォルダをリンクしてGUIを表示、インポートし、アイテム、ブロック、サウンドをアクションで使用します。",
+    "link_button": "Modをリンク…",
+    "give": "与える",
+    "open_screen": "画面を開く",
+    "sound": "サウンド"
+  },
+  "project": {
+    "mod_id": "Mod ID",
+    "package": "パッケージ",
+    "screen_class": "画面クラス",
+    "ai_model": "モデル",
+    "ai_instruction": "指示",
+    "ai_placeholder": "例：中央にボタンを追加"
+  },
+  "settings": {
+    "start_screen": "起動時に開始画面を表示",
+    "interface": "インターフェース",
+    "snap": "グリッド (px)",
+    "initial_zoom": "初期ズーム (2-6)",
+    "auto_save": "自動保存",
+    "theme": "新規プロジェクトのテーマ",
+    "default_width": "デフォルトGUI幅",
+    "default_height": "デフォルトGUI高さ",
+    "default_loader": "デフォルトローダー",
+    "ollama_model": "Ollamaモデル",
+    "ollama_host": "Ollamaホスト",
+    "ai_context": "AIコンテキスト (tokens)"
+  },
+  "settings_values": {
+    "interface_auto": "自動",
+    "interface_light": "ライト",
+    "interface_dark": "ダーク",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "キャンバスまたは階層で要素を選択してください。",
+    "invalid_mod_id": "無効なMod ID：小文字、数字、_のみ、文字で始める必要があります",
+    "invalid_package": "無効なJavaパッケージ（例：com.example.mod）",
+    "invalid_class": "無効なクラス名（例：MainMenuScreen）"
+  },
+  "hints": {
+    "drag_canvas": "キャンバスにドラッグまたはクリック。パネルが選択されている場合、コンポーネントは内部に入ります。",
+    "empty_gui": "空のGUI。コンポーネントをドラッグまたはクリックして追加します。",
+    "select_element": "要素を選択"
+  },
+  "alignment": {
+    "align_left": "左揃え",
+    "align_center_h": "水平中央揃え",
+    "align_right": "右揃え",
+    "align_top": "上揃え",
+    "align_center_v": "垂直中央揃え",
+    "align_bottom": "下揃え",
+    "distribute_h": "水平配布",
+    "distribute_v": "垂直配布"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "target / command / text (例：coins=5, coins+=1)",
+    "placeholder_cond": "次の場合のみ：coins>=10"
+  },
+  "dialogs": {
+    "new_screen": "新規画面",
+    "close": "閉じる",
+    "new_screen_hint": "新規画面がプロジェクトに追加されます。リンクするには：ボタンを選択し、アクションopen_guiを選択し、ターゲットを画面のクラス名に設定します。",
+    "template_new": "テンプレートから新規",
+    "template_hint": "スロット位置はバニラGUIと同じ。メニューモードのプロジェクトを作成（実際のスロット、メニュー+画面）。",
+    "overwrite": "上書き",
+    "cancel": "キャンセル"
+  },
+  "pixel_editor": {
+    "title": "ピクセルエディタ",
+    "width": "幅",
+    "height": "高さ",
+    "pencil": "鉛筆",
+    "eraser": "消しゴム",
+    "fill": "塗りつぶし",
+    "eyedropper": "スポイト",
+    "mirror": "ミラー",
+    "clear": "クリア",
+    "asset_name": "リソース名",
+    "save_asset": "リソースとして保存"
+  },
+  "color_picker": {
+    "title": "色",
+    "to_element": "要素へ",
+    "as_brush": "ブラシとして",
+    "generate_theme": "この色からテーマを生成"
+  },
+  "lint": {
+    "goes_outside_screen": "画面外",
+    "exits_from_window": "ウィンドウ外",
+    "overlap": "重複",
+    "menu_mode_active": "メニューモードアクティブですがスロットなし",
+    "screen_not_found": "プロジェクトで画面\"{target}\"が見つかりません",
+    "inventory_index_duplicated": "インベントリインデックス{index}が重複({ids})",
+    "no_java_source": "{root}にJavaソースなし"
+  },
+  "generated_java": {
+    "overlay_comment": "Minecraft GUI Builderによって生成 - {screen}({version})のオーバーレイ。自動登録：Modに追加コード不要。",
+    "forge_comment": "Minecraft GUI Builderによって生成 - ターゲット：Minecraft 1.20.1 / Forge。画面\"{screen}\"。",
+    "overlay_vanilla": "TODO：カスタム実装：{target}はバニラGUIのオーバーレイです：画面として開けません。",
+    "has_inventory": "TODO：カスタム実装：{target}はインベントリ（メニュー）があります：{target}Registryでサーバー側で開いてください（クラスのコメントを参照）。",
+    "requires_params": "TODO：カスタム実装：{target}({params})はパラメータが必要：手動でインスタンス化して画面を開いてください。",
+    "must_exist": "TODO：カスタム実装：クラス{target}はプロジェクトに存在する必要があります",
+    "open_gui": "TODO：カスタム実装：生成されたGUIを開いてください（例：KeyMappingまたはクライアントコマンドを使用）。"
+  },
+  "gradle": {
+    "verify_versions": "公式MDKでバージョンを確認してください。"
+  },
+  "messages": {
+    "autosave_disabled": "自動保存無効：プロジェクトがローカルストレージ用に大きすぎます。ファイルに保存してください！",
+    "exported_to": "{path}にエクスポート",
+    "mod_linked": "Mod\"{modId}\"：{items}アイテム、{blocks}ブロック、{sounds}サウンド、{screens}画面、{textures}GUIテクスチャ",
+    "import_failed": "インポート失敗",
+    "only_desktop": "デスクトップアプリのみ。",
+    "requires_ollama": "AIはデスクトップアプリのみ利用可能（Ollama実行中が必要）。",
+    "waiting": "待機中",
+    "attempt": "試行",
+    "completed": "完了",
+    "cancelled": "キャンセル",
+    "no_valid_element": "有効な要素なし",
+    "response_discarded": "応答破棄",
+    "no_change_applied": "変更なし",
+    "added": "追加",
+    "modified": "変更",
+    "removed": "削除",
+    "coordinates_correct": "座標正しい",
+    "inside_screen": "画面内",
+    "only_desktop": "デスクトップアプリのみ"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "どのタイプのGUIを作成しますか？",
+    "continue_last": "最後のプロジェクトを続行",
+    "open_file": "ファイルを開く…",
+    "link_mod": "Modをリンク…",
+    "open_json": "JSONを開く/貼り付け…",
+    "dont_show": "起動時に表示しない"
+  },
+  "preview": {
+    "toggle": "プレビュー終了",
+    "start": "▶ プレビュー"
+  },
+  "screens": {
+    "new": "新規画面…",
+    "delete_current": "現在の画面を削除",
+    "go_to": "画面へ移動：{name}"
+  },
+  "mod_actions": {
+    "link": "Modをリンク…",
+    "write": "Modに書き込み",
+    "save_file": "ファイルに保存…",
+    "export_project": "Modプロジェクトをエクスポート…",
+    "save_java": "Javaをファイルに保存…",
+    "save_png": "GUI PNGを保存…",
+    "save_atlas": "テクスチャアトラスPNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "操作方法",
+    "how_to_work_text": "1) プロジェクトタイプを選択：新規画面またはオーバーレイで既存のGUIに要素を追加（メインメニュー、一時停止、インベントリ...）。2) コンポーネントをキャンバスにドラッグ。3) イベントとアクションを設定（ロジック、ノードグラフ）。4) プレビューでテスト。5) Javaを生成、またはModをリンク+Modに書き込み。",
+    "shortcuts": "ショートカット",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   元に戻す / やり直し\nCtrl+C / Ctrl+V   コピー / 貼り付け\nCtrl+D            複製\nCtrl+S            保存（デスクトップアプリ）\nDel              削除\n矢印キー         1px移動\nShift+click      複数選択\nノードグラフをダブルクリック   ノード検索\nShift+テクスチャをクリック   ピクセル編集\nCtrl+K            コマンドパレット\nCtrl+G / Ctrl+Shift+G   グループ化 / グループ解除\nCtrl+] / Ctrl+[   最前面 / 最背面\nShift+矢印キー     10px移動\nCtrl+スクロール   ズーム · スペース+ドラッグまたは中ボタン：パン",
+    "multiple_screens": "複数画面",
+    "multiple_screens_text": "キャンバスの上部に画面タブがあります：クリックで画面を切り替え、ダブルクリックで名前変更、＋で追加。リンクするには：ボタンを選択し、アクションopen_guiを設定し、ターゲットを別の画面のクラス名に設定（推奨）。プレビューでは、ボタンは実際に別の画面を開き、close_guiで戻ります。ゲームでは、Escで前の画面に戻ります。",
+    "overlay": "オーバーレイ",
+    "overlay_text": "キャンバス上の赤い点はアンカーです：Javaの位置はこの点に対して相対的で、ウィンドウに従います。破線はバニラGUIの近似参照です。"
+  },
+  "language": {
+    "title": "言語",
+    "select": "言語を選択"
+  },
+  "templates": {
+    "chest3": "チェスト（3行）",
+    "furnace": "かまど",
+    "hopper": "ホッパー",
+    "blank": "空白画面",
+    "title": "メインメニュー追加",
+    "pause": "一時停止メニュー追加",
+    "inventory": "インベントリ追加",
+    "creative": "クリエイティブインベントリ追加"
+  }
+}

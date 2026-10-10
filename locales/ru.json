@@ -1,0 +1,306 @@
+{
+  "app": {
+    "title": "Minecraft GUI Builder"
+  },
+  "menu": {
+    "file": "Файл",
+    "edit": "Редактирование",
+    "view": "Вид",
+    "project": "Проект",
+    "asset": "Ресурс",
+    "mod": "Мод",
+    "export": "Экспорт",
+    "ai": "ИИ",
+    "help": "Справка",
+    "new_project": "Новый проект…",
+    "new_from_template": "Создать из шаблона…",
+    "open_save_json": "Открыть / сохранить JSON…",
+    "settings": "Настройки…",
+    "undo": "Отменить",
+    "redo": "Повторить",
+    "duplicate": "Дублировать",
+    "delete": "Удалить",
+    "group": "Сгруппировать в панели",
+    "ungroup": "Разгруппировать",
+    "bring_front": "На передний план",
+    "send_back": "На задний план",
+    "save_component": "Сохранить как компонент",
+    "zoom_in": "Увеличить",
+    "zoom_out": "Уменьшить",
+    "fit_window": "Подогнать к окну",
+    "show_borders": "Показать границы элементов",
+    "command_palette": "Палитра команд",
+    "snap_grid": "Привязка к сетке",
+    "generate_java": "Сгенерировать Java",
+    "import_java_ai": "Импорт из Java с ИИ",
+    "quick_guide": "Быстрое руководство"
+  },
+  "tabs": {
+    "components": "Компоненты",
+    "assets": "Ресурсы",
+    "mod": "Мод",
+    "layers": "Слои",
+    "element": "Элемент",
+    "project": "Проект",
+    "colors": "Цвета",
+    "problems": "Проблемы"
+  },
+  "components": {
+    "button": "Кнопка",
+    "label": "Метка",
+    "panel": "Панель",
+    "image": "Изображение",
+    "slot": "Слот",
+    "input": "Ввод",
+    "checkbox": "Флажок",
+    "progress": "Прогресс",
+    "player": "Игрок"
+  },
+  "actions": {
+    "open_gui": "open_gui",
+    "close_gui": "close_gui",
+    "give_item": "give_item",
+    "play_sound": "play_sound",
+    "send_message": "send_message",
+    "run_command": "run_command",
+    "set_variable": "set_variable",
+    "change_variable": "change_variable",
+    "custom_java_hook": "custom_java_hook"
+  },
+  "properties": {
+    "id": "id",
+    "x": "x",
+    "y": "y",
+    "width": "ширина",
+    "height": "высота",
+    "text": "текст",
+    "texture": "текстура",
+    "visible": "видимый",
+    "locked": "заблокирован",
+    "enabled": "включён",
+    "bg": "фон",
+    "pose": "поза",
+    "model": "модель",
+    "layout": "макет",
+    "slotType": "slotType",
+    "slotIndex": "slotIndex",
+    "placeholder": "заполнитель",
+    "maxLength": "maxLength",
+    "value": "значение",
+    "min": "мин",
+    "max": "макс",
+    "opacity": "непрозрачность",
+    "reference": "ссылка"
+  },
+  "properties_values": {
+    "pose_idle": "idle",
+    "pose_walk": "walk",
+    "pose_wave": "wave",
+    "pose_sit": "sit",
+    "layout_none": "none",
+    "layout_vertical": "vertical",
+    "layout_horizontal": "horizontal",
+    "model_steve": "steve",
+    "model_alex": "alex",
+    "model_creeper": "creeper",
+    "slotType_player": "player",
+    "slotType_container": "container",
+    "slotType_custom": "custom",
+    "slotType_output": "output"
+  },
+  "mod": {
+    "link_folder": "Свяжите папку мода, чтобы увидеть его GUI, импортировать их и использовать его предметы, блоки и звуки в действиях.",
+    "link_button": "Связать мод…",
+    "give": "Дать",
+    "open_screen": "Открыть экран",
+    "sound": "Звук"
+  },
+  "project": {
+    "mod_id": "ID мода",
+    "package": "Пакет",
+    "screen_class": "Класс экрана",
+    "ai_model": "Модель",
+    "ai_instruction": "Инструкция",
+    "ai_placeholder": "например, добавить центрированную кнопку"
+  },
+  "settings": {
+    "start_screen": "Открывать экран при запуске",
+    "interface": "Интерфейс",
+    "snap": "Привязка (px)",
+    "initial_zoom": "Начальный масштаб (2-6)",
+    "auto_save": "Автосохранение",
+    "theme": "Тема для новых проектов",
+    "default_width": "Ширина GUI по умолчанию",
+    "default_height": "Высота GUI по умолчанию",
+    "default_loader": "Загрузчик по умолчанию",
+    "ollama_model": "Модель Ollama",
+    "ollama_host": "Хост Ollama",
+    "ai_context": "Контекст ИИ (токены)"
+  },
+  "settings_values": {
+    "interface_auto": "auto",
+    "interface_light": "светлая",
+    "interface_dark": "тёмная",
+    "loader_forge": "forge",
+    "loader_neoforge": "neoforge",
+    "loader_neoforge121": "neoforge121"
+  },
+  "validation": {
+    "select_element": "Выберите элемент на холсте или в иерархии.",
+    "invalid_mod_id": "Неверный ID мода: только строчные буквы, цифры и _, должен начинаться с буквы",
+    "invalid_package": "Неверный пакет Java (пример: com.example.mod)",
+    "invalid_class": "Неверное имя класса (пример: MainMenuScreen)"
+  },
+  "hints": {
+    "drag_canvas": "Перетащите на холст или нажмите. Если выбрана Панель, компонент попадёт внутрь.",
+    "empty_gui": "Пустой GUI. Перетащите компоненты или нажмите для добавления.",
+    "select_element": "Выберите элемент"
+  },
+  "alignment": {
+    "align_left": "Выровнять по левому краю",
+    "align_center_h": "Центрировать по горизонтали",
+    "align_right": "Выровнять по правому краю",
+    "align_top": "Выровнять по верху",
+    "align_center_v": "Центрировать по вертикали",
+    "align_bottom": "Выровнять по низу",
+    "distribute_h": "Распределить по горизонтали",
+    "distribute_v": "Распределить по вертикали"
+  },
+  "events": {
+    "click": "click",
+    "hover": "hover",
+    "press": "press",
+    "release": "release",
+    "open": "open",
+    "close": "close",
+    "tick": "tick",
+    "placeholder_target": "цель / команда / текст (например, монеты=5, монеты+=1)",
+    "placeholder_cond": "только если: монеты>=10"
+  },
+  "dialogs": {
+    "new_screen": "Новый экран",
+    "close": "Закрыть",
+    "new_screen_hint": "Новый экран добавляется в проект. Чтобы связать его: выберите кнопку, выберите действие open_gui и в качестве цели имя класса экрана.",
+    "template_new": "Создать из шаблона",
+    "template_hint": "Позиции слотов идентичны стандартным GUI. Создаёт проект в режиме Меню (реальные слоты, Меню + Экран)."
+  },
+  "pixel_editor": {
+    "title": "Редактор пикселей",
+    "width": "Ширина",
+    "height": "Высота",
+    "pencil": "Карандаш",
+    "eraser": "Ластик",
+    "fill": "Заливка",
+    "eyedropper": "Пипетка",
+    "mirror": "зеркало",
+    "clear": "Очистить",
+    "asset_name": "имя ресурса",
+    "save_asset": "Сохранить как ресурс"
+  },
+  "color_picker": {
+    "title": "Цвет",
+    "to_element": "К элементу",
+    "as_brush": "Как кисть",
+    "generate_theme": "Сгенерировать тему из этого цвета"
+  },
+  "lint": {
+    "goes_outside_screen": "выходит за пределы экрана",
+    "exits_from_window": "выходит из окна",
+    "overlap": "перекрытие",
+    "menu_mode_active": "Режим меню активен, но нет слотов",
+    "screen_not_found": "экран \"{target}\" не найден в проекте",
+    "inventory_index_duplicated": "Индекс инвентаря {index} дублируется ({ids})",
+    "no_java_source": "Нет исходного кода Java в {root}"
+  },
+  "generated_java": {
+    "overlay_comment": "Сгенерировано Minecraft GUI Builder - наложение на {screen} ({version}). Регистрируется самостоятельно: без дополнительного кода в моде.",
+    "forge_comment": "Сгенерировано Minecraft GUI Builder - цель: Minecraft 1.20.1 / Forge. Экран \"{screen}\".",
+    "overlay_vanilla": "TODO: КАСТОМНАЯ РЕАЛИЗАЦИЯ: {target} - это наложение на стандартный GUI: нельзя открыть как экран.",
+    "has_inventory": "TODO: КАСТОМНАЯ РЕАЛИЗАЦИЯ: {target} имеет инвентарь (Меню): откройте его на сервере с {target}Registry (см. комментарий в классе).",
+    "requires_params": "TODO: КАСТОМНАЯ РЕАЛИЗАЦИЯ: {target}({params}) требует параметры: создайте экземпляр и откройте экран вручную.",
+    "must_exist": "TODO: КАСТОМНАЯ РЕАЛИЗАЦИЯ: класс {target} должен существовать в вашем проекте",
+    "open_gui": "TODO: КАСТОМНАЯ РЕАЛИЗАЦИЯ: откройте сгенерированный GUI (например, с помощью KeyMapping или клиентской команды)."
+  },
+  "gradle": {
+    "verify_versions": "Проверьте версии с официальным MDK."
+  },
+  "messages": {
+    "autosave_disabled": "Автосохранение отключено: проект слишком большой для локального хранилища. Сохраните в файл!",
+    "exported_to": "Экспортировано в {path}",
+    "mod_linked": "Мод \"{modId}\": {items} предмет, {blocks} блоков, {sounds} звуков, {screens} экран, {textures} текстур GUI",
+    "import_failed": "Импорт не удался",
+    "only_desktop": "Только в десктопном приложении.",
+    "requires_ollama": "ИИ доступен только в десктопном приложении (требуется запущенный Ollama).",
+    "waiting": "Ожидание",
+    "attempt": "Попытка",
+    "completed": "завершено",
+    "cancelled": "отменено",
+    "no_valid_element": "нет допустимого элемента",
+    "response_discarded": "Ответ отброшен",
+    "no_change_applied": "Изменения не применены",
+    "added": "добавлено",
+    "modified": "изменено",
+    "removed": "удалено",
+    "coordinates_correct": "координаты верны",
+    "inside_screen": "внутри экрана",
+    "only_desktop": "Только в десктопном приложении"
+  },
+  "launch": {
+    "title": "Minecraft GUI Builder",
+    "question": "Какой тип GUI вы хотите создать?",
+    "continue_last": "Продолжить последний проект",
+    "open_file": "Открыть файл…",
+    "link_mod": "Связать мод…",
+    "open_json": "Открыть / вставить JSON…",
+    "dont_show": "Не показывать при запуске"
+  },
+  "preview": {
+    "toggle": "Выйти из предпросмотра",
+    "start": "▶ Предпросмотр"
+  },
+  "screens": {
+    "new": "Новый экран…",
+    "delete_current": "Удалить текущий экран",
+    "go_to": "Перейти к экрану: {name}"
+  },
+  "mod_actions": {
+    "link": "Связать мод…",
+    "write": "Записать в мод",
+    "save_file": "Сохранить в файл…",
+    "export_project": "Экспортировать проект мода…",
+    "save_java": "Сохранить Java в файл…",
+    "save_png": "Сохранить GUI PNG…",
+    "save_atlas": "Атлас текстуры PNG…"
+  },
+  "overlay_types": {
+    "title": "TitleScreen",
+    "pause": "PauseScreen",
+    "inventory": "InventoryScreen",
+    "creative": "CreativeScreen",
+    "custom": "CustomScreen"
+  },
+  "help": {
+    "how_to_work": "Как работать",
+    "how_to_work_text": "1) Выберите тип проекта: Новый экран или Наложение для добавления элементов к существующему GUI (главное меню, пауза, инвентарь...). 2) Перетащите компоненты на холст. 3) Установите события и действия (Логика, Граф узлов). 4) Попробуйте в предпросмотре. 5) Сгенерируйте Java, или Свяжите мод + Записать в мод.",
+    "shortcuts": "Горячие клавиши",
+    "shortcuts_text": "Ctrl+Z / Ctrl+Y   отменить / повторить\nCtrl+C / Ctrl+V   копировать / вставить\nCtrl+D            дублировать\nCtrl+S            сохранить (десктопное приложение)\nDel              удалить\nСтрелки          переместить на 1 px\nShift+click      множественный выбор\nДвойной клик в графе   поиск узла\nShift+click на текстуре   редактировать пиксели\nCtrl+K            палитра команд\nCtrl+G / Ctrl+Shift+G   сгруппировать / разгруппировать\nCtrl+] / Ctrl+[   на передний план / на задний план\nShift+стрелки    переместить на 10 px\nCtrl+scroll       масштаб · Пробел+перетаскивание или средняя кнопка: панорамирование",
+    "multiple_screens": "Несколько экранов",
+    "multiple_screens_text": "В верхней части холста есть вкладки экранов: нажмите для переключения между экранами, двойной клик для переименования, ＋ для добавления ещё. Чтобы связать их: выберите кнопку, установите действие open_gui и в качестве цели имя класса другого экрана (предлагается). В предпросмотре кнопка действительно открывает другой экран, а close_gui возвращает обратно. В игре Esc возвращает к предыдущему экрану.",
+    "overlay": "Наложение",
+    "overlay_text": "Красная точка на холсте - это якорь: позиции в Java относительны этой точке, поэтому они следуют за окном. Пунктирные линии - это приблизительная ссылка на стандартный GUI."
+  },
+  "language": {
+    "title": "Язык",
+    "select": "Выбрать язык"
+  },
+  "templates": {
+    "chest3": "Сундук (3 ряда)",
+    "furnace": "Печь",
+    "hopper": "Воронка",
+    "blank": "Пустой экран",
+    "title": "Дополнения экрана заголовка",
+    "pause": "Дополнения экрана паузы",
+    "inventory": "Дополнения инвентаря",
+    "creative": "Дополнения творческого инвентаря"
+  }
+}
