@@ -245,7 +245,15 @@
     "removed": "제거됨",
     "coordinates_correct": "좌표 올바름",
     "inside_screen": "화면 내",
-    "only_desktop": "데스크톱 앱에서만 사용 가능"
+    "only_desktop": "데스크톱 앱에서만 사용 가능",
+    "no_custom_variables": "사용자 정의 변수가 정의되지 않았습니다.",
+    "no_custom_functions": "사용자 정의 함수가 정의되지 않았습니다."
+  },
+  "update": {
+    "new_update_available": "새 업데이트 사용 가능",
+    "version_available": "버전 {latest}을(를) 사용할 수 있습니다（현재 {current}）. 최신 기능과 버그 수정을 받으려면 지금 업데이트하세요.",
+    "update_now": "지금 업데이트",
+    "later": "나중에"
   },
   "launch": {
     "title": "Minecraft GUI Builder",

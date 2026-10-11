@@ -245,7 +245,15 @@
     "removed": "削除",
     "coordinates_correct": "座標正しい",
     "inside_screen": "画面内",
-    "only_desktop": "デスクトップアプリのみ"
+    "only_desktop": "デスクトップアプリのみ",
+    "no_custom_variables": "カスタム変数は定義されていません。",
+    "no_custom_functions": "カスタム関数は定義されていません。"
+  },
+  "update": {
+    "new_update_available": "新しいアップデートが利用可能",
+    "version_available": "バージョン {latest} が利用可能です（現在 {current}）。最新の機能とバグ修正を取得するために今すぐ更新してください。",
+    "update_now": "今すぐ更新",
+    "later": "後で"
   },
   "launch": {
     "title": "Minecraft GUI Builder",

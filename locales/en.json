@@ -245,10 +245,16 @@
     "removed": "removed",
     "coordinates_correct": "coordinates correct",
     "inside_screen": "inside the screen",
-    "only_desktop": "Only in desktop app"
+    "only_desktop": "Only in desktop app",
+    "no_custom_variables": "No custom variables defined.",
+    "no_custom_functions": "No custom functions defined."
   },
-  "no_custom_variables": "No custom variables defined.",
-  "no_custom_functions": "No custom functions defined.",
+  "update": {
+    "new_update_available": "New Update Available",
+    "version_available": "Version {latest} is available (you have {current}). Update now to get the latest features and bug fixes.",
+    "update_now": "Update Now",
+    "later": "Later"
+  },
   "launch": {
     "title": "Minecraft GUI Builder",
     "question": "What type of GUI do you want to create?",

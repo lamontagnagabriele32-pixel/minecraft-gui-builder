@@ -245,7 +245,15 @@
     "removed": "eliminado",
     "coordinates_correct": "coordenadas correctas",
     "inside_screen": "dentro de la pantalla",
-    "only_desktop": "Solo en app de escritorio"
+    "only_desktop": "Solo en app de escritorio",
+    "no_custom_variables": "Sin variables personalizadas definidas.",
+    "no_custom_functions": "Sin funciones personalizadas definidas."
+  },
+  "update": {
+    "new_update_available": "Nueva Actualización Disponible",
+    "version_available": "La versión {latest} está disponible (tienes {current}). Actualiza ahora para obtener las últimas funciones y correcciones de errores.",
+    "update_now": "Actualizar Ahora",
+    "later": "Más Tarde"
   },
   "launch": {
     "title": "Minecraft GUI Builder",

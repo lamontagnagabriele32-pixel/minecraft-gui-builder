@@ -243,7 +243,15 @@
     "removed": "удалено",
     "coordinates_correct": "координаты верны",
     "inside_screen": "внутри экрана",
-    "only_desktop": "Только в десктопном приложении"
+    "only_desktop": "Только в десктопном приложении",
+    "no_custom_variables": "Пользовательские переменные не определены.",
+    "no_custom_functions": "Пользовательские функции не определены."
+  },
+  "update": {
+    "new_update_available": "Доступно Новое Обновление",
+    "version_available": "Доступна версия {latest}（у вас {current}）. Обновитесь сейчас, чтобы получить последние функции и исправления ошибок.",
+    "update_now": "Обновить Сейчас",
+    "later": "Позже"
   },
   "launch": {
     "title": "Minecraft GUI Builder",
