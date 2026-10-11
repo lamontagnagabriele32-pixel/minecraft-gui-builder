@@ -243,7 +243,9 @@
     "removed": "rimosso",
     "coordinates_correct": "coordinate corrette",
     "inside_screen": "dentro la schermata",
-    "only_desktop": "Solo nell'app desktop"
+    "only_desktop": "Solo nell'app desktop",
+    "no_custom_variables": "Nessuna variabile personalizzata definita.",
+    "no_custom_functions": "Nessuna funzione personalizzata definita."
   },
   "launch": {
     "title": "Minecraft GUI Builder",

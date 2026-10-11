@@ -179,7 +179,7 @@ aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
 <header id="top">
  <div class="brand"><svg width="22" height="22" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" fill="#2a9d5c"/><rect x="6" y="6" width="5" height="5" rx="1" fill="#fff"/><rect x="13" y="6" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="6" y="13" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="13" y="13" width="5" height="5" rx="1" fill="#fff"/></svg><b>GUI Builder</b></div>
  <nav id="menubar">
-  <div class="menu"><button class="mb">File</button><div class="dd" id="dd-file"><button onclick="launchOpen()">New project…</button><button onclick="tplOpen()">New from template…</button><button onclick="openJson()">Open / save JSON…</button><hr><button onclick="openSettings()">Settings…</button></div></div>
+  <div class="menu"><button class="mb" id="menu-file">File</button><div class="dd" id="dd-file"><button onclick="launchOpen()" id="menu-new-project">New project…</button><button onclick="tplOpen()" id="menu-new-template">New from template…</button><button onclick="openJson()" id="menu-open-json">Open / save JSON…</button><hr><button onclick="openSettings()" id="menu-settings">Settings…</button></div></div>
   <div class="menu"><button class="mb">Edit</button><div class="dd"><button onclick="undo()">Undo<kbd>Ctrl+Z</kbd></button><button onclick="redo()">Redo<kbd>Ctrl+Y</kbd></button><hr><button onclick="dup()">Duplicate<kbd>Ctrl+D</kbd></button><button onclick="del()">Delete<kbd>Del</kbd></button><hr><button onclick="groupSel()">Group in Panel<kbd>Ctrl+G</kbd></button><button onclick="ungroupSel()">Ungroup<kbd>Ctrl+Shift+G</kbd></button><button onclick="zSel(1)">Bring to front<kbd>Ctrl+]</kbd></button><button onclick="zSel(-1)">Send to back<kbd>Ctrl+[</kbd></button><button onclick="saveComp()">Save as component</button></div></div>
   <div class="menu"><button class="mb">View</button><div class="dd"><button onclick="zoom(1)">Zoom in</button><button onclick="zoom(-1)">Zoom out</button><button onclick="fitZoom()">Fit to window<kbd>Ctrl+0</kbd></button><button onclick="$('gui').classList.toggle('dbg')">Show element borders</button><button onclick="cmdkOpen()">Command palette<kbd>Ctrl+K</kbd></button><hr><label><span><input type="checkbox" id="sn"> Snap to grid</span></label></div></div>
   <div class="menu"><button class="mb">Project</button><div class="dd" id="dd-proj"><button onclick="openAddScreen()">New screen…</button><button onclick="deleteCur()">Delete current screen</button><hr><button onclick="switchTab('right','p-proj')">Project settings</button><button onclick="switchTab('right','p-col')">Colors and themes</button><hr><button onclick="flow()">Logic (tabs)</button><button onclick="gopen()">Logic (node graph)</button></div></div>
@@ -196,7 +196,7 @@ aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
 <main id="shell">
  <aside id="left">
   <div class="tabs"><button class="tab on" data-g="left" data-p="p-comp">Components</button><button class="tab" data-g="left" data-p="p-asset">Assets</button><button class="tab" data-g="left" data-p="p-mod">Mod</button></div>
-  <div class="pane on" id="p-comp" data-pg="left"><p class="hint">Drag onto canvas or click. If a Panel is selected, the component goes inside.</p><div id="lib"></div><div id="cl"></div></div>
+  <div class="pane on" id="p-comp" data-pg="left"><p class="hint" id="hint-drag">Drag onto canvas or click. If a Panel is selected, the component goes inside.</p><div id="lib"></div><div id="cl"></div></div>
   <div class="pane" id="p-asset" data-pg="left"><div id="th"></div></div>
   <div class="pane" id="p-mod" data-pg="left"><p class="hint">Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions.</p><button class="pri" onclick="linkMod()" style="width:100%">📁 Link a mod…</button><div id="mg"></div></div>
   <div id="layers"><div class="sec">Layers</div><div id="hr"></div></div>
@@ -210,11 +210,13 @@ aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
    <label>Type<select id="ovs" onchange="setOverlay(this.value)"><option value="">New Screen</option><option value="title">Overlay: Main menu</option><option value="pause">Overlay: Pause menu</option><option value="inventory">Overlay: Player inventory</option><option value="creative">Overlay: Creative inventory</option><option value="custom">Overlay: GUI custom…</option></select></label>
    <label>Anchor<select id="ova" onchange="P.overlay.anchor=this.value;push();ui()" style="display:none"><option>top-left</option><option>top-center</option><option>top-right</option><option>center</option><option>bottom-left</option><option>bottom-center</option><option>bottom-right</option><option>gui</option></select></label>
    <label>Target class<input id="ovc" placeholder="net.mod.MiaScreen" style="display:none" onchange="P.overlay.custom=this.value;push()"></label>
-   <label>Dimensioni<span class="two"><input id="sw" type="number"><span>×</span><input id="sh" type="number"></span></label>
+   <label>Dimensions<span class="two"><input id="sw" type="number"><span>×</span><input id="sh" type="number"></span></label>
    <label>Platform<select id="ld2" onchange="P.loader=this.value;P.minecraft=this.value==='neoforge121'?'1.21.1':'1.20.1';push();statusUpd()"><option value="forge">Forge 1.20.1</option><option value="neoforge">NeoForge 1.20.1</option><option value="neoforge121">NeoForge 1.21.1</option></select></label>
    <h4>Reference image</h4><label>Image<input type="file" id="refin" accept="image/*"></label><label>Opacity<input type="range" id="refop" min="10" max="100" value="40"></label><div class="row"><button onclick="refClear()">Remove reference</button></div><h4>Export</h4>
    <label>Mod ID<input id="mod" value="mygui"></label><label>Package<input id="pkg" value="com.example.mygui"></label><label>Screen class<input id="cls" value="MainMenuScreen"></label>
-   <h4>AI (Ollama, opzionale)</h4>
+   <h4>Custom Variables</h4><div id="vars"></div><button onclick="addVar()">+ Add variable</button>
+   <h4>Custom Functions</h4><div id="funcs"></div><button onclick="addFunc()">+ Add function</button>
+   <h4>AI (Ollama, optional)</h4>
    <label>Model<input id="aim" value="qwen2.5-coder:14b"></label><label>Instruction<input id="aiq" placeholder="e.g. add a centered button"></label>
    <div class="row"><button onclick="aiCmd()">Execute command</button><button onclick="aiImport()">Import Java</button></div>
   </div>
@@ -228,14 +230,25 @@ aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
 <script>
 const $=id=>document.getElementById(id);let S=3,P,sel=null,hist=[],hi=-1,prev=false,n=0,drag=null;
 const D={button:{width:120,height:20,text:"Button",texture:"",slice:4},label:{width:60,height:9,text:"Label",color:"#404040"},slot:{width:18,height:18,slotIndex:0,slotType:"container"},player:{width:48,height:72,scale:30,skin:"",pose:"idle",model:"steve"},panel:{width:100,height:60,bg:true,color:"",texture:"",slice:4,layout:"none",gap:2,pad:4,hug:false,children:[]},input:{width:100,height:16,text:"",placeholder:"Type...",maxLength:32},progress:{width:80,height:8,value:50,min:0,max:100},checkbox:{width:70,height:12,text:"Option",checked:false},image:{width:32,height:32,texture:""}};
-const ACT=["","open_gui","close_gui","run_command","play_sound","send_message","set_variable","change_variable","give_item","custom_java_hook"];
+const ACT=["","open_gui","close_gui","run_command","play_sound","send_message","set_variable","change_variable","give_item","call_function","custom_java_hook"];
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 function mk(t){return {type:t,id:t+"_"+(++n),x:8,y:8,visible:true,locked:false,enabled:true,events:{},...structuredClone(D[t])}}
 function walk(l,f,p=null,d=0){for(const e of l){f(e,p,d,l);if(e.children)walk(e.children,f,e,d+1)}}
 function find(id){let r=null;walk(P.elements,(e,p,d,l)=>{if(e.id===id)r={e,p,l}});return r}
 function cur(){return sel&&find(sel)}
-function blank(){return {format:1,minecraft:"1.20.1",loader:CFG.loader,theme:CFG.theme,screen:{id:"main_menu",width:CFG.sw,height:CFG.sh},elements:[]}}
+function blank(){return {format:1,minecraft:"1.20.1",loader:CFG.loader,theme:CFG.theme,screen:{id:"main_menu",width:CFG.sw,height:CFG.sh},elements:[],variables:[],functions:[]}}
 function recount(){n=100;walk(P.elements,()=>n++)}
+function addVar(){P.variables=P.variables||[];P.variables.push({name:"var"+(P.variables.length+1),type:"int",initialValue:0});push();renderVars()}
+function deleteVar(idx){P.variables.splice(idx,1);push();renderVars()}
+function renderVars(){const d=$("vars");if(!P.variables||P.variables.length===0){d.innerHTML="<p class=m style='padding:8px'>"+(window.i18n?.t("messages.no_custom_variables")||"No custom variables defined.")+"</p>";return}
+d.innerHTML=P.variables.map((v,i)=>`<div class=fr style="padding:4px;background:var(--pn2);border-radius:6px;margin-bottom:4px"><label>Name<input type=text value="${esc(v.name)}" data-idx=${i} data-f=name></label><label>Type<select data-idx=${i} data-f=type><option ${v.type==="int"?"selected":""}>int</option><option ${v.type==="boolean"?"selected":""}>boolean</option><option ${v.type==="String"?"selected":""}>String</option></select></label><label>Initial<input type=text value="${esc(String(v.initialValue))}" data-idx=${i} data-f=initialValue></label><button onclick="deleteVar(${i})" style="padding:2px 8px">×</button></div>`).join("")}
+$("vars").onchange=ev=>{const t=ev.target;if(t.dataset.idx!==undefined){const v=P.variables[+t.dataset.idx];if(t.dataset.f==="name")v.name=t.value.replace(/\W/g,"_")||"var";else if(t.dataset.f==="type")v.type=t.value;else if(t.dataset.f==="initialValue"){if(v.type==="int")v.initialValue=+t.value||0;else if(v.type==="boolean")v.initialValue=t.value==="true";else v.initialValue=t.value}push();renderVars()}};
+function addFunc(){P.functions=P.functions||[];P.functions.push({name:"func"+(P.functions.length+1),returnType:"void",params:[],body:"return;"});
+push();renderFuncs()}
+function deleteFunc(idx){P.functions.splice(idx,1);push();renderFuncs()}
+function renderFuncs(){const d=$("funcs");if(!P.functions||P.functions.length===0){d.innerHTML="<p class=m style='padding:8px'>"+(window.i18n?.t("messages.no_custom_functions")||"No custom functions defined.")+"</p>";return}
+d.innerHTML=P.functions.map((f,i)=>`<div style="padding:4px;background:var(--pn2);border-radius:6px;margin-bottom:4px"><div class=fr><label>Name<input type=text value="${esc(f.name)}" data-idx=${i} data-f=name></label><label>Return<select data-idx=${i} data-f=returnType><option ${f.returnType==="void"?"selected":""}>void</option><option ${f.returnType==="int"?"selected":""}>int</option><option ${f.returnType==="boolean"?"selected":""}>boolean</option><option ${f.returnType==="String"?"selected":""}>String</option></select></label><button onclick="deleteFunc(${i})" style="padding:2px 8px">×</button></div><label>Parameters (comma-separated: type name)<input type=text value="${esc(f.params.join(", "))}" data-idx=${i} data-f=params placeholder="e.g. int amount, String name"></label><label>Body (Java code)<textarea data-idx=${i} data-f=body style="width:100%;height:60px;font:11px monospace">${esc(f.body)}</textarea></div>`).join("")}
+$("funcs").onchange=ev=>{const t=ev.target;if(t.dataset.idx!==undefined){const f=P.functions[+t.dataset.idx];if(t.dataset.f==="name")f.name=t.value.replace(/\W/g,"_")||"func";else if(t.dataset.f==="returnType")f.returnType=t.value;else if(t.dataset.f==="params")f.params=t.value.split(",").map(s=>s.trim()).filter(s=>s);else if(t.dataset.f==="body")f.body=t.value;push();renderFuncs()}};
 function push(){hist=hist.slice(0,hi+1);hist.push(JSON.stringify(P));if(hist.length>120)hist.shift();hi=hist.length-1;if(CFG.autosave!==false)try{localStorage.setItem("mcgb",hist[hi])}catch(e){if(!push.w){push.w=1;say("Autosave disabled: project is too large for local storage. Save to file!")}}}
 function undo(){if(hi>0){P=JSON.parse(hist[--hi]);fix()}}function redo(){if(hi<hist.length-1){P=JSON.parse(hist[++hi]);fix()}}
 function fix(){if(sel&&!find(sel))sel=null;ui()}
@@ -247,7 +260,7 @@ function del(){const c=cur();if(!c)return;c.l.splice(c.l.indexOf(c.e),1);sel=nul
 function dup(){const c=cur();if(!c)return;const k=structuredClone(c.e);walk([k],e=>{e.id=e.type+"_"+(++n)});k.x+=8;k.y+=8;c.l.splice(c.l.indexOf(c.e)+1,0,k);sel=k.id;push();ui()}
 function zoom(d){S=Math.max(2,Math.min(6,S+d));ui()}
 function togglePrev(){prev=!prev;$("pv").textContent=prev?"■ Exit Preview":"▶ Preview";ui()}
-function say(t){const l=$("log");l.textContent="▶ "+t;l.style.display="block";clearTimeout(say.t);say.t=setTimeout(()=>l.style.display="none",4500)}
+function say(t){const l=$("log");l.textContent="▶ "+t;l.style.display="block";clearTimeout(say.t);say.t=setTimeout(()=>l.style.display="none",4500);if(!window.i18n)window.i18n={t:k=>k}}
 const V={};
 function cnd(c){if(!c)return true;const m=/^(\w+)\s*(>=|<=|==|!=|>|<)\s*(-?\d+)$/.exec(c.trim());if(!m)return true;const a=V[m[1]]||0,b=+m[3];return {">=":a>=b,"<=":a<=b,"==":a==b,"!=":a!=b,">":a>b,"<":a<b}[m[2]]}
 function run(e,ev){(e.events[ev]||[]).forEach(a=>{if(!a.action||!cnd(a.cond))return;let m;if(a.action==="close_gui"&&prev)setTimeout(previewBack,0);if(a.action==="open_gui"&&prev){const si=screenIndexBy(a.target);if(si>=0)setTimeout(()=>previewOpen(si),0)}
@@ -280,7 +293,7 @@ addEventListener("keydown",ev=>{if(/INPUT|TEXTAREA|SELECT/.test(ev.target.tagNam
  else if(c&&k.startsWith("Arrow")){const st=ev.shiftKey?10:1;selEls().forEach(({e})=>{if(k==="ArrowLeft")e.x-=st;if(k==="ArrowRight")e.x+=st;if(k==="ArrowUp")e.y-=st;if(k==="ArrowDown")e.y+=st});push();ui();ev.preventDefault()}});
 /* properties */
 const FT={button:["text","texture","slice"],label:["text","color"],slot:["slotIndex","slotType"],panel:["bg","color","texture","slice","layout","gap","pad","hug"],player:["scale","skin","pose","model"],input:["text","placeholder","maxLength"],progress:["value","min","max"],checkbox:["text","checked"],image:["texture"]};
-function props(){const c=cur(),pr=$("pr");statusUpd();if(!c){pr.innerHTML="<p class=m>Select an element on the canvas or in the hierarchy.</p>";return}const e=c.e;
+function props(){const c=cur(),pr=$("pr");statusUpd();if(!c){pr.innerHTML="<p class=m>"+(window.i18n?.t("validation.select_element")||"Select an element on the canvas or in the hierarchy.")+"</p>";return}const e=c.e;
  const f=k=>{const v=e[k];if(typeof v==="boolean"||k==="bg")return `<label><input type=checkbox data-k="${k}" ${v!==false&&v?"checked":""}> ${k}</label>`;if(k==="pose"||k==="model"||k==="layout"){const o=k==="pose"?["idle","walk","wave","sit"]:k==="layout"?["none","vertical","horizontal"]:["steve","alex","creeper"];return `<label>${k}<select data-k="${k}">${o.map(x=>`<option ${x===v?"selected":""}>${x}</option>`).join("")}</select></label>`}if(k==="slotType")return `<label>${k}<select data-k="${k}">${["player","container","custom","output"].map(o=>`<option ${o===v?"selected":""}>${o}</option>`).join("")}</select></label>`;return `<label>${k}<input data-k="${k}" type="${typeof v==="number"?"number":k==="color"&&e.type==="label"?"color":"text"}" value="${esc(v)}"></label>`};
  const evs=["click",...(e.type==="checkbox"||e.type==="input"?["change"]:[]),"hover"];
  pr.innerHTML=`<h4>${e.type.toUpperCase()}</h4>`+["id","x","y","width","height"].map(f).join("")+(FT[e.type]||[]).map(f).join("")+f("visible")+f("locked")+f("enabled")+`<h4>Events → actions</h4>`+evs.map(v=>{const a=(e.events[v]||[])[0]||{};return `<label>${v}<select data-ev="${v}" data-f="action">${ACT.map(o=>`<option ${o===(a.action||"")?"selected":""}>${o}</option>`).join("")}</select><input data-ev="${v}" data-f="target" list="${TL[a.action||""]||""}" placeholder="target / command / text (e.g. coins=5, coins+=1)" value="${esc(a.target)}"><input data-ev="${v}" data-f="cond" placeholder="only if: coins>=10" value="${esc(a.cond)}"></label>`}).join("")}
@@ -289,7 +302,7 @@ $("pr").addEventListener("change",ev=>{const t=ev.target,c=cur();if(!c)return;co
  else{const k=t.dataset.k;let v=t.type==="checkbox"?t.checked:t.type==="number"?Number(t.value):t.value;if(k==="id"){v=v.replace(/\W/g,"_");if(!v||find(v)){props();return}sel=v}e[k]=v}push();ui()});
 $("sw").onchange=$("sh").onchange=()=>{P.screen.width=+$("sw").value||176;P.screen.height=+$("sh").value||166;push();ui()};
 /* hierarchy */
-function hier(){let h="";walk(P.elements,(e,p,d)=>{h+=`<div class="r${e.id===sel?" a":""}" data-id="${e.id}" style="padding-left:${8+d*16}px"><span>${e.type}: ${esc(e.id)}</span><b data-a=v>${e.visible?"👁":"–"}</b><b data-a=l>${e.locked?"🔒":"🔓"}</b><b data-a=u>▲</b><b data-a=d>▼</b></div>`});$("hr").innerHTML=h||"<p class=m style='padding:8px'>Empty GUI</p>"}
+function hier(){let h="";walk(P.elements,(e,p,d)=>{h+=`<div class="r${e.id===sel?" a":""}" data-id="${e.id}" style="padding-left:${8+d*16}px"><span>${e.type}: ${esc(e.id)}</span><b data-a=v>${e.visible?"👁":"–"}</b><b data-a=l>${e.locked?"🔒":"🔓"}</b><b data-a=u>▲</b><b data-a=d>▼</b></div>`});$("hr").innerHTML=h||"<p class=m style='padding:8px'>"+(window.i18n?.t("hints.empty_gui")||"Empty GUI")+"</p>"}
 $("hr").onclick=ev=>{const r=ev.target.closest(".r");if(!r)return;const c=find(r.dataset.id),a=ev.target.dataset.a;sel=r.dataset.id;
  if(a==="v")c.e.visible=!c.e.visible;if(a==="l")c.e.locked=!c.e.locked;const i=c.l.indexOf(c.e);
  if(a==="u"&&i>0)[c.l[i-1],c.l[i]]=[c.l[i],c.l[i-1]];if(a==="d"&&i<c.l.length-1)[c.l[i+1],c.l[i]]=[c.l[i],c.l[i+1]];if(a)push();ui()};
@@ -302,7 +315,7 @@ $("lib").ondragstart=ev=>ev.dataTransfer.setData("t",ev.target.dataset.t||"");
 $("gui").ondragover=ev=>ev.preventDefault();
 $("gui").ondrop=ev=>{ev.preventDefault();const t=ev.dataTransfer.getData("t");if(!t)return;const r=$("gui").getBoundingClientRect(),h=ev.target.closest(".panel"),pc=h&&find(h.dataset.id);
  const e=mk(t),ox=h?h.getBoundingClientRect():r;e.x=Math.round((ev.clientX-ox.left)/S);e.y=Math.round((ev.clientY-ox.top)/S);(pc?pc.e.children:P.elements).push(e);sel=e.id;push();ui()};
-function ui(){relayout();$("ld2").value=P.loader||"forge";libr();ovSync();document.title=P.screen.id+" - Minecraft GUI Builder";if(P.screen.cls)$("cls").value=P.screen.cls;screensRender();statusUpd();colorsRender();probRender();$("sw").value=P.screen.width;$("sh").value=P.screen.height;canvas();props();hier()}
+function ui(){relayout();$("ld2").value=P.loader||"forge";libr();ovSync();document.title=P.screen.id+" - Minecraft GUI Builder";if(P.screen.cls)$("cls").value=P.screen.cls;screensRender();statusUpd();colorsRender();probRender();renderVars();renderFuncs();$("sw").value=P.screen.width;$("sh").value=P.screen.height;canvas();props();hier();if(window.i18n){if($("hint-drag"))$("hint-drag").textContent=window.i18n.t("hints.drag_canvas");if($("menu-file"))$("menu-file").textContent=window.i18n.t("menu.file");if($("menu-new-project"))$("menu-new-project").textContent=window.i18n.t("menu.new_project");if($("menu-new-template"))$("menu-new-template").textContent=window.i18n.t("menu.new_from_template");if($("menu-open-json"))$("menu-open-json").textContent=window.i18n.t("menu.open_save_json");if($("menu-settings"))$("menu-settings").textContent=window.i18n.t("menu.settings")}}
 /* json */
 function openJson(){$("ta").value=JSON.stringify(P,null,2);$("md").style.display="flex";$("ld").style.display=""}
 function loadTa(){const prevP=P;try{const j=JSON.parse($("ta").value);if(!j||j.format!==1)throw new Error("campo format mancante o non supportato");P=normProject(j);recount();sel=null;multi=new Set();push();ui();$("md").style.display="none"}catch(e){P=prevP;say("JSON non valido: "+e.message);ui()}}
@@ -319,6 +332,7 @@ function act(a,cls){const t=a.target||"";switch(a.action){
 case"set_variable":{const m=/^(\w+)\s*=\s*(-?\d+)$/.exec(t);return m?`vars.put("${m[1]}", ${m[2]});`:`// TODO: CUSTOM IMPLEMENTATION: set_variable invalid "${t}" (use name=number)`}
  case"change_variable":{const m=/^(\w+)\s*([+-])=\s*(\d+)$/.exec(t);return m?`vars.merge("${m[1]}", ${m[2]==="-"?"-":""}${m[3]}, Integer::sum);`:`// TODO: CUSTOM IMPLEMENTATION: change_variable invalid "${t}" (use name+=n)`}
  case"give_item":return `if (this.minecraft != null && this.minecraft.player != null) this.minecraft.player.connection.sendCommand(${js("give @p "+t)});`;
+ case"call_function":{const f=(P.functions||[]).find(fn=>fn.name===t);return f?`${f.returnType==="void"?"":f.returnType+" ret = "}${f.name}(${(f.params||[]).map(p=>p.split(" ")[1]||"arg").join(", ")});`:`// TODO: CUSTOM IMPLEMENTATION: function "${t}" not found. Define it in Custom Functions.`}
  default:return `// TODO: CUSTOM IMPLEMENTATION: action "${a.action}" target "${t}" - implement manually.`}}
 function exJava(){$("ta").value=genAllFiles().map(f=>"// ===== "+f.path+" =====\n"+f.text).join("\n\n");$("md").style.display="flex";$("ld").style.display="none"}
 let CB=null;
@@ -581,13 +595,17 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;${[...IMPS].map(i=>"\nimport "+i+";").join("")}
 
-/** Generato da Minecraft GUI Builder - target: ${V121?"Minecraft 1.21.1 / NeoForge":"Minecraft 1.20.1 / Forge"}. Schermo "${P.screen.id}". */
+/** Generated by Minecraft GUI Builder - target: ${V121?"Minecraft 1.21.1 / NeoForge":"Minecraft 1.20.1 / Forge"}. Screen "${P.screen.id}". */
 public class ${cls} extends ${CT?`AbstractContainerScreen<${cls}Menu>`:"Screen"} {
     private static final int GUI_WIDTH = ${W};
     private static final int GUI_HEIGHT = ${H};
 ${CT?"":`    private int leftPos;
     private int topPos;
 `}    private final java.util.Map<String, Integer> vars = new java.util.HashMap<>();
+${(P.variables||[]).map(v=>`    private ${v.type} ${v.name} = ${v.type==="int"?v.initialValue:v.type==="boolean"?v.initialValue:js(String(v.initialValue))};`).join("\n")}
+${(P.functions||[]).map(f=>`    private ${f.returnType} ${f.name}(${f.params.join(", ")}) {
+        ${f.body}
+    }`).join("\n")}
 ${F.join("\n")}${F.length?"\n":""}
 ${CT?`    public ${cls}(${cls}Menu menu, Inventory inv, Component title) {
         super(menu, inv, title);

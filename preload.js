@@ -1,2 +1,4 @@
 const {contextBridge,ipcRenderer}=require("electron");
+const i18n = require("./i18n");
 contextBridge.exposeInMainWorld("native",{save:o=>ipcRenderer.invoke("save",o),open:()=>ipcRenderer.invoke("open"),mod:o=>ipcRenderer.invoke("mod",o),ai:o=>ipcRenderer.invoke("ai",o),openJava:()=>ipcRenderer.invoke("openjava"),scan:p=>ipcRenderer.invoke("scan",p),write:o=>ipcRenderer.invoke("write",o),startDir:()=>ipcRenderer.invoke("startdir"),importScreen:c=>ipcRenderer.invoke("importscreen",c),onCmd:cb=>ipcRenderer.on("menu-cmd",(_,n)=>cb(n)),stop:()=>ipcRenderer.invoke("ai-stop"),onChunk:cb=>ipcRenderer.on("ai-chunk",(_,t)=>cb(t))});
+contextBridge.exposeInMainWorld("i18n",{t:i18n.t,setLanguage:i18n.setLanguage,getLanguage:i18n.getLanguage,getAvailableLanguages:i18n.getAvailableLanguages,DEFAULT_LANGUAGE:i18n.DEFAULT_LANGUAGE});
