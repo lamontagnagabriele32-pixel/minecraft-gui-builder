@@ -1,4 +1,4 @@
-# Minecraft GUI Builder (Electron)
+# Minecraft GUI Builder 1.0.1 Beta (Electron)
 
     npm install
     npm start                      # start the app

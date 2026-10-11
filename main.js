@@ -1,5 +1,5 @@
 const {app,BrowserWindow,ipcMain,dialog,Menu}=require("electron");const fs=require("fs"),path=require("path");
-function win(){const w=new BrowserWindow({width:1400,height:900,title:"Minecraft GUI Builder",icon:path.join(__dirname,"build","icon.png"),webPreferences:{preload:path.join(__dirname,"preload.js"),contextIsolation:true,nodeIntegration:false}});w.loadFile(path.join(__dirname,"renderer","index.html"))}
+function win(){const w=new BrowserWindow({width:1400,height:900,title:"Minecraft GUI Builder 1.0.1 Beta",icon:path.join(__dirname,"build","icon.png"),webPreferences:{preload:path.join(__dirname,"preload.js"),contextIsolation:true,nodeIntegration:false}});w.loadFile(path.join(__dirname,"renderer","index.html"))}
 function emitCmd(w,name){if(!w)return;const wc=w.webContents;
  if(["undo","redo","cut","copy","paste","selectAll"].includes(name))wc.executeJavaScript("(()=>{const a=document.activeElement;return !!a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)})()").then(inp=>{if(inp)wc[name]();else wc.send("menu-cmd",name)});else wc.send("menu-cmd",name)}
 function buildMenu(){if(process.platform!=="darwin"){Menu.setApplicationMenu(null);return}

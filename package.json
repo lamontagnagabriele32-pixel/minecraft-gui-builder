@@ -1,6 +1,6 @@
 {
   "name": "minecraft-gui-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Visual GUI editor for Minecraft mods",
   "main": "main.js",
   "scripts": {
