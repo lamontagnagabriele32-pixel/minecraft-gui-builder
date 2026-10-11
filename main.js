@@ -22,7 +22,7 @@ ipcMain.handle("mod",async(_,o)=>{if(!/^[a-z][a-z0-9_]*$/.test(o.mod)||!/^[A-Za-
 let ctl=null;
 ipcMain.handle("ai-stop",()=>{ctl&&ctl.abort()});
 ipcMain.handle("ai",async(ev,o)=>{ctl=new AbortController();try{const r=await fetch((o.host||"http://127.0.0.1:11434").replace(/\/$/,"")+"/api/chat",{method:"POST",signal:ctl.signal,headers:{"Content-Type":"application/json"},body:JSON.stringify({model:o.model,stream:true,format:"json",options:{temperature:0.1,seed:1,num_ctx:o.ctx||16384},messages:[{role:"system",content:o.system},{role:"user",content:o.user}]})});
- if(!r.ok)return{error:`Ollama HTTP ${r.status}: modello "${o.model}" installato? (ollama pull ${o.model})`};
+ if(!r.ok)return{error:`Ollama HTTP ${r.status}: model "${o.model}" installed? (ollama pull ${o.model})`};
  let buf="",txt="";const dec=new TextDecoder();for await(const c of r.body){buf+=dec.decode(c,{stream:true});let i;while((i=buf.indexOf("\n"))>=0){const line=buf.slice(0,i);buf=buf.slice(i+1);if(!line.trim())continue;const j=JSON.parse(line);if(j.error)return{error:"Ollama: "+j.error};const t=(j.message&&j.message.content)||"";if(t){txt+=t;ev.sender.send("ai-chunk",t)}}}
  return{text:txt}}catch(e){return{error:e.name==="AbortError"?"Aborted by user":"Ollama not reachable on 127.0.0.1:11434 (run 'ollama serve'): "+e.message}}finally{ctl=null}});
 ipcMain.handle("openjava",async()=>{const r=await dialog.showOpenDialog({filters:[{name:"Java",extensions:["java"]}],properties:["openFile"]});return r.canceled?null:fs.readFileSync(r.filePaths[0],"utf8")});

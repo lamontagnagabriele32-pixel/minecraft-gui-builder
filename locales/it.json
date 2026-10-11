@@ -304,5 +304,21 @@
     "pause": "Aggiunte Menu Pausa",
     "inventory": "Aggiunte Inventario",
     "creative": "Aggiunte Inventario Creativo"
+  },
+  "custom": {
+    "variables_title": "Variabili personalizzate",
+    "functions_title": "Funzioni personalizzate",
+    "add_variable": "+ Aggiungi variabile",
+    "add_function": "+ Aggiungi funzione",
+    "name": "Nome",
+    "type": "Tipo",
+    "initial": "Iniziale",
+    "return": "Ritorno",
+    "parameters": "Parametri (separati da virgola: tipo nome)",
+    "body": "Corpo (codice Java)",
+    "placeholder_params": "es. int quantità, String nome",
+    "error_empty_name": "Il nome non può essere vuoto",
+    "error_invalid_int": "Valore intero non valido",
+    "error_invalid_param": "Formato parametro non valido. Usa: tipo nome (es. int quantità)"
   }
 }

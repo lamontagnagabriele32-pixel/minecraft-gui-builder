@@ -306,5 +306,21 @@
     "pause": "Pause Screen Additions",
     "inventory": "Inventory Additions",
     "creative": "Creative Inventory Additions"
+  },
+  "custom": {
+    "variables_title": "Custom Variables",
+    "functions_title": "Custom Functions",
+    "add_variable": "+ Add variable",
+    "add_function": "+ Add function",
+    "name": "Name",
+    "type": "Type",
+    "initial": "Initial",
+    "return": "Return",
+    "parameters": "Parameters (comma-separated: type name)",
+    "body": "Body (Java code)",
+    "placeholder_params": "e.g. int amount, String name",
+    "error_empty_name": "Name cannot be empty",
+    "error_invalid_int": "Invalid integer value",
+    "error_invalid_param": "Invalid parameter format. Use: type name (e.g. int amount)"
   }
 }
