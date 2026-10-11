@@ -245,10 +245,10 @@
     "removed": "removed",
     "coordinates_correct": "coordinates correct",
     "inside_screen": "inside the screen",
-    "only_desktop": "Only in desktop app",
-    "no_custom_variables": "No custom variables defined.",
-    "no_custom_functions": "No custom functions defined."
+    "only_desktop": "Only in desktop app"
   },
+  "no_custom_variables": "No custom variables defined.",
+  "no_custom_functions": "No custom functions defined.",
   "launch": {
     "title": "Minecraft GUI Builder",
     "question": "What type of GUI do you want to create?",
