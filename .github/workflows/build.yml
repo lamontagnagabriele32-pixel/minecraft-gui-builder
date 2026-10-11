@@ -28,12 +28,12 @@ jobs:
       
     - name: Build Windows app
       run: npm run dist:win
-      
+
     - name: Build portable app
       run: node pack.js
-      
+
     - name: Create portable ZIP
-      run: Compress-Archive -Path 'dist\minecraft-gui-builder-win32-x64\*' -DestinationPath 'dist\Minecraft-GUI-Builder-Portable.zip' -Force
+      run: if (Test-Path 'dist\minecraft-gui-builder-win32-x64') { Compress-Archive -Path 'dist\minecraft-gui-builder-win32-x64\*' -DestinationPath 'dist\Minecraft-GUI-Builder-Portable.zip' -Force } else { Write-Error "Portable build directory not found" }
       shell: pwsh
       
     - name: Upload artifacts
