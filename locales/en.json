@@ -111,6 +111,7 @@
   "mod": {
     "link_folder": "Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions.",
     "link_button": "Link mod…",
+    "link_mod": "Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions.",
     "give": "Give",
     "open_screen": "Open screen",
     "sound": "Sound"
@@ -154,7 +155,8 @@
   "hints": {
     "drag_canvas": "Drag to canvas or click. If a Panel is selected, the component goes inside.",
     "empty_gui": "Empty GUI. Drag components or click to add.",
-    "select_element": "Select an element"
+    "select_element": "Select an element",
+    "link_mod": "Link a mod folder to see its GUIs, import them and use its items, blocks and sounds in actions."
   },
   "alignment": {
     "align_left": "Align left",

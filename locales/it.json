@@ -111,6 +111,7 @@
   "mod": {
     "link_folder": "Collega una cartella mod per vedere le sue GUI, importarle e usare i suoi oggetti, blocchi e suoni nelle azioni.",
     "link_button": "Collega mod…",
+    "link_mod": "Collega una cartella mod per vedere le sue GUI, importarle e usare i suoi oggetti, blocchi e suoni nelle azioni.",
     "give": "Dai",
     "open_screen": "Apri schermata",
     "sound": "Suono"
