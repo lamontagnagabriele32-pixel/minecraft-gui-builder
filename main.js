@@ -1,5 +1,5 @@
 const {app,BrowserWindow,ipcMain,dialog,Menu}=require("electron");const fs=require("fs"),path=require("path");
-function win(){const w=new BrowserWindow({width:1400,height:900,title:"Minecraft GUI Builder 1.0.1 Beta",icon:path.join(__dirname,"build","icon.png"),webPreferences:{preload:path.join(__dirname,"preload.js"),contextIsolation:true,nodeIntegration:false}});w.loadFile(path.join(__dirname,"renderer","index.html"))}
+function win(){const w=new BrowserWindow({width:1400,height:900,title:"Minecraft GUI Builder 1.0.1 Beta",icon:path.join(__dirname,"build","icon.png"),webPreferences:{preload:path.join(__dirname,"preload.js"),contextIsolation:true,nodeIntegration:false},show:false});w.loadFile(path.join(__dirname,"renderer","index.html"));w.once("ready-to-show",()=>w.show())}
 function emitCmd(w,name){if(!w)return;const wc=w.webContents;
  if(["undo","redo","cut","copy","paste","selectAll"].includes(name))wc.executeJavaScript("(()=>{const a=document.activeElement;return !!a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)})()").then(inp=>{if(inp)wc[name]();else wc.send("menu-cmd",name)});else wc.send("menu-cmd",name)}
 function buildMenu(){if(process.platform!=="darwin"){Menu.setApplicationMenu(null);return}
@@ -7,7 +7,7 @@ function buildMenu(){if(process.platform!=="darwin"){Menu.setApplicationMenu(nul
  Menu.setApplicationMenu(Menu.buildFromTemplate([{role:"appMenu"},{label:"File",submenu:[it("New","CmdOrCtrl+N","new"),it("Open…","CmdOrCtrl+O","open"),it("Save","CmdOrCtrl+S","save"),{type:"separator"},{role:"close"}]},
   {label:"Edit",submenu:[it("Undo","CmdOrCtrl+Z","undo"),it("Redo","Shift+CmdOrCtrl+Z","redo"),{type:"separator"},it("Cut","CmdOrCtrl+X","cut"),it("Copy","CmdOrCtrl+C","copy"),it("Paste","CmdOrCtrl+V","paste"),it("Select All","CmdOrCtrl+A","selectAll"),{type:"separator"},it("Duplicate","CmdOrCtrl+D","dup")]},
   {label:"View",submenu:[{role:"togglefullscreen"},{role:"toggleDevTools"}]},{role:"windowMenu"}]))}
-app.whenReady().then(()=>{buildMenu();win();app.on("activate",()=>{if(BrowserWindow.getAllWindows().length===0)win()})});
+app.whenReady().then(()=>{buildMenu();win();app.setUserTasks([{program:"node",arguments:process.argv.slice(1),iconPath:path.join(__dirname,"build","icon.png"),title:"Minecraft GUI Builder 1.0.1 Beta",description:"Visual GUI editor for Minecraft mods"}]);app.on("activate",()=>{if(BrowserWindow.getAllWindows().length===0)win()})});
 app.on("window-all-closed",()=>{if(process.platform!=="darwin")app.quit()});
 ipcMain.handle("save",async(_,o)=>{const r=await dialog.showSaveDialog({defaultPath:o.name,filters:[{name:o.ext,extensions:[o.ext]}]});if(r.canceled)return null;
  fs.writeFileSync(r.filePath,o.b64?Buffer.from(o.b64,"base64"):o.text,o.b64?undefined:"utf8");return r.filePath});
