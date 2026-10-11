@@ -6,7 +6,7 @@ function buildMenu(){if(process.platform!=="darwin"){Menu.setApplicationMenu(nul
  const it=(label,acc,name)=>({label,accelerator:acc,click:(_,w)=>emitCmd(w||BrowserWindow.getFocusedWindow(),name)});
  Menu.setApplicationMenu(Menu.buildFromTemplate([{role:"appMenu"},{label:"File",submenu:[it("New","CmdOrCtrl+N","new"),it("Open…","CmdOrCtrl+O","open"),it("Save","CmdOrCtrl+S","save"),{type:"separator"},{role:"close"}]},
   {label:"Edit",submenu:[it("Undo","CmdOrCtrl+Z","undo"),it("Redo","Shift+CmdOrCtrl+Z","redo"),{type:"separator"},it("Cut","CmdOrCtrl+X","cut"),it("Copy","CmdOrCtrl+C","copy"),it("Paste","CmdOrCtrl+V","paste"),it("Select All","CmdOrCtrl+A","selectAll"),{type:"separator"},it("Duplicate","CmdOrCtrl+D","dup")]},
-  {label:"Vista",submenu:[{role:"togglefullscreen"},{role:"toggleDevTools"}]},{role:"windowMenu"}]))}
+  {label:"View",submenu:[{role:"togglefullscreen"},{role:"toggleDevTools"}]},{role:"windowMenu"}]))}
 app.whenReady().then(()=>{buildMenu();win();app.on("activate",()=>{if(BrowserWindow.getAllWindows().length===0)win()})});
 app.on("window-all-closed",()=>{if(process.platform!=="darwin")app.quit()});
 ipcMain.handle("save",async(_,o)=>{const r=await dialog.showSaveDialog({defaultPath:o.name,filters:[{name:o.ext,extensions:[o.ext]}]});if(r.canceled)return null;
