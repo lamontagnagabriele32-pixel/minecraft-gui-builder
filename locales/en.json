@@ -279,6 +279,22 @@
     "no_custom_variables": "No custom variables defined.",
     "no_custom_functions": "No custom functions defined."
   },
+  "tutorial": {
+    "title": "Welcome to Minecraft GUI Builder",
+    "welcome": "This tutorial will help you get started with creating Minecraft mod GUIs.",
+    "step1_title": "Getting Started",
+    "step1": "1. Choose a GUI type from the launch screen (Main Menu, Pause Menu, Inventory, or Custom Screen).",
+    "step2_title": "Adding Components",
+    "step2": "2. Drag components from the left panel (Components tab) onto the canvas. Available components include Buttons, Labels, Panels, Slots, and more.",
+    "step3_title": "Editing Properties",
+    "step3": "3. Select a component on the canvas to edit its properties in the right panel (Element tab). You can change position, size, text, colors, and events.",
+    "step4_title": "Generating Java Code",
+    "step4": "4. Click 'Generate Java' to export your GUI as Java code for Forge or NeoForge. Set your Mod ID, Package, and Screen class in the Project tab.",
+    "step5_title": "Saving and Loading",
+    "step5": "5. Use File → Open / save JSON to save your project. You can also use Ctrl+Z to undo and Ctrl+Y to redo.",
+    "close": "Got it!",
+    "skip": "Skip tutorial"
+  },
   "update": {
     "new_update_available": "New Update Available",
     "version_available": "Version {latest} is available (you have {current}). Update now to get the latest features and bug fixes.",

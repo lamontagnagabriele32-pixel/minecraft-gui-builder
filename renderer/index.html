@@ -141,6 +141,15 @@ input[type=color]{padding:0;height:28px;width:44px;border-radius:7px;border:1px 
 aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
 
 #db{position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:80;display:none;gap:4px;align-items:center;background:var(--pn);border:1px solid var(--ac);padding:4px 8px;flex-wrap:wrap}
+#tutorial{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:1000;display:none;align-items:center;justify-content:center}
+#tutorial-content{background:var(--pn);border-radius:12px;max-width:600px;max-height:80vh;overflow:auto;padding:24px;box-shadow:var(--sh);border:1px solid var(--bd)}
+#tutorial-content h2{margin:0 0 16px;color:var(--ac)}
+#tutorial-content p{margin:0 0 12px;line-height:1.6}
+#tutorial-content ul{margin:0 0 16px;padding-left:20px}
+#tutorial-content li{margin:6px 0}
+#tutorial-content .tutorial-step{background:var(--in);padding:12px;border-radius:8px;margin:12px 0;border-left:4px solid var(--ac)}
+#tutorial-content .tutorial-step h3{margin:0 0 8px;font-size:14px}
+#tutorial-buttons{display:flex;gap:12px;justify-content:flex-end;margin-top:20px}
 
 #log{position:fixed;left:140px;bottom:156px;background:#000c;color:#9f9;font:11px monospace;padding:4px 8px;display:none}
 /* rifiniture */
@@ -226,7 +235,7 @@ aside .mgi button{display:inline-block;width:auto;margin:0;padding:1px 5px}
 <footer id="sb"><span id="sbl"></span><span class="sp"></span><span id="sbr"></span></footer>
 <div id="md"><div><textarea id="ta" style="width:100%;height:50vh;font:11px monospace"></textarea><p><button onclick="cp()">Copy</button> <button id="ld" class="pri" onclick="loadTa()">Load this JSON</button> <input type="file" id="fi" accept=".json"> <button onclick="md.style.display='none'">Close</button></p></div></div>
 <div id="aip"><b id="aih">AI</b> <button id="aix">Stop</button> <button id="aic">×</button><pre id="aio"></pre></div>
-<div id="db"></div><div id="dls"></div><div id="gp"></div><div id="pe"></div><div id="gv"></div><div id="fl"></div><div id="tm"></div><div id="st"></div><div id="launch"></div><div id="cmdk"></div><div id="ctx"></div><div id="log"></div>
+<div id="db"></div><div id="dls"></div><div id="gp"></div><div id="pe"></div><div id="gv"></div><div id="fl"></div><div id="tm"></div><div id="st"></div><div id="launch"></div><div id="cmdk"></div><div id="ctx"></div><div id="log"></div><div id="tutorial"></div>
 <script>
 const $=id=>document.getElementById(id);let S=3,P,sel=null,hist=[],hi=-1,prev=false,n=0,drag=null;
 const D={button:{width:120,height:20,text:"Button",texture:"",slice:4},label:{width:60,height:9,text:"Label",color:"#404040"},slot:{width:18,height:18,slotIndex:0,slotType:"container"},player:{width:48,height:72,scale:30,skin:"",pose:"idle",model:"steve"},panel:{width:100,height:60,bg:true,color:"",texture:"",slice:4,layout:"none",gap:2,pad:4,hug:false,children:[]},input:{width:100,height:16,text:"",placeholder:"Type...",maxLength:32},progress:{width:80,height:8,value:50,min:0,max:100},checkbox:{width:70,height:12,text:"Option",checked:false},image:{width:32,height:32,texture:""}};
@@ -1082,6 +1091,8 @@ function previewOpen(i){if(!prev||i===P.cur||!P.screens[i])return;walk(P.element
 function previewBack(){if(!prev)return;if(PSTACK.length){walk(P.elements,e=>run(e,"close"));switchScreen(PSTACK.pop());walk(P.elements,e=>run(e,"open"))}else togglePrev()}
 /* launch screen */
 function launchOpen(){const l=$("launch");l.style.display="flex";l.innerHTML=`<div class="lw"><div class="lh"><svg width="44" height="44" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" fill="#2a9d5c"/><rect x="6" y="6" width="5" height="5" rx="1" fill="#fff"/><rect x="13" y="6" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="6" y="13" width="5" height="5" rx="1" fill="#fff" opacity=".7"/><rect x="13" y="13" width="5" height="5" rx="1" fill="#fff"/></svg><div><h1>Minecraft GUI Builder</h1><p>What type of GUI do you want to create?</p></div></div>${kindCards("lk")}<div class="lf">${HAD_AUTO?'<button class="pri" data-lk="continue">▶ Continue last project</button>':""}${window.native?'<button data-lk="open">📂 Open a file…</button><button data-lk="mod">📁 Link to mod…</button>':""}<button data-lk="json">Open / paste JSON…</button><label class="lskip"><input type="checkbox" id="lskip" ${CFG.showLaunch===false?"checked":""}> Do not show on startup</label></div></div>`}
+function showTutorial(){const t=$("tutorial");t.style.display="flex";const content=window.i18n?{title:window.i18n.t("tutorial.title"),welcome:window.i18n.t("tutorial.welcome"),step1_title:window.i18n.t("tutorial.step1_title"),step1:window.i18n.t("tutorial.step1"),step2_title:window.i18n.t("tutorial.step2_title"),step2:window.i18n.t("tutorial.step2"),step3_title:window.i18n.t("tutorial.step3_title"),step3:window.i18n.t("tutorial.step3"),step4_title:window.i18n.t("tutorial.step4_title"),step4:window.i18n.t("tutorial.step4"),step5_title:window.i18n.t("tutorial.step5_title"),step5:window.i18n.t("tutorial.step5"),close:window.i18n.t("tutorial.close"),skip:window.i18n.t("tutorial.skip")}:{title:"Welcome to Minecraft GUI Builder",welcome:"This tutorial will help you get started with creating Minecraft mod GUIs.",step1_title:"Getting Started",step1:"1. Choose a GUI type from the launch screen (Main Menu, Pause Menu, Inventory, or Custom Screen).",step2_title:"Adding Components",step2:"2. Drag components from the left panel (Components tab) onto the canvas. Available components include Buttons, Labels, Panels, Slots, and more.",step3_title:"Editing Properties",step3:"3. Select a component on the canvas to edit its properties in the right panel (Element tab). You can change position, size, text, colors, and events.",step4_title:"Generating Java Code",step4:"4. Click 'Generate Java' to export your GUI as Java code for Forge or NeoForge. Set your Mod ID, Package, and Screen class in the Project tab.",step5_title:"Saving and Loading",step5:"5. Use File → Open / save JSON to save your project. You can also use Ctrl+Z to undo and Ctrl+Y to redo.",close:"Got it!",skip:"Skip tutorial"};t.innerHTML=`<div id="tutorial-content"><h2>${content.title}</h2><p>${content.welcome}</p><div class="tutorial-step"><h3>${content.step1_title}</h3><p>${content.step1}</p></div><div class="tutorial-step"><h3>${content.step2_title}</h3><p>${content.step2}</p></div><div class="tutorial-step"><h3>${content.step3_title}</h3><p>${content.step3}</p></div><div class="tutorial-step"><h3>${content.step4_title}</h3><p>${content.step4}</p></div><div class="tutorial-step"><h3>${content.step5_title}</h3><p>${content.step5}</p></div><div id="tutorial-buttons"><button class="pri" onclick="closeTutorial()">${content.close}</button><button onclick="closeTutorial(true)">${content.skip}</button></div></div>`}
+function closeTutorial(skip){localStorage.setItem("mcgb_tutorial","true");$("tutorial").style.display="none"}
 $("launch").onclick=ev=>{if(ev.target.id==="lskip"){CFG.showLaunch=!ev.target.checked;saveCfg();return}const b=ev.target.closest("[data-lk]");if(b)launchPick(b.dataset.lk)};
 function launchPick(k){const l=$("launch");l.style.display="none";if(k==="continue")return;if(k==="open")return nOpen();if(k==="mod"){linkMod();return switchTab("left","p-mod")}if(k==="json")return openJson();
  newP();if(k.startsWith("ov:"))setOverlay(k.slice(3));else if(k!=="blank")tplNew(k);switchTab("left","p-comp");
@@ -1089,4 +1100,6 @@ function launchPick(k){const l=$("launch");l.style.display="none";if(k==="contin
 /* init */
 try{const s=localStorage.getItem("mcgb");if(s){P=blank();P=normProject(JSON.parse(s));recount();hist=[JSON.stringify(P)];hi=0;HAD_AUTO=true}}catch(e){P=undefined}
 if(!P)newP();else ui();if(CFG.showLaunch!==false)launchOpen();
+const hasSeenTutorial=localStorage.getItem("mcgb_tutorial");
+if(!hasSeenTutorial){showTutorial()}
 </script></body></html>
