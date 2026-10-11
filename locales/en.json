@@ -33,7 +33,13 @@
     "snap_grid": "Snap to grid",
     "generate_java": "Generate Java",
     "import_java_ai": "Import from Java with AI",
-    "quick_guide": "Quick guide"
+    "quick_guide": "Quick guide",
+    "logic": "Logic",
+    "graph": "Graph",
+    "quick_guide": "Quick guide",
+    "search_commands": "Search commands…",
+    "preview": "Preview",
+    "generate_java": "Generate Java"
   },
   "tabs": {
     "components": "Components",

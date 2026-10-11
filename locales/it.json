@@ -33,7 +33,13 @@
     "snap_grid": "Griglia magnetica",
     "generate_java": "Genera Java",
     "import_java_ai": "Importa da Java con AI",
-    "quick_guide": "Guida rapida"
+    "quick_guide": "Guida rapida",
+    "logic": "Logica",
+    "graph": "Grafo",
+    "quick_guide": "Guida rapida",
+    "search_commands": "Cerca comandi…",
+    "preview": "Anteprima",
+    "generate_java": "Genera Java"
   },
   "tabs": {
     "components": "Componenti",
