@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://minecraft-gui-builder.altervista.org/sitemap.xml
+Sitemap: https://minecraftguibuilder.altervista.org/sitemap.xml
