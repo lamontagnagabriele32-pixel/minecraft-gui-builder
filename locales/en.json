@@ -150,6 +150,7 @@
     "app_title": "Application",
     "reset": "Reset",
     "close": "Close",
+    "reset_tutorial": "Reset tutorial",
     "start_screen": "Start screen on launch",
     "interface": "Interface",
     "snap": "Snap (px)",
