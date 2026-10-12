@@ -14,7 +14,7 @@ function buildMenu(){if(process.platform!=="darwin"){Menu.setApplicationMenu(nul
  Menu.setApplicationMenu(Menu.buildFromTemplate([{role:"appMenu"},{label:"File",submenu:[it("New","CmdOrCtrl+N","new"),it("Open…","CmdOrCtrl+O","open"),it("Save","CmdOrCtrl+S","save"),{type:"separator"},{role:"close"}]},
   {label:"Edit",submenu:[it("Undo","CmdOrCtrl+Z","undo"),it("Redo","Shift+CmdOrCtrl+Z","redo"),{type:"separator"},it("Cut","CmdOrCtrl+X","cut"),it("Copy","CmdOrCtrl+C","copy"),it("Paste","CmdOrCtrl+V","paste"),it("Select All","CmdOrCtrl+A","selectAll"),{type:"separator"},it("Duplicate","CmdOrCtrl+D","dup")]},
   {label:"View",submenu:[{role:"togglefullscreen"},{role:"toggleDevTools"}]},{role:"windowMenu"}]))}
-app.whenReady().then(()=>{buildMenu();win();app.setUserTasks([{program:"node",arguments:process.argv.slice(1),iconPath:path.join(__dirname,"build","icon.png"),title:"Minecraft GUI Builder 1.0.1 Beta",description:"Visual GUI editor for Minecraft mods"}]);checkForUpdates();app.on("activate",()=>{if(BrowserWindow.getAllWindows().length===0)win()})});
+app.whenReady().then(()=>{buildMenu();win();checkForUpdates();app.on("activate",()=>{if(BrowserWindow.getAllWindows().length===0)win()})});
 app.on("window-all-closed",()=>{if(process.platform!=="darwin")app.quit()});
 ipcMain.handle("save",async(_,o)=>{const r=await dialog.showSaveDialog({defaultPath:o.name,filters:[{name:o.ext,extensions:[o.ext]}]});if(r.canceled)return null;
  fs.writeFileSync(r.filePath,o.b64?Buffer.from(o.b64,"base64"):o.text,o.b64?undefined:"utf8");return r.filePath});
