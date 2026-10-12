@@ -141,7 +141,8 @@
     "export": "Export",
     "ai_section": "AI (Ollama, optional)",
     "execute_command": "Execute command",
-    "import_java": "Import Java"
+    "import_java": "Import Java",
+    "import_texture": "Import Texture"
   },
   "settings": {
     "project_title": "Current project",

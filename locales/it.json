@@ -141,7 +141,8 @@
     "export": "Esporta",
     "ai_section": "AI (Ollama, opzionale)",
     "execute_command": "Esegui comando",
-    "import_java": "Importa Java"
+    "import_java": "Importa Java",
+    "import_texture": "Importa Texture"
   },
   "settings": {
     "project_title": "Progetto corrente",
